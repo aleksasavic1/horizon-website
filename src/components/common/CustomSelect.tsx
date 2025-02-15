@@ -33,7 +33,7 @@ const CustomSelect = ({
           border: '1px solid hsla(0, 0%, 100%, 0.3)',
           borderRadius: '4px',
           transition: 'border 0.3s ease',
-          height: '56px',
+          height: '50px',
 
           '& .MuiOutlinedInput-notchedOutline': {
             border: 'none',

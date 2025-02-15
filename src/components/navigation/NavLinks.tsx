@@ -36,7 +36,7 @@ const NavLinks = () => {
             sx={{
               fontFamily: 'sans-serif',
               cursor: 'pointer',
-              fontSize: '14px',
+              fontSize: '15px',
               color: 'hsla(0, 0%, 100%, 0.8)',
               display: 'flex',
               alignItems: 'center',

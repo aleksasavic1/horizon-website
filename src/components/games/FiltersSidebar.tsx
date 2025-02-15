@@ -40,7 +40,7 @@ const FiltersSidebar = () => {
   return (
     <Box
       sx={{
-        width: '300px',
+        width: '320px',
         padding: '16px',
         backgroundColor: '#1e1e1e',
         color: '#fff',
@@ -48,7 +48,7 @@ const FiltersSidebar = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: '16px',
-        minHeight: 'calc(100vh - 64px)',
+        minHeight: 'calc(100vh - 68px)',
         overflowY: 'auto',
       }}
     >
@@ -57,7 +57,7 @@ const FiltersSidebar = () => {
       </Typography>
 
       <FormControl fullWidth>
-        <Typography sx={{ marginBottom: '4px' }}>Platforms:</Typography>
+        <Typography sx={{ marginBottom: '6px' }}>Platforms:</Typography>
         <CustomSelect
           name='platforms'
           value={formData.platforms}
@@ -67,7 +67,7 @@ const FiltersSidebar = () => {
       </FormControl>
 
       <FormControl fullWidth>
-        <Typography sx={{ marginBottom: '4px' }}>Genres:</Typography>
+        <Typography sx={{ marginBottom: '6px' }}>Genres:</Typography>
         <CustomSelect
           name='genres'
           value={formData.genres}
@@ -77,7 +77,7 @@ const FiltersSidebar = () => {
       </FormControl>
 
       <FormControl fullWidth>
-        <Typography sx={{ marginBottom: '4px' }}>Sort by:</Typography>
+        <Typography sx={{ marginBottom: '6px' }}>Sort by:</Typography>
         <CustomSelect
           name='sort_by'
           value={formData.sort_by}

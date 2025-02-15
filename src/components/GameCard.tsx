@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import CustomButton from './common/CustomButton';
 import { GameTypes } from '../types/game-types';
+import gamePlaceholder from '../assets/game-placeholder.png';
 
 type GameCardProps = {
   game: GameTypes;
@@ -31,8 +32,8 @@ const GameCard = ({ game }: GameCardProps) => {
       <Box sx={{ minHeight: '170px', maxHeight: '170px', overflow: 'hidden' }}>
         <Box
           component='img'
-          src={game.image}
-          alt={game.title}
+          src={game.background_image || gamePlaceholder}
+          alt={game.name}
           sx={{
             width: '100%',
             objectFit: 'cover',
@@ -44,23 +45,40 @@ const GameCard = ({ game }: GameCardProps) => {
         />
       </Box>
 
-      <Box sx={{ padding: '12px' }}>
-        <Typography variant='h6'>{game.title}</Typography>
-        <Typography variant='body2' sx={{ opacity: 0.7 }}>
-          Genre: {game.genre}
-        </Typography>
-        <Typography variant='body2' sx={{ opacity: 0.7 }}>
-          Rating: {game.rating} ⭐
-        </Typography>
+      <Box
+        sx={{
+          padding: '12px',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        }}
+      >
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography
+            variant='h6'
+            sx={{ lineHeight: 1.3, marginBottom: '4px' }}
+          >
+            {game.name || 'No Name'}
+          </Typography>
+          <Typography variant='body2' sx={{ opacity: 0.7 }}>
+            {game.genres.length > 1 ? 'Genres: ' : 'Genre: '}
+            {game.genres.map((genre: any) => genre.name).join(', ')}
+          </Typography>
+          <Typography variant='body2' sx={{ opacity: 0.7 }}>
+            Rating: {game.rating || 'No rating'}
+          </Typography>
+        </Box>
 
-        <CustomButton
-          variant='orange'
-          onClick={handleAddToLibrary}
-          disabled={isAdded}
-          sx={{ marginTop: '10px' }}
-        >
-          {isAdded ? 'Added to Library' : 'Add to My Library'}
-        </CustomButton>
+        <Box>
+          <CustomButton
+            variant='orange'
+            onClick={handleAddToLibrary}
+            disabled={isAdded}
+            sx={{ marginTop: '10px' }}
+          >
+            {isAdded ? 'Added to Library' : 'Add to My Library'}
+          </CustomButton>
+        </Box>
       </Box>
     </Box>
   );

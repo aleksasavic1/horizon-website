@@ -1,7 +1,12 @@
+type Genre = {
+  id: number;
+  name: string;
+};
+
 export type GameTypes = {
   id: number;
-  title: string;
-  image: string;
-  genre: string;
+  name: string;
+  background_image: string;
+  genres: Genre[];
   rating: number;
 };
