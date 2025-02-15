@@ -9,7 +9,6 @@ const NavLinks = () => {
   const links = [
     { label: 'Home', path: '/' },
     { label: 'Games', path: '/games' },
-    { label: 'Top Rated', path: '/top-rated' },
     { label: 'My Library', path: '/library' },
     { label: 'FAQ', path: '/faq' },
     { label: 'Contact Us', path: '/contact' },
@@ -23,7 +22,11 @@ const NavLinks = () => {
     <Box sx={{ display: 'flex' }}>
       {links.map((link) =>
         location.pathname === link.path ? (
-          <CustomButton key={link.path} onClick={() => handleClick(link.path)}>
+          <CustomButton
+            key={link.path}
+            onClick={() => handleClick(link.path)}
+            sx={{ fontFamily: 'sans-serif' }}
+          >
             {link.label}
           </CustomButton>
         ) : (
@@ -31,6 +34,7 @@ const NavLinks = () => {
             key={link.path}
             onClick={() => handleClick(link.path)}
             sx={{
+              fontFamily: 'sans-serif',
               cursor: 'pointer',
               fontSize: '14px',
               color: 'hsla(0, 0%, 100%, 0.8)',
