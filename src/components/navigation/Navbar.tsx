@@ -10,6 +10,7 @@ const Navbar = () => {
     <Box
       sx={{
         width: '100%',
+        height: '64px',
         display: 'flex',
         alignItems: 'center',
         padding: '16px 48px',
@@ -23,9 +24,9 @@ const Navbar = () => {
       <Box sx={{ flex: 1, display: 'flex' }}>
         <Typography
           onClick={() => navigate('/')}
-          variant='h6'
           sx={{
-            fontSize: '24px',
+            fontFamily: 'Orbitron, sans-serif',
+            fontSize: '22px',
             fontWeight: 'bold',
             color: 'hsla(0, 0%, 100%, 0.8)',
             cursor: 'pointer',
@@ -47,14 +48,22 @@ const Navbar = () => {
         sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 2 }}
       >
         <CustomButton
-          sx={{ padding: '6px 20px' }}
+          sx={{
+            padding: '6px 20px',
+            fontSize: '13px',
+            fontFamily: 'Orbitron, sans-serif',
+          }}
           onClick={() => navigate('/login')}
         >
           Sign In
         </CustomButton>
         <CustomButton
           variant='outlined'
-          sx={{ padding: '6px 16px' }}
+          sx={{
+            padding: '6px 16px',
+            fontSize: '13px',
+            fontFamily: 'Orbitron, sans-serif',
+          }}
           onClick={() => navigate('/register')}
         >
           Sign Up

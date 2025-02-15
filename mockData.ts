@@ -1,0 +1,88 @@
+import gamePlaceholder from './src/assets/game-placeholder.png';
+
+export const gamesData = [
+  {
+    id: 1,
+    title: 'Grand Theft Auto VI',
+    image: gamePlaceholder,
+    genre: 'Action',
+    rating: 4.7,
+  },
+  {
+    id: 2,
+    title: 'Red Dead Redemption 2',
+    image: gamePlaceholder,
+    genre: 'Shooter',
+    rating: 4.2,
+  },
+  {
+    id: 3,
+    title: 'Life is Strange 3',
+    image: gamePlaceholder,
+    genre: 'Adventure',
+    rating: 3.4,
+  },
+  {
+    id: 4,
+    title: 'Call of Duty: Warzone Caldera',
+    image: gamePlaceholder,
+    genre: 'Action',
+    rating: 3.8,
+  },
+  {
+    id: 5,
+    title: 'eFootball 2024',
+    image: gamePlaceholder,
+    genre: 'Sport',
+    rating: 4.1,
+  },
+  {
+    id: 6,
+    title: 'Minecraft',
+    image: gamePlaceholder,
+    genre: 'Adventure',
+    rating: 4.4,
+  },
+  {
+    id: 7,
+    title: 'Counter Strike 2',
+    image: gamePlaceholder,
+    genre: 'Shooter',
+    rating: 3.8,
+  },
+  {
+    id: 8,
+    title: 'God of War',
+    image: gamePlaceholder,
+    genre: 'RPG',
+    rating: 3.1,
+  },
+  {
+    id: 9,
+    title: 'World of Warcraft',
+    image: gamePlaceholder,
+    genre: 'RPG',
+    rating: 4.5,
+  },
+  {
+    id: 10,
+    title: 'Grand Theft Auto V',
+    image: gamePlaceholder,
+    genre: 'Action',
+    rating: 4.3,
+  },
+  {
+    id: 11,
+    title: 'Watch Dogs 2',
+    image: gamePlaceholder,
+    genre: 'Action',
+    rating: 3.2,
+  },
+  {
+    id: 12,
+    title: 'World of Warship',
+    image: gamePlaceholder,
+    genre: 'Shooter',
+    rating: 2.4,
+  },
+];

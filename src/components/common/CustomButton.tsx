@@ -47,9 +47,32 @@ const OutlineButton = styled(Button)({
   },
 });
 
-interface CustomButtonProps extends ButtonProps {
+const OrangeButton = styled(Button)({
+  background: 'linear-gradient(190deg, #db7909, #5e3b13)',
+  padding: '6px 30px',
+  color: '#fff',
+  textTransform: 'none',
+  fontSize: '14px',
+  borderRadius: '6px',
+  transition: 'all 0.3s ease',
+  border: 'none',
+  minWidth: '180px',
+
+  '&:hover': {
+    boxShadow: '0 0 3px hsla(0, 0%, 100%, 0.2)',
+  },
+
+  '&:disabled': {
+    background: 'linear-gradient(190deg, #5a5553, #312f2f )',
+    color: '#fff',
+    boxShadow: 'none',
+    transform: 'none',
+  },
+});
+
+interface CustomButtonProps extends Omit<ButtonProps, 'variant'> {
   children: ReactNode;
-  variant?: 'contained' | 'outlined';
+  variant?: 'contained' | 'outlined' | 'orange';
 }
 
 const CustomButton = ({
@@ -57,11 +80,11 @@ const CustomButton = ({
   variant = 'contained',
   ...props
 }: CustomButtonProps) => {
-  return variant === 'outlined' ? (
-    <OutlineButton {...props}>{children}</OutlineButton>
-  ) : (
-    <GradientButton {...props}>{children}</GradientButton>
-  );
+  if (variant === 'outlined')
+    return <OutlineButton {...props}>{children}</OutlineButton>;
+  if (variant === 'orange')
+    return <OrangeButton {...props}>{children}</OrangeButton>;
+  return <GradientButton {...props}>{children}</GradientButton>;
 };
 
 export default CustomButton;

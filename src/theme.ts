@@ -1,3 +1,4 @@
+import '@fontsource/chakra-petch/index.css';
 import '@fontsource/orbitron/index.css';
 import { createTheme } from '@mui/material/styles';
 
@@ -11,7 +12,10 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Orbitron, sans-serif',
+    fontFamily: 'Chakra Petch, sans-serif',
+    orbitron: {
+      fontFamily: 'Orbitron, sans-serif',
+    },
   },
 });
 
