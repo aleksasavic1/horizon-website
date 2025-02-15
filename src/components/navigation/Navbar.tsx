@@ -50,7 +50,7 @@ const Navbar = () => {
         <CustomButton
           sx={{
             padding: '6px 20px',
-            fontSize: '14px',
+            fontSize: '13px',
             fontFamily: 'Orbitron, sans-serif',
           }}
           onClick={() => navigate('/login')}
@@ -61,7 +61,7 @@ const Navbar = () => {
           variant='outlined'
           sx={{
             padding: '6px 16px',
-            fontSize: '14px',
+            fontSize: '13px',
             fontFamily: 'Orbitron, sans-serif',
           }}
           onClick={() => navigate('/register')}

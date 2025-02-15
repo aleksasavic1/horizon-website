@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import CustomButton from './common/CustomButton';
 import { GameTypes } from '../types/game-types';
@@ -9,14 +10,21 @@ type GameCardProps = {
 };
 
 const GameCard = ({ game }: GameCardProps) => {
+  const navigate = useNavigate();
   const [isAdded, setIsAdded] = useState(false);
 
-  const handleAddToLibrary = () => {
+  const handleAddToLibrary = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsAdded(true);
+  };
+
+  const handleClick = () => {
+    navigate(`/games/${game.id}`);
   };
 
   return (
     <Box
+      onClick={handleClick}
       sx={{
         width: 300,
         backgroundColor: '#1e1e1e',
@@ -36,6 +44,7 @@ const GameCard = ({ game }: GameCardProps) => {
           alt={game.name}
           sx={{
             width: '100%',
+            height: '100%',
             objectFit: 'cover',
             transition: '300ms ease',
             '&:hover': {
@@ -53,11 +62,15 @@ const GameCard = ({ game }: GameCardProps) => {
           height: '100%',
         }}
       >
-        <Box sx={{ flexGrow: 1 }}>
-          <Typography
-            variant='h6'
-            sx={{ lineHeight: 1.3, marginBottom: '4px' }}
-          >
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '4px',
+          }}
+        >
+          <Typography variant='h6' sx={{ lineHeight: 1.3 }}>
             {game.name || 'No Name'}
           </Typography>
           <Typography variant='body2' sx={{ opacity: 0.7 }}>
@@ -67,6 +80,9 @@ const GameCard = ({ game }: GameCardProps) => {
           <Typography variant='body2' sx={{ opacity: 0.7 }}>
             Rating: {game.rating || 'No rating'}
           </Typography>
+          <Typography variant='body2' sx={{ opacity: 0.7 }}>
+            {`${game.reviews_count} reviews` || 'No reviews'}
+          </Typography>
         </Box>
 
         <Box>
@@ -74,7 +90,7 @@ const GameCard = ({ game }: GameCardProps) => {
             variant='orange'
             onClick={handleAddToLibrary}
             disabled={isAdded}
-            sx={{ marginTop: '10px' }}
+            sx={{ marginTop: '12px' }}
           >
             {isAdded ? 'Added to Library' : 'Add to My Library'}
           </CustomButton>

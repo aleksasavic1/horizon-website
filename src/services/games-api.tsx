@@ -8,3 +8,14 @@ export const fetchGames = async () => {
     throw error.response?.data || 'An error occurred while fetching games.';
   }
 };
+
+export const fetchGameDetails = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/games/${id}`);
+    return response.data;
+  } catch (error: any) {
+    throw (
+      error.response?.data || 'An error occurred while fetching game details.'
+    );
+  }
+};

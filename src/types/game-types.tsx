@@ -9,4 +9,5 @@ export type GameTypes = {
   background_image: string;
   genres: Genre[];
   rating: number;
+  reviews_count: number;
 };
