@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { ReactNode } from 'react';
 
 const GradientButton = styled(Button)({
-  background: 'linear-gradient(190deg, #293763, #4d5d8a)',
+  background: 'linear-gradient(190deg, #4d5d8a, #293763)',
   padding: '6px 30px',
   color: '#fff',
   textTransform: 'none',

@@ -10,7 +10,7 @@ const Navbar = () => {
     <Box
       sx={{
         width: '100%',
-        height: '64px',
+        height: '68px',
         display: 'flex',
         alignItems: 'center',
         padding: '16px 48px',
@@ -26,7 +26,7 @@ const Navbar = () => {
           onClick={() => navigate('/')}
           sx={{
             fontFamily: 'Orbitron, sans-serif',
-            fontSize: '22px',
+            fontSize: '24px',
             fontWeight: 'bold',
             color: 'hsla(0, 0%, 100%, 0.8)',
             cursor: 'pointer',
@@ -50,7 +50,7 @@ const Navbar = () => {
         <CustomButton
           sx={{
             padding: '6px 20px',
-            fontSize: '13px',
+            fontSize: '14px',
             fontFamily: 'Orbitron, sans-serif',
           }}
           onClick={() => navigate('/login')}
@@ -61,7 +61,7 @@ const Navbar = () => {
           variant='outlined'
           sx={{
             padding: '6px 16px',
-            fontSize: '13px',
+            fontSize: '14px',
             fontFamily: 'Orbitron, sans-serif',
           }}
           onClick={() => navigate('/register')}
