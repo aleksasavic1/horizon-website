@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, matchPath } from 'react-router-dom';
 import CustomButton from '../common/CustomButton';
 
 const NavLinks = () => {
@@ -20,8 +20,13 @@ const NavLinks = () => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      {links.map((link) =>
-        location.pathname === link.path ? (
+      {links.map((link) => {
+        const isActive =
+          location.pathname === link.path ||
+          (link.path === '/games' &&
+            matchPath('/games/:id', location.pathname));
+
+        return isActive ? (
           <CustomButton
             key={link.path}
             onClick={() => handleClick(link.path)}
@@ -52,8 +57,8 @@ const NavLinks = () => {
           >
             {link.label}
           </Typography>
-        )
-      )}
+        );
+      })}
     </Box>
   );
 };
