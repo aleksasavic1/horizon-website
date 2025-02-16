@@ -12,13 +12,19 @@ import placeholderImg from '../assets/game-placeholder.png';
 import websiteLogo from '../assets/website-logo.png';
 import redditLogo from '../assets/reddit-logo.png';
 import returnIcon from '../assets/return-icon.png';
-import { useGameDetails } from '../hooks/games-hook';
+import { useGameDetails, useGameScreenshots } from '../hooks/games-hook';
+import ScreenshotsCarousel from '../components/games/ScreenshotsCarousel';
 
 const GameDetails = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { data: game, isPending, error } = useGameDetails(id || '');
+
+  const { data: screenshots, isPending: scPending } = useGameScreenshots(
+    id || ''
+  );
+  console.log('Screenshots: ', screenshots);
 
   const [isRecommended, setIsRecommended] = useState<boolean>(false);
 
@@ -442,17 +448,35 @@ const GameDetails = () => {
           </Box>
         </Box>
         <Box sx={{ padding: '0 30px', position: 'relative' }}>
-          <Box
-            component='img'
-            src={game?.background_image_additional || placeholderImg}
-            alt={game?.name || ''}
-            sx={{
-              width: '100%',
-              height: '360px',
-              objectFit: 'cover',
-              border: '1px solid hsla(0, 0%, 100%, 0.12)',
-            }}
-          />
+          {scPending ? (
+            // Prikaz spinnera dok se screenshot-ovi učitavaju
+            <Box
+              sx={{
+                width: '100%',
+                height: '360px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <CircularProgress color='secondary' />
+            </Box>
+          ) : screenshots && screenshots.length > 0 ? (
+            <ScreenshotsCarousel screenshots={screenshots} />
+          ) : (
+            <Box
+              component='img'
+              src={game?.background_image_additional || placeholderImg}
+              alt={game?.name || ''}
+              sx={{
+                width: '100%',
+                height: '360px',
+                objectFit: 'cover',
+                border: '1px solid hsla(0, 0%, 100%, 0.12)',
+              }}
+            />
+          )}
+
           <Box
             component='img'
             src={redditLogo}
