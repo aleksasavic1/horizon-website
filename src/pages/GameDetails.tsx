@@ -1,23 +1,22 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import { Box, CircularProgress, Typography, Stack } from '@mui/material';
 import CustomTooltip from '../components/common/CustomTooltip';
+import CustomButton from '../components/common/CustomButton';
+import ShowMore from '../components/common/ShowMore';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import placeholderImg from '../assets/game-placeholder.png';
-import { useGameDetails } from '../hooks/games-hook';
-import CustomButton from '../components/common/CustomButton';
-import { useTheme } from '@mui/material/styles';
-import ShowMore from '../components/common/ShowMore';
 import websiteLogo from '../assets/website-logo.png';
 import redditLogo from '../assets/reddit-logo.png';
+import { useGameDetails } from '../hooks/games-hook';
 
 const GameDetails = () => {
   const theme = useTheme();
   const { id } = useParams<{ id: string }>();
   const { data: game, isPending, error } = useGameDetails(id || '');
-  console.log('Game details: ', game);
 
   const [isRecommended, setIsRecommended] = useState<boolean>(false);
 
@@ -61,37 +60,46 @@ const GameDetails = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  //   TODO: fix loading
   if (isPending) {
-    <Box
-      sx={{
-        flex: 1,
-        backgroundColor: '#121212',
-        color: '#fff',
-        padding: '16px',
-        overflow: 'auto',
-        maxHeight: 'calc(100vh - 68px)',
-      }}
-    >
-      <CircularProgress color='secondary' />
-    </Box>;
+    return (
+      <Box
+        sx={{
+          flex: 1,
+          backgroundColor: '#121212',
+          color: '#fff',
+          padding: '16px',
+          overflow: 'auto',
+          height: 'calc(100vh - 68px)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <CircularProgress color='secondary' />
+      </Box>
+    );
   }
 
   if (error) {
-    <Box
-      sx={{
-        flex: 1,
-        backgroundColor: '#121212',
-        color: '#fff',
-        padding: '16px',
-        overflow: 'auto',
-        maxHeight: 'calc(100vh - 68px)',
-      }}
-    >
-      <Typography sx={{ textAlign: 'center', color: 'red', mt: 5 }}>
-        Failed to load game details. Please try again.
-      </Typography>
-    </Box>;
+    return (
+      <Box
+        sx={{
+          flex: 1,
+          backgroundColor: '#121212',
+          color: '#fff',
+          padding: '16px',
+          overflow: 'auto',
+          height: 'calc(100vh - 68px)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography sx={{ textAlign: 'center', color: 'red', mt: 5 }}>
+          Failed to load game details. Please try again.
+        </Typography>
+      </Box>
+    );
   }
 
   return (

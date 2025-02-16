@@ -52,6 +52,8 @@ const CustomSelect = ({
               color: 'white',
               borderRadius: '8px',
               boxShadow: '0px 4px 10px rgba(0,0,0,0.7)',
+              maxHeight: '240px',
+              overflowY: 'auto',
             },
           },
         }}
