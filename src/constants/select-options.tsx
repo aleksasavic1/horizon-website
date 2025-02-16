@@ -1,3 +1,5 @@
+import countries from 'world-countries';
+
 export const PLATFORM_OPTIONS = [
   { value: 'all_platforms', label: 'All Platforms' },
   { value: 'pc', label: 'PC' },
@@ -22,3 +24,8 @@ export const SORT_BY_OPTIONS = [
   { value: 'top_rated', label: 'Top Rated' },
   { value: 'most_popular', label: 'Most Popular' },
 ];
+
+export const COUNTRY_OPTIONS = countries.map((country) => ({
+  value: country.cca2.toLowerCase(),
+  label: country.name.common,
+}));

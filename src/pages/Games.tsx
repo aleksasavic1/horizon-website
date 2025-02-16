@@ -6,8 +6,6 @@ import { useGames } from '../hooks/games-hook';
 const Games = () => {
   const { data: games, isPending, error } = useGames();
 
-  console.log('games: ', games);
-
   return (
     <Box
       sx={{
