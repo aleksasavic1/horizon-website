@@ -44,7 +44,7 @@ const FiltersSidebar = () => {
         padding: '16px',
         backgroundColor: '#1e1e1e',
         color: '#fff',
-        borderTopRightRadius: '8px',
+        borderTopRightRadius: '6px',
         display: 'flex',
         flexDirection: 'column',
         gap: '16px',

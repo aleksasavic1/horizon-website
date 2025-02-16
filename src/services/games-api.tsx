@@ -19,3 +19,23 @@ export const fetchGameDetails = async (id: string) => {
     );
   }
 };
+
+export const fetchGameScreenshots = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/games/${id}/screenshots`);
+    if (response.data.results.length > 0) {
+      return response.data.results;
+    }
+
+    const gameDetails = await fetchGameDetails(id);
+    return [
+      { id: `${id}-bg1`, image: gameDetails.background_image },
+      { id: `${id}-bg2`, image: gameDetails.background_image_additional },
+    ];
+  } catch (error: any) {
+    throw (
+      error.response?.data ||
+      'An error occurred while fetching game screenshots.'
+    );
+  }
+};
