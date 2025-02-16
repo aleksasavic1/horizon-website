@@ -13,11 +13,14 @@ import CustomInput from '../components/common/CustomInput';
 import CustomButton from '../components/common/CustomButton';
 import CustomSelect from '../components/common/CustomSelect';
 import { COUNTRY_OPTIONS } from '../constants/select-options';
+import { RegisterTypes } from '../types/auth-types';
+import { useRegister } from '../hooks/auth-hook';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { mutate: register, isPending } = useRegister();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RegisterTypes>({
     first_name: '',
     last_name: '',
     country: COUNTRY_OPTIONS[0].value,
@@ -25,6 +28,7 @@ const Register = () => {
     password: '',
     confirm_password: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -46,9 +50,46 @@ const Register = () => {
     }));
   };
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.first_name) {
+      newErrors.first_name = 'This field is required';
+    }
+
+    if (!formData.last_name) {
+      newErrors.last_name = 'This field is required';
+    }
+
+    if (!formData.email) {
+      newErrors.email = 'This field is required';
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'This field is required';
+    }
+    if (!formData.confirm_password) {
+      newErrors.confirm_password = 'This field is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log('Form data:', formData);
+
+    if (validateForm()) {
+      const formDataSend = {
+        email: formData.email,
+        password: formData.password,
+        // confirm_password: formData.confirm_password,
+        // first_name: formData.first_name,
+        // last_name: formData.last_name,
+      };
+
+      register(formDataSend);
+    }
   };
 
   return (
@@ -89,12 +130,34 @@ const Register = () => {
             value={formData.first_name}
             onChange={handleChange}
           />
+          {errors.first_name && (
+            <Typography
+              sx={{
+                color: 'hsl(0, 50%, 60%)',
+                fontSize: '12px',
+                marginTop: '-8px',
+              }}
+            >
+              {errors.first_name}
+            </Typography>
+          )}
           <CustomInput
             label='Last name:'
             name='last_name'
             value={formData.last_name}
             onChange={handleChange}
           />
+          {errors.last_name && (
+            <Typography
+              sx={{
+                color: 'hsl(0, 50%, 60%)',
+                fontSize: '12px',
+                marginTop: '-8px',
+              }}
+            >
+              {errors.last_name}
+            </Typography>
+          )}
           <CustomSelect
             options={COUNTRY_OPTIONS}
             name='country'
@@ -107,6 +170,17 @@ const Register = () => {
             value={formData.email}
             onChange={handleChange}
           />
+          {errors.email && (
+            <Typography
+              sx={{
+                color: 'hsl(0, 50%, 60%)',
+                fontSize: '12px',
+                marginTop: '-8px',
+              }}
+            >
+              {errors.email}
+            </Typography>
+          )}
           <CustomInput
             label='Password:'
             type={showPassword ? 'text' : 'password'}
@@ -125,6 +199,17 @@ const Register = () => {
               </InputAdornment>
             }
           />
+          {errors.password && (
+            <Typography
+              sx={{
+                color: 'hsl(0, 50%, 60%)',
+                fontSize: '12px',
+                marginTop: '-8px',
+              }}
+            >
+              {errors.password}
+            </Typography>
+          )}
           <CustomInput
             label='Confirm password:'
             type={showConfirmPassword ? 'text' : 'password'}
@@ -146,8 +231,21 @@ const Register = () => {
               </InputAdornment>
             }
           />
+          {errors.confirm_password && (
+            <Typography
+              sx={{
+                color: 'hsl(0, 50%, 60%)',
+                fontSize: '12px',
+                marginTop: '-8px',
+              }}
+            >
+              {errors.confirm_password}
+            </Typography>
+          )}
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-            <CustomButton type='submit'>Register</CustomButton>
+            <CustomButton type='submit' disabled={isPending}>
+              {isPending ? 'Registering...' : 'Register'}
+            </CustomButton>
           </Box>
           <Typography sx={{ fontSize: '0.9rem', textAlign: 'center' }}>
             Already have an account?&nbsp;

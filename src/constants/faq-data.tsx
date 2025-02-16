@@ -31,7 +31,9 @@ export const FAQ_DATA = [
         and styled with <span style={{ color: spanColor }}>
           Material UI
         </span>{' '}
-        for a modern and responsive design.
+        for a modern and responsive design. User authentication is handled using{' '}
+        <span style={{ color: spanColor }}>Firebase Authentication</span> for
+        secure and seamless login and registration.
       </Typography>
     ),
   },

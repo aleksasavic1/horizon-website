@@ -10,14 +10,18 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CustomInput from '../components/common/CustomInput';
 import CustomButton from '../components/common/CustomButton';
+import { LoginTypes } from '../types/auth-types';
+import { useLogin } from '../hooks/auth-hook';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { mutate: login, isPending } = useLogin();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginTypes>({
     email: '',
     password: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -33,9 +37,32 @@ const Login = () => {
     }));
   };
 
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.email) {
+      newErrors.email = 'This field is required';
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'This field is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log('Form data:', formData);
+
+    if (validateForm()) {
+      const formDataSend = {
+        email: formData.email,
+        password: formData.password,
+      };
+
+      login(formDataSend);
+    }
   };
 
   return (
@@ -76,6 +103,17 @@ const Login = () => {
             value={formData.email}
             onChange={handleChange}
           />
+          {errors.email && (
+            <Typography
+              sx={{
+                color: 'hsl(0, 50%, 60%)',
+                fontSize: '12px',
+                marginTop: '-8px',
+              }}
+            >
+              {errors.email}
+            </Typography>
+          )}
           <CustomInput
             label='Password:'
             type={showPassword ? 'text' : 'password'}
@@ -94,6 +132,17 @@ const Login = () => {
               </InputAdornment>
             }
           />
+          {errors.password && (
+            <Typography
+              sx={{
+                color: 'hsl(0, 50%, 60%)',
+                fontSize: '12px',
+                marginTop: '-8px',
+              }}
+            >
+              {errors.password}
+            </Typography>
+          )}
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Link
               sx={{ cursor: 'pointer', fontSize: '0.9rem' }}
@@ -101,7 +150,9 @@ const Login = () => {
             >
               Forgot Password?
             </Link>
-            <CustomButton type='submit'>Login</CustomButton>
+            <CustomButton type='submit' disabled={isPending}>
+              {isPending ? 'Logging in...' : 'Login'}
+            </CustomButton>
           </Box>
           <Typography sx={{ fontSize: '0.9rem', textAlign: 'center' }}>
             Don't have an account?&nbsp;

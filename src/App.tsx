@@ -1,6 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import TitleUpdater from './components/navigation/TitleUpdater';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from './layouts/Layout';
+import ProtectedLayout from './layouts/ProtectedLayout';
+import useAuthStore from './store/auth-store';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
@@ -9,22 +18,46 @@ import GameDetails from './pages/GameDetails';
 import MyLibrary from './pages/MyLibrary';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
+import NotFound from './pages/NotFound';
 
 const App = () => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return (
     <Router>
+      <ToastContainer
+        position='top-center'
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <TitleUpdater />
       <Layout>
         <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+          <Route
+            index
+            path='/login'
+            element={isAuthenticated ? <Navigate to='/' /> : <Login />}
+          />
+          <Route
+            path='/register'
+            element={isAuthenticated ? <Navigate to='/' /> : <Register />}
+          />
 
-          <Route index path='/' element={<Home />} />
-          <Route path='/games' element={<Games />} />
-          <Route path='/games/:id' element={<GameDetails />} />
-          <Route path='/library' element={<MyLibrary />} />
-          <Route path='/faq' element={<FAQ />} />
-          <Route path='/contact' element={<Contact />} />
+          <Route element={<ProtectedLayout />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/games' element={<Games />} />
+            <Route path='/games/:id' element={<GameDetails />} />
+            <Route path='/library' element={<MyLibrary />} />
+            <Route path='/faq' element={<FAQ />} />
+            <Route path='/contact' element={<Contact />} />
+          </Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Layout>
     </Router>
