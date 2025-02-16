@@ -7,3 +7,17 @@
 body {
   overflow-x: hidden;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #222;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  /* Boja scrollbar-a */
+  border-radius: 4px;
+}

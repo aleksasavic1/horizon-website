@@ -8,8 +8,13 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import placeholderImg from '../assets/game-placeholder.png';
 import { useGameDetails } from '../hooks/games-hook';
 import CustomButton from '../components/common/CustomButton';
+import { useTheme } from '@mui/material/styles';
+import ShowMore from '../components/common/ShowMore';
+import websiteLogo from '../assets/website-logo.png';
+import redditLogo from '../assets/reddit-logo.png';
 
 const GameDetails = () => {
+  const theme = useTheme();
   const { id } = useParams<{ id: string }>();
   const { data: game, isPending, error } = useGameDetails(id || '');
   console.log('Game details: ', game);
@@ -41,7 +46,20 @@ const GameDetails = () => {
 
   const formattedDate = game?.released
     ? new Date(game.released).toLocaleDateString('en-GB')
-    : 'No release date';
+    : 'N/A';
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1).replace('.0', '') + 'M+';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace('.0', '') + 'K+';
+    }
+    return num.toString();
+  };
+
+  const openLink = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
 
   //   TODO: fix loading
   if (isPending) {
@@ -100,7 +118,7 @@ const GameDetails = () => {
         <Box
           component='img'
           src={game?.background_image || placeholderImg}
-          alt={game?.name}
+          alt={game?.name || ''}
           sx={{
             width: '100%',
             height: '100%',
@@ -128,7 +146,7 @@ const GameDetails = () => {
             textAlign: 'center',
           }}
         >
-          {game?.name}
+          {game?.name || ''}
         </Typography>
         <Typography
           sx={{
@@ -177,14 +195,123 @@ const GameDetails = () => {
 
       <Box
         sx={{
+          margin: '15px 30px',
           display: 'flex',
-          justifyContent: 'space-around',
-          marginTop: '20px',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {game?.developers.map((developer: any, index: number) => {
+            return (
+              <Typography
+                key={index}
+                sx={{
+                  backgroundColor: theme.palette.blueBox.bg,
+                  border: `1px solid ${theme.palette.blueBox.border}`,
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                }}
+              >
+                {developer?.name || ''}
+              </Typography>
+            );
+          })}
+        </Box>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {game?.genres.map((genre: any, index: number) => {
+            return (
+              <Typography
+                key={index}
+                sx={{
+                  backgroundColor: theme.palette.blueBox.bg,
+                  border: `1px solid ${theme.palette.blueBox.border}`,
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                }}
+              >
+                {genre?.name || ''}
+              </Typography>
+            );
+          })}
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '40px 0',
+          margin: '20px 0 40px 0',
         }}
       >
         <Box
           sx={{
-            width: '50%',
+            padding: '0 30px',
+          }}
+        >
+          <Box>
+            <Typography
+              sx={{ fontSize: '1.3rem', fontWeight: 'bold', margin: '4px 0' }}
+            >
+              Available platforms:
+            </Typography>
+            <Typography>
+              {game?.platforms
+                ?.map((platform: any) => platform?.platform?.name)
+                .filter(Boolean)
+                .join(', ')}{' '}
+            </Typography>
+          </Box>
+          <Box sx={{ marginTop: '20px' }}>
+            <Typography
+              sx={{
+                fontSize: '1rem',
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
+            >
+              Youtube: {formatNumber(parseInt(game?.youtube_count || 0))} views
+            </Typography>
+          </Box>
+          <Box>
+            <Typography
+              sx={{
+                fontSize: '1rem',
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
+            >
+              Twitch: {formatNumber(parseInt(game?.twitch_count || 0))} views
+            </Typography>
+          </Box>
+          <Box>
+            <Typography
+              sx={{
+                fontSize: '1rem',
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
+            >
+              Reddit: {formatNumber(parseInt(game?.reddit_count || 0))} posts
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ padding: '0 30px' }}>
+          <Typography
+            sx={{
+              fontSize: '1.3rem',
+              fontWeight: 'bold',
+              margin: '4px 0',
+            }}
+          >
+            Overview:
+          </Typography>
+
+          <ShowMore text={game?.description_raw || 'No description'} />
+        </Box>
+        <Box
+          sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -205,10 +332,10 @@ const GameDetails = () => {
               sx={{
                 backgroundColor: isRecommended
                   ? 'transparent'
-                  : 'hsla(25, 100%, 40%, 0.2)',
+                  : theme.palette.orangeBox.bg,
                 borderColor: isRecommended
                   ? 'hsla(0, 0%, 100%, 0.4)'
-                  : 'hsla(25, 100%, 40%, 0.8)',
+                  : theme.palette.orangeBox.border,
               }}
             >
               Minimum
@@ -218,10 +345,10 @@ const GameDetails = () => {
               onClick={() => setIsRecommended(true)}
               sx={{
                 backgroundColor: isRecommended
-                  ? 'hsla(25, 100%, 40%, 0.2)'
+                  ? theme.palette.orangeBox.bg
                   : 'transparent',
                 borderColor: isRecommended
-                  ? 'hsla(25, 100%, 40%, 0.8)'
+                  ? theme.palette.orangeBox.border
                   : 'hsla(0, 0%, 100%, 0.4)',
               }}
             >
@@ -246,8 +373,9 @@ const GameDetails = () => {
                 : 'Recommended Requirements:'}
             </Typography>
 
-            {!isRecommended
-              ? parsedMinimumReq.slice(0, 5).map((line: any, index: number) => {
+            {!isRecommended ? (
+              parsedMinimumReq.length > 0 ? (
+                parsedMinimumReq.slice(0, 5).map((line: any, index: number) => {
                   const [key, ...value] = line.split(':');
                   return (
                     <Typography
@@ -258,34 +386,90 @@ const GameDetails = () => {
                     </Typography>
                   );
                 })
-              : parsedRecommendedReq
-                  .slice(0, 5)
-                  .map((line: any, index: number) => {
-                    const [key, ...value] = line.split(':');
-                    return (
-                      <Typography
-                        key={index}
-                        sx={{ opacity: 0.9, lineHeight: '1.65' }}
-                      >
-                        <strong>{key.trim()}:</strong> {value.join(':').trim()}
-                      </Typography>
-                    );
-                  })}
+              ) : (
+                <Typography sx={{ opacity: 0.9, lineHeight: '1.65' }}>
+                  No minimum requirements available.
+                </Typography>
+              )
+            ) : parsedRecommendedReq.length > 0 ? (
+              parsedRecommendedReq
+                .slice(0, 5)
+                .map((line: any, index: number) => {
+                  const [key, ...value] = line.split(':');
+                  return (
+                    <Typography
+                      key={index}
+                      sx={{ opacity: 0.9, lineHeight: '1.65' }}
+                    >
+                      <strong>{key.trim()}:</strong> {value.join(':').trim()}
+                    </Typography>
+                  );
+                })
+            ) : (
+              <Typography sx={{ opacity: 0.9, lineHeight: '1.65' }}>
+                No recommended requirements available.
+              </Typography>
+            )}
           </Box>
         </Box>
-        <Box sx={{ width: '50%', padding: '0 30px' }}>
-          <Typography
+        <Box sx={{ padding: '0 30px', position: 'relative' }}>
+          <Box
+            component='img'
+            src={game?.background_image_additional || placeholderImg}
+            alt={game?.name || ''}
             sx={{
-              fontSize: '1.3rem',
-              fontWeight: 'bold',
-              margin: '8px 0',
+              width: '100%',
+              height: '360px',
+              objectFit: 'cover',
+              border: '1px solid hsla(0, 0%, 100%, 0.12)',
             }}
-          >
-            Overview:
-          </Typography>
-          <Typography sx={{ fontSize: '14px' }}>
-            {game?.description_raw || 'No description'}
-          </Typography>
+          />
+          <Box
+            component='img'
+            src={redditLogo}
+            alt='Reddit Logo'
+            onClick={() => openLink(game?.reddit_url || '')}
+            sx={{
+              margin: '0 30px',
+              position: 'absolute',
+              bottom: 15,
+              left: 10,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '38px',
+              height: '38px',
+              cursor: 'pointer',
+              transition: '300ms ease',
+              filter: 'drop-shadow(2px 2px 2px black) brightness(84%)',
+              '&:hover': {
+                transform: 'scale(1.1)',
+              },
+            }}
+          />
+          <Box
+            component='img'
+            src={websiteLogo}
+            alt='Website Logo'
+            onClick={() => openLink(game?.website || '')}
+            sx={{
+              margin: '0 30px',
+              position: 'absolute',
+              bottom: 15,
+              left: 54,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '40px',
+              height: '40px',
+              cursor: 'pointer',
+              transition: '300ms ease',
+              filter: 'drop-shadow(2px 2px 2px black) brightness(84%)',
+              '&:hover': {
+                transform: 'scale(1.08)',
+              },
+            }}
+          />
         </Box>
       </Box>
     </Box>
