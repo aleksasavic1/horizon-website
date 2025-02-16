@@ -2,9 +2,18 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import NavLinks from './NavLinks';
 import CustomButton from '../common/CustomButton';
+import useAuthStore from '../../store/auth-store';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuthStore();
+
+  console.log(isAuthenticated);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <Box
@@ -47,27 +56,39 @@ const Navbar = () => {
       <Box
         sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 2 }}
       >
-        <CustomButton
-          sx={{
-            padding: '6px 20px',
-            fontSize: '13px',
-            fontFamily: 'Orbitron, sans-serif',
-          }}
-          onClick={() => navigate('/login')}
-        >
-          Sign In
-        </CustomButton>
-        <CustomButton
-          variant='outlined'
-          sx={{
-            padding: '6px 16px',
-            fontSize: '13px',
-            fontFamily: 'Orbitron, sans-serif',
-          }}
-          onClick={() => navigate('/register')}
-        >
-          Sign Up
-        </CustomButton>
+        {!isAuthenticated ? (
+          <>
+            <CustomButton
+              sx={{
+                padding: '6px 20px',
+                fontSize: '13px',
+                fontFamily: 'Orbitron, sans-serif',
+              }}
+              onClick={() => navigate('/login')}
+            >
+              Sign In
+            </CustomButton>
+            <CustomButton
+              variant='outlined'
+              sx={{
+                padding: '6px 16px',
+                fontSize: '13px',
+                fontFamily: 'Orbitron, sans-serif',
+              }}
+              onClick={() => navigate('/register')}
+            >
+              Sign Up
+            </CustomButton>
+          </>
+        ) : (
+          <CustomButton
+            variant='outlined'
+            sx={{ padding: '6px 16px' }}
+            onClick={handleLogout}
+          >
+            Logout
+          </CustomButton>
+        )}
       </Box>
     </Box>
   );
