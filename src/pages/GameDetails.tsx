@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { Box, CircularProgress, Typography, Stack } from '@mui/material';
 import CustomTooltip from '../components/common/CustomTooltip';
@@ -11,10 +11,12 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import placeholderImg from '../assets/game-placeholder.png';
 import websiteLogo from '../assets/website-logo.png';
 import redditLogo from '../assets/reddit-logo.png';
+import returnIcon from '../assets/return-icon.png';
 import { useGameDetails } from '../hooks/games-hook';
 
 const GameDetails = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { data: game, isPending, error } = useGameDetails(id || '');
 
@@ -140,6 +142,25 @@ const GameDetails = () => {
               'linear-gradient(to right, transparent, white 30%, white 40%, transparent)',
             WebkitMaskImage:
               'linear-gradient(to right, transparent, white 30%, white 40%, transparent)',
+          }}
+        />
+
+        <Box
+          component='img'
+          src={returnIcon}
+          alt='Return Icon'
+          onClick={() => navigate(-1)}
+          sx={{
+            position: 'absolute',
+            top: 15,
+            left: 15,
+            width: '40px',
+            cursor: 'pointer',
+            transition: '300ms ease',
+            zIndex: 200,
+            '&:hover': {
+              transform: 'scale(1.1)',
+            },
           }}
         />
 

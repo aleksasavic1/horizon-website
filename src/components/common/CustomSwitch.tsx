@@ -34,7 +34,7 @@ const StyledSwitch = styled((props: SwitchProps) => (
   '& .MuiSwitch-thumb': {
     width: 20,
     height: 20,
-    backgroundColor: '#534949',
+    backgroundColor: '#222121',
     transition: 'all 0.3s ease',
   },
 
