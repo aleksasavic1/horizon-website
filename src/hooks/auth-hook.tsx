@@ -8,9 +8,7 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       registerUser(email, password),
-    onSuccess: () => {
-      toast.success('Registration successful!');
-    },
+    onSuccess: () => {},
     onError: (error: any) => {
       toast.error(error.slice(10));
     },
