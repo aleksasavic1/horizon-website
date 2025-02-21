@@ -40,3 +40,14 @@ export const fetchGameScreenshots = async (id: string) => {
     );
   }
 };
+
+export const fetchGameStores = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/games/${id}/stores`);
+    return response.data.results;
+  } catch (error: any) {
+    throw (
+      error.response?.data || 'An error occurred while fetching game stores.'
+    );
+  }
+};

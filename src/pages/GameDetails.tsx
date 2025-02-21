@@ -305,7 +305,10 @@ const GameDetails = () => {
                 alignItems: 'baseline',
               }}
             >
-              Youtube: {formatNumber(parseInt(game?.youtube_count || 0))} views
+              Youtube:{' '}
+              {game?.youtube_count && parseInt(game.youtube_count) > 0
+                ? `${formatNumber(parseInt(game.youtube_count))} views`
+                : 'No views available'}
             </Typography>
           </Box>
           <Box>
@@ -316,7 +319,10 @@ const GameDetails = () => {
                 alignItems: 'baseline',
               }}
             >
-              Twitch: {formatNumber(parseInt(game?.twitch_count || 0))} views
+              Twitch:{' '}
+              {game?.twitch_count && parseInt(game.twitch_count) > 0
+                ? `${formatNumber(parseInt(game.twitch_count))} views`
+                : 'No views available'}
             </Typography>
           </Box>
           <Box>
@@ -327,7 +333,10 @@ const GameDetails = () => {
                 alignItems: 'baseline',
               }}
             >
-              Reddit: {formatNumber(parseInt(game?.reddit_count || 0))} posts
+              Reddit:{' '}
+              {game?.reddit_count && parseInt(game.reddit_count) > 0
+                ? `${formatNumber(parseInt(game.reddit_count))} posts`
+                : 'No posts available'}
             </Typography>
           </Box>
         </Box>

@@ -1,21 +1,32 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import CustomButton from './common/CustomButton';
 import { GameTypes, Genre } from '../types/game-types';
 import gamePlaceholder from '../assets/game-placeholder.png';
+import useLibraryStore from '../store/library-store';
+import { useGameStores } from '../hooks/games-hook';
 
 type GameCardProps = {
   game: GameTypes;
+  isInLibrary?: boolean;
 };
 
-const GameCard = ({ game }: GameCardProps) => {
+const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
   const navigate = useNavigate();
-  const [isAdded, setIsAdded] = useState(false);
+  const { games, addGame, removeGame } = useLibraryStore();
+  const isAdded = games.some((g) => g.id === game.id);
+  const { data: stores, isPending } = useGameStores(game.id.toString());
 
-  const handleAddToLibrary = (event: React.MouseEvent) => {
+  const handleAddOrRemove = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setIsAdded(true);
+    console.log(isAdded);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    isAdded ? removeGame(game.id) : addGame(game);
+  };
+
+  const handleStore = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    window.open(stores[0].url, '_blank');
   };
 
   const handleClick = () => {
@@ -88,14 +99,52 @@ const GameCard = ({ game }: GameCardProps) => {
         </Box>
 
         <Box>
-          <CustomButton
-            variant='orange'
-            onClick={handleAddToLibrary}
-            disabled={isAdded}
-            sx={{ marginTop: '12px' }}
-          >
-            {isAdded ? 'Added to My Library' : 'Add to My Library'}
-          </CustomButton>
+          {!isInLibrary ? (
+            <CustomButton
+              variant='orange'
+              onClick={handleAddOrRemove}
+              sx={{
+                marginTop: '12px',
+                background: !isAdded
+                  ? 'linear-gradient(190deg, #db7909, #5e3b13)'
+                  : 'linear-gradient(190deg, #db2109, #572718)',
+              }}
+            >
+              {isAdded ? 'Remove' : 'Add to My Library'}
+            </CustomButton>
+          ) : (
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <CustomButton
+                variant='orange'
+                onClick={handleAddOrRemove}
+                sx={{
+                  marginTop: '12px',
+                  background: 'linear-gradient(190deg, #db2109, #572718)',
+                  minWidth: '100px',
+                }}
+              >
+                Remove
+              </CustomButton>
+              {isPending ? (
+                <CircularProgress color='secondary' />
+              ) : (
+                stores &&
+                stores.length > 0 && (
+                  <CustomButton
+                    variant='orange'
+                    onClick={handleStore}
+                    sx={{
+                      marginTop: '12px',
+                      background: 'linear-gradient(190deg, #14c004, #264e1f)',
+                      minWidth: '100px',
+                    }}
+                  >
+                    Store
+                  </CustomButton>
+                )
+              )}
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>
