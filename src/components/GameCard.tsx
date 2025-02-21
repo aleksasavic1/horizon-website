@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import CustomButton from './common/CustomButton';
-import { GameTypes } from '../types/game-types';
+import { GameTypes, Genre } from '../types/game-types';
 import gamePlaceholder from '../assets/game-placeholder.png';
 
 type GameCardProps = {
@@ -75,13 +75,15 @@ const GameCard = ({ game }: GameCardProps) => {
           </Typography>
           <Typography variant='body2' sx={{ opacity: 0.7 }}>
             {game.genres.length > 1 ? 'Genres: ' : 'Genre: '}
-            {game.genres.map((genre: any) => genre.name).join(', ')}
+            {game.genres.map((genre: Genre) => genre.name).join(', ')}
           </Typography>
           <Typography variant='body2' sx={{ opacity: 0.7 }}>
             Rating: {game.rating || 'No rating'}
           </Typography>
           <Typography variant='body2' sx={{ opacity: 0.7 }}>
-            {`${game.reviews_count} reviews` || 'No reviews'}
+            {game.reviews_count
+              ? `${game.reviews_count} reviews`
+              : 'No reviews'}
           </Typography>
         </Box>
 
@@ -92,7 +94,7 @@ const GameCard = ({ game }: GameCardProps) => {
             disabled={isAdded}
             sx={{ marginTop: '12px' }}
           >
-            {isAdded ? 'Added to Library' : 'Add to My Library'}
+            {isAdded ? 'Added to My Library' : 'Add to My Library'}
           </CustomButton>
         </Box>
       </Box>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -24,7 +25,6 @@ const GameDetails = () => {
   const { data: screenshots, isPending: scPending } = useGameScreenshots(
     id || ''
   );
-  console.log('Screenshots: ', screenshots);
 
   const [isRecommended, setIsRecommended] = useState<boolean>(false);
 

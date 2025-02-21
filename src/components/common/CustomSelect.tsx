@@ -27,6 +27,7 @@ const CustomSelect = ({
         value={value}
         onChange={onChange}
         IconComponent={() => null}
+        displayEmpty
         sx={{
           color: 'white',
           backgroundColor: '#1e1e1e',

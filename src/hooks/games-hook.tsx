@@ -5,11 +5,11 @@ import {
   fetchGameScreenshots,
 } from '../services/games-api';
 
-export const useGames = () => {
+export const useGames = (filters: Record<string, string>) => {
   return useQuery({
-    queryKey: ['games'],
-    queryFn: fetchGames,
-    staleTime: 1000 * 60 * 5,
+    queryKey: ['games', filters],
+    queryFn: () => fetchGames(filters),
+    // staleTime: 1000 * 60 * 5,
   });
 };
 

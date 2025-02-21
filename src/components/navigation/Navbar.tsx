@@ -8,8 +8,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuthStore();
 
-  console.log(isAuthenticated);
-
   const handleLogout = () => {
     logout();
     navigate('/login');
