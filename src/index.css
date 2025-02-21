@@ -22,6 +22,5 @@ input:-webkit-autofill {
 
 ::-webkit-scrollbar-thumb {
   background: #444;
-  /* Boja scrollbar-a */
   border-radius: 4px;
 }

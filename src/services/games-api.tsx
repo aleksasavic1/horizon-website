@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axiosInstance from '../api/axios-instance';
 
-export const fetchGames = async () => {
+export const fetchGames = async (filters: Record<string, string>) => {
   try {
-    const response = await axiosInstance.get('/games');
+    const response = await axiosInstance.get('/games', { params: filters });
     return response.data.results;
   } catch (error: any) {
     throw error.response?.data || 'An error occurred while fetching games.';

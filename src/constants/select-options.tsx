@@ -1,28 +1,38 @@
 import countries from 'world-countries';
 
 export const PLATFORM_OPTIONS = [
-  { value: 'all_platforms', label: 'All Platforms' },
-  { value: 'pc', label: 'PC' },
-  { value: 'playstation_4', label: 'PlayStation 4' },
-  { value: 'playstation_5', label: 'PlayStation 5' },
-  { value: 'xbox_one', label: 'Xbox One' },
-  { value: 'nintendo_switch', label: 'Nintendo Switch' },
+  { value: '', label: 'All Platforms' },
+  { value: '4', label: 'PC' },
+  { value: '18', label: 'PlayStation 4' },
+  { value: '187', label: 'PlayStation 5' },
+  { value: '1', label: 'Xbox One' },
+  { value: '7', label: 'Nintendo Switch' },
 ];
 
 export const GENRE_OPTIONS = [
-  { value: 'all_genres', label: 'All Genres' },
-  { value: 'action', label: 'Action' },
-  { value: 'adventure', label: 'Adventure' },
-  { value: 'rpg', label: 'RPG' },
-  { value: 'shooter', label: 'Shooter' },
-  { value: 'strategy', label: 'Strategy' },
+  { value: '', label: 'All Genres' },
+  { value: '4', label: 'Action' },
+  { value: '3', label: 'Adventure' },
+  { value: '5', label: 'RPG' },
+  { value: '2', label: 'Shooter' },
+  { value: '10', label: 'Strategy' },
+  { value: '11', label: 'Arcade' },
+  { value: '83', label: 'Platformer' },
+  { value: '14', label: 'Simulation' },
+  { value: '7', label: 'Puzzle' },
+  { value: '1', label: 'Racing' },
+  { value: '15', label: 'Sports' },
+  { value: '19', label: 'Family' },
+  { value: '28', label: 'Board Games' },
+  { value: '34', label: 'Educational' },
+  { value: '17', label: 'Card & Casino' },
 ];
 
 export const SORT_BY_OPTIONS = [
-  { value: 'default', label: 'Default' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'top_rated', label: 'Top Rated' },
-  { value: 'most_popular', label: 'Most Popular' },
+  { value: '', label: 'Default' },
+  { value: '-released', label: 'Newest' },
+  { value: '-rating', label: 'Top Rated' },
+  { value: '-added', label: 'Most Popular' },
 ];
 
 export const COUNTRY_OPTIONS = countries.map((country) => ({
