@@ -1,8 +1,14 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useGameDetails } from '../../hooks/games-hook';
 
 const TitleUpdater = () => {
   const location = useLocation();
+
+  const match = location.pathname.match(/^\/games\/(\d+)$/);
+  const gameId = match ? match[1] : null;
+
+  const { data: game } = useGameDetails(gameId || '');
 
   useEffect(() => {
     const titles: Record<string, string> = {
@@ -15,8 +21,12 @@ const TitleUpdater = () => {
       '/contact': 'Contact Us',
     };
 
-    document.title = titles[location.pathname] || 'Horizon';
-  }, [location.pathname]);
+    if (gameId && game?.name) {
+      document.title = game.name;
+    } else {
+      document.title = titles[location.pathname] || 'Horizon';
+    }
+  }, [location.pathname, game, gameId]);
 
   return null;
 };
