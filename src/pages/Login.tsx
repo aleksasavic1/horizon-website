@@ -146,7 +146,7 @@ const Login = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Link
               sx={{ cursor: 'pointer', fontSize: '0.9rem' }}
-              onClick={() => console.log('Forgot Password Clicked.')}
+              onClick={() => navigate('/forgot-password')}
             >
               Forgot Password?
             </Link>

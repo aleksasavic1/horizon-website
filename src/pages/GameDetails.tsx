@@ -2,7 +2,13 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
-import { Box, CircularProgress, Typography, Stack } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Typography,
+  Stack,
+  Skeleton,
+} from '@mui/material';
 import CustomTooltip from '../components/common/CustomTooltip';
 import CustomButton from '../components/common/CustomButton';
 import ShowMore from '../components/common/ShowMore';
@@ -131,25 +137,40 @@ const GameDetails = () => {
           justifyContent: 'center',
         }}
       >
-        <Box
-          component='img'
-          src={game?.background_image || placeholderImg}
-          alt={game?.name || ''}
-          sx={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: '50% 20%',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            zIndex: 2,
-            maskImage:
-              'linear-gradient(to right, transparent, white 30%, white 40%, transparent)',
-            WebkitMaskImage:
-              'linear-gradient(to right, transparent, white 30%, white 40%, transparent)',
-          }}
-        />
+        {isPending ? (
+          <Skeleton
+            variant='rectangular'
+            width='100%'
+            height='400px'
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              zIndex: 2,
+              bgcolor: 'grey.800',
+            }}
+          />
+        ) : (
+          <Box
+            component='img'
+            src={game?.background_image || placeholderImg}
+            alt={game?.name || ''}
+            sx={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: '50% 20%',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              zIndex: 2,
+              maskImage:
+                'linear-gradient(to right, transparent, white 30%, white 40%, transparent)',
+              WebkitMaskImage:
+                'linear-gradient(to right, transparent, white 30%, white 40%, transparent)',
+            }}
+          />
+        )}
 
         <Box
           component='img'
@@ -305,7 +326,10 @@ const GameDetails = () => {
                 alignItems: 'baseline',
               }}
             >
-              Youtube: {formatNumber(parseInt(game?.youtube_count || 0))} views
+              Youtube:{' '}
+              {game?.youtube_count && parseInt(game.youtube_count) > 0
+                ? `${formatNumber(parseInt(game.youtube_count))} views`
+                : 'No views available'}
             </Typography>
           </Box>
           <Box>
@@ -316,7 +340,10 @@ const GameDetails = () => {
                 alignItems: 'baseline',
               }}
             >
-              Twitch: {formatNumber(parseInt(game?.twitch_count || 0))} views
+              Twitch:{' '}
+              {game?.twitch_count && parseInt(game.twitch_count) > 0
+                ? `${formatNumber(parseInt(game.twitch_count))} views`
+                : 'No views available'}
             </Typography>
           </Box>
           <Box>
@@ -327,7 +354,10 @@ const GameDetails = () => {
                 alignItems: 'baseline',
               }}
             >
-              Reddit: {formatNumber(parseInt(game?.reddit_count || 0))} posts
+              Reddit:{' '}
+              {game?.reddit_count && parseInt(game.reddit_count) > 0
+                ? `${formatNumber(parseInt(game.reddit_count))} posts`
+                : 'No posts available'}
             </Typography>
           </Box>
         </Box>
@@ -449,18 +479,12 @@ const GameDetails = () => {
         </Box>
         <Box sx={{ padding: '0 30px', position: 'relative' }}>
           {scPending ? (
-            // Prikaz spinnera dok se screenshot-ovi učitavaju
-            <Box
-              sx={{
-                width: '100%',
-                height: '360px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <CircularProgress color='secondary' />
-            </Box>
+            <Skeleton
+              variant='rectangular'
+              width='100%'
+              height='360px'
+              sx={{ borderRadius: '8px', bgcolor: 'grey.800' }}
+            />
           ) : screenshots && screenshots.length > 0 ? (
             <ScreenshotsCarousel screenshots={screenshots} />
           ) : (
@@ -468,6 +492,7 @@ const GameDetails = () => {
               component='img'
               src={game?.background_image_additional || placeholderImg}
               alt={game?.name || ''}
+              loading='lazy'
               sx={{
                 width: '100%',
                 height: '360px',
