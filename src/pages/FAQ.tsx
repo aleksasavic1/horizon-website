@@ -11,6 +11,14 @@ const FAQ: React.FC = () => {
         backgroundColor: '#121212',
         padding: '20px',
         borderRadius: '8px',
+
+        '@media (max-width: 640px)': {
+          padding: '10px',
+        },
+
+        '@media (max-width: 480px)': {
+          padding: '4px',
+        },
       }}
     >
       <Typography
@@ -18,7 +26,15 @@ const FAQ: React.FC = () => {
           fontSize: '2.3rem',
           textAlign: 'center',
           fontWeight: 'bold',
-          margin: '16px 0',
+          margin: '16px',
+          lineHeight: 1.4,
+          '@media (max-width: 768px)': {
+            fontSize: '2rem',
+          },
+          '@media (max-width: 640px)': {
+            fontSize: '1.7rem',
+            margin: '16px 16px 8px 16px',
+          },
         }}
       >
         Frequently Asked Questions

@@ -17,6 +17,7 @@ const Games = () => {
     data: games,
     isPending,
     error,
+    isFetching: isQueryFetching,
   } = useGames({ ...filters, page: page.toString() });
 
   useEffect(() => {
@@ -40,7 +41,8 @@ const Games = () => {
       if (
         window.innerHeight + window.scrollY >=
           document.body.offsetHeight - 100 &&
-        !isFetching
+        !isFetching &&
+        !isQueryFetching
       ) {
         setIsFetching(true);
         setPage((prevPage) => prevPage + 1);
@@ -49,7 +51,7 @@ const Games = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isFetching]);
+  }, [isFetching, isQueryFetching]);
 
   return (
     <Box

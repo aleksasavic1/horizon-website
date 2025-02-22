@@ -51,7 +51,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({ items }) => {
             <Typography>{item.title}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>{item.content}</Typography>
+            <Typography component='div'>{item.content}</Typography>
           </AccordionDetails>
         </Accordion>
       ))}
