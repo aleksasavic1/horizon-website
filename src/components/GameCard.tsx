@@ -30,13 +30,24 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
     window.open(stores[0].url, '_blank');
   };
 
-  const handleClick = () => {
-    navigate(`/games/${game.id}`);
+  const handleClick = (event: React.MouseEvent) => {
+    if (event.button === 1 || event.ctrlKey || event.metaKey) {
+      event.preventDefault();
+      window.open(`/games/${game.id}`, '_blank', 'noopener,noreferrer');
+    } else {
+      navigate(`/games/${game.id}`);
+    }
   };
 
   return (
     <Box
       onClick={handleClick}
+      onAuxClick={(e) => {
+        if (e.button === 1) {
+          window.open(`/games/${game.id}`, '_blank', 'noopener,noreferrer');
+        }
+      }}
+      onMouseDown={(e) => e.button === 1 && e.preventDefault()}
       sx={{
         width: 300,
         backgroundColor: '#1e1e1e',
