@@ -132,7 +132,16 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
                 Remove
               </CustomButton>
               {isPending ? (
-                <CircularProgress color='secondary' />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minWidth: '100px',
+                  }}
+                >
+                  <CircularProgress color='secondary' />
+                </Box>
               ) : (
                 stores &&
                 stores.length > 0 && (

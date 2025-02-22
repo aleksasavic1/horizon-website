@@ -46,11 +46,11 @@ const NavLinks = () => {
               display: 'flex',
               alignItems: 'center',
               padding: '8px 32px',
-              '@media (max-width:1440px)': {
+              '@media (max-width:1439px)': {
                 padding: '8px 24px',
               },
-              '@media (max-width:1280px)': {
-                padding: '8px 12px',
+              '@media (max-width:1279px)': {
+                padding: '8px 16px',
               },
               '&:hover': { opacity: 1 },
             }}
