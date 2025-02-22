@@ -12,6 +12,7 @@ import ProtectedLayout from './layouts/ProtectedLayout';
 import useAuthStore from './store/auth-store';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import Games from './pages/Games';
 import GameDetails from './pages/GameDetails';
@@ -47,6 +48,10 @@ const App = () => {
           <Route
             path='/register'
             element={isAuthenticated ? <Navigate to='/' /> : <Register />}
+          />
+          <Route
+            path='/forgot-password'
+            element={isAuthenticated ? <Navigate to='/' /> : <ForgotPassword />}
           />
 
           <Route element={<ProtectedLayout />}>

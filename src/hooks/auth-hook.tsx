@@ -1,6 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { registerUser, loginUser, logoutUser } from '../services/auth-api';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  resetPassword,
+} from '../services/auth-api';
 import useAuthStore from '../store/auth-store';
 import { toast } from 'react-toastify';
 
@@ -39,6 +45,18 @@ export const useLogout = () => {
     mutationFn: logoutUser,
     onSuccess: () => {
       setUser(null);
+    },
+    onError: (error: any) => {
+      toast.error(error.slice(10));
+    },
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: (email: string) => resetPassword(email),
+    onSuccess: (message) => {
+      toast.success(message);
     },
     onError: (error: any) => {
       toast.error(error.slice(10));

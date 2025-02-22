@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -34,6 +36,15 @@ export const loginUser = async (email: string, password: string) => {
 export const logoutUser = async () => {
   try {
     await signOut(auth);
+  } catch (error: any) {
+    throw error.message;
+  }
+};
+
+export const resetPassword = async (email: string) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    return 'Check your email for the password reset link.';
   } catch (error: any) {
     throw error.message;
   }

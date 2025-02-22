@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography, CircularProgress, Skeleton } from '@mui/material';
 import CustomButton from './common/CustomButton';
 import { GameTypes, Genre } from '../types/game-types';
 import gamePlaceholder from '../assets/game-placeholder.png';
@@ -16,10 +17,10 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
   const { games, addGame, removeGame } = useLibraryStore();
   const isAdded = games.some((g) => g.id === game.id);
   const { data: stores, isPending } = useGameStores(game.id.toString());
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleAddOrRemove = (event: React.MouseEvent) => {
     event.stopPropagation();
-    console.log(isAdded);
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     isAdded ? removeGame(game.id) : addGame(game);
   };
@@ -49,10 +50,15 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
       }}
     >
       <Box sx={{ minHeight: '170px', maxHeight: '170px', overflow: 'hidden' }}>
+        {!imageLoaded && (
+          <Skeleton variant='rectangular' width='100%' height='100%' />
+        )}
         <Box
           component='img'
           src={game.background_image || gamePlaceholder}
           alt={game.name}
+          loading='lazy'
+          onLoad={() => setImageLoaded(true)}
           sx={{
             width: '100%',
             height: '100%',
