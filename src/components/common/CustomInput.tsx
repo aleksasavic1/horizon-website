@@ -46,10 +46,11 @@ type CustomInputProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  startAdornment?: ReactNode;
   endAdornment?: ReactNode;
   sx?: SxProps<Theme>;
   inputStyle?: SxProps<Theme>;
-} & ({ leftImage: true; image: string } | { leftImage?: false; image?: never });
+};
 
 const CustomInput = ({
   placeholder,
@@ -60,16 +61,17 @@ const CustomInput = ({
   onChange,
   onFocus,
   onBlur,
-  leftImage = false,
-  image,
+  startAdornment,
   endAdornment,
   sx,
   inputStyle,
 }: CustomInputProps) => {
   return (
     <InputContainer sx={sx}>
-      {leftImage && (
-        <img src={image} alt='Search icon' style={{ padding: '0 4px' }} />
+      {startAdornment && (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {startAdornment}
+        </Box>
       )}
       {label && <label>{label}</label>}
       <StyledInput

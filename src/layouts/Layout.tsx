@@ -6,7 +6,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <Box sx={{ minHeight: '100vh' }}>
       <Navbar />
-      {children}
+      <Box sx={{ paddingTop: '68px' }}>{children}</Box>
     </Box>
   );
 };

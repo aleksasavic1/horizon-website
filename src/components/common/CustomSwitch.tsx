@@ -25,7 +25,7 @@ const StyledSwitch = styled((props: SwitchProps) => (
       color: '#f1f1f1',
 
       '& + .MuiSwitch-track': {
-        backgroundColor: '#665b5b',
+        backgroundColor: '#696969',
         opacity: 1,
       },
     },
@@ -34,19 +34,19 @@ const StyledSwitch = styled((props: SwitchProps) => (
   '& .MuiSwitch-thumb': {
     width: 20,
     height: 20,
-    backgroundColor: '#222121',
+    backgroundColor: '#d3d3d3',
     transition: 'all 0.3s ease',
   },
 
   '& .MuiSwitch-track': {
     borderRadius: 13,
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#696969',
     opacity: 1,
     transition: 'all 0.3s ease',
   },
 
   '& .Mui-checked .MuiSwitch-thumb': {
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#d3d3d3',
   },
 }));
 
