@@ -6,6 +6,7 @@ import { GameTypes, Genre } from '../types/game-types';
 import gamePlaceholder from '../assets/game-placeholder.png';
 import useLibraryStore from '../store/library-store';
 import { useGameStores } from '../hooks/games-hook';
+import { toast } from 'react-toastify';
 
 type GameCardProps = {
   game: GameTypes;
@@ -21,8 +22,14 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
 
   const handleAddOrRemove = (event: React.MouseEvent) => {
     event.stopPropagation();
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    isAdded ? removeGame(game.id) : addGame(game);
+
+    if (isAdded) {
+      removeGame(game.id);
+      toast.success(`${game.name} has been removed from your collection.`);
+    } else {
+      addGame(game);
+      toast.success(`${game.name} has been added to your collection!`);
+    }
   };
 
   const handleStore = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,7 +56,7 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
       }}
       onMouseDown={(e) => e.button === 1 && e.preventDefault()}
       sx={{
-        width: 300,
+        width: '100%',
         backgroundColor: '#1e1e1e',
         color: 'white',
         borderRadius: '8px',
@@ -58,10 +65,6 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
         display: 'flex',
         flexDirection: 'column',
         cursor: 'pointer',
-
-        '@media (max-width: 767px)': {
-          minWidth: '80vw',
-        },
       }}
     >
       <Box

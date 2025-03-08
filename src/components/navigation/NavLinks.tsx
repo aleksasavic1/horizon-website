@@ -16,6 +16,7 @@ const NavLinks = () => {
 
   const handleClick = (path: string) => {
     navigate(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

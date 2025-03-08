@@ -28,17 +28,29 @@ const CustomModal = ({
 
   const defaultStyles: SxProps<Theme> = {
     position: 'absolute',
-    bottom: 0,
+    bottom: '50%',
     left: '50%',
-    transform: 'translate(-50%, 0%)',
-    width: '100%',
-    height: '94%',
+    transform: 'translate(-50%, 50%)',
+    minWidth: '50%',
+    height: '75%',
     overflowY: 'auto',
-    bgcolor: 'background.paper',
+    bgcolor: '#1c1c1c',
     boxShadow: 24,
     padding: '12px',
-    borderRadius: '30px 30px 0 0',
+    borderRadius: '30px',
     outline: 'none',
+
+    '@media (max-width: 1024px)': {
+      minWidth: '80%',
+    },
+
+    '@media (max-width: 768px)': {
+      borderRadius: '30px 30px 0 0',
+      minWidth: '100%',
+      bottom: 0,
+      transform: 'translate(-50%, 0%)',
+      height: '90%',
+    },
   };
 
   return ReactDOM.createPortal(
@@ -57,6 +69,7 @@ const CustomModal = ({
           <CustomButton
             variant='outlined'
             onClick={onClose}
+            disableRipple
             sx={{
               mt: 2,
               display: 'block',
@@ -65,9 +78,14 @@ const CustomModal = ({
               top: 0,
               right: 0,
               cursor: 'pointer',
+              border: 'none',
+
+              '&:hover': {
+                boxShadow: 'none',
+              },
             }}
           >
-            <CloseIcon />
+            <CloseIcon sx={{ color: 'white' }} />
           </CustomButton>
         )}
       </Box>

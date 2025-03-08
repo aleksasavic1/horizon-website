@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -25,8 +25,17 @@ const ListItemStyles = {
 const Navbar = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuthStore();
-
   const [open, setOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -46,14 +55,14 @@ const Navbar = () => {
           padding: '16px 25px',
         },
 
-        backgroundColor: '#121212',
+        backgroundColor: isScrolled ? 'rgba(18, 18, 18, 0.8)' : '#121212',
         color: '#fff',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+        boxShadow: isScrolled ? '0 2px 8px rgba(0, 0, 0, 0.2)' : 'none',
         position: 'fixed',
         top: 0,
         left: 0,
         zIndex: 1000,
-        backdropFilter: 'blur(10px)',
+        backdropFilter: isScrolled ? 'blur(10px)' : 'none',
       }}
     >
       <Box sx={{ flex: 1, display: 'flex' }}>

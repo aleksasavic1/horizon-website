@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import useLibraryStore from '../store/library-store';
 import GameCard from '../components/GameCard';
+import batmanBg from '../assets/batman-bg.jpg';
 
 const MyLibrary = () => {
   const { games } = useLibraryStore();
@@ -8,9 +9,19 @@ const MyLibrary = () => {
   return (
     <Box
       sx={{
-        padding: '20px',
-        minHeight: '100vh',
+        p: 3,
         color: '#fff',
+
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${batmanBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        minHeight: '100vh',
+
+        '@media (max-width: 768px)': {
+          p: 2,
+        },
       }}
     >
       <Typography
@@ -18,10 +29,28 @@ const MyLibrary = () => {
           fontSize: '2.3rem',
           textAlign: 'center',
           fontWeight: 'bold',
-          margin: '16px 0 32px 0',
+          margin: '16px auto 8px',
+          padding: '0 10px',
         }}
       >
         My Library
+      </Typography>
+
+      <Typography
+        sx={{
+          fontSize: '1.1rem',
+          textAlign: 'center',
+          color: 'hsla(0, 0%, 100%, 0.6)',
+          maxWidth: '720px',
+          margin: '0 auto 32px',
+
+          '@media (max-width: 768px)': {
+            fontSize: '1rem',
+          },
+        }}
+      >
+        Explore your personal game collection! Keep track of your favorite
+        games, discover new ones, and build the ultimate gaming library.
       </Typography>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
