@@ -8,7 +8,7 @@ const FAQ: React.FC = () => {
       maxWidth='md'
       sx={{
         color: '#fff',
-        backgroundColor: '#121212',
+        backgroundColor: 'transparent',
         padding: '20px',
         borderRadius: '8px',
 

@@ -58,9 +58,29 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
         display: 'flex',
         flexDirection: 'column',
         cursor: 'pointer',
+
+        '@media (max-width: 767px)': {
+          minWidth: '80vw',
+        },
       }}
     >
-      <Box sx={{ minHeight: '170px', maxHeight: '170px', overflow: 'hidden' }}>
+      <Box
+        sx={{
+          minHeight: '170px',
+          maxHeight: '170px',
+          overflow: 'hidden',
+
+          '@media (max-width: 767px)': {
+            minHeight: '300px',
+            maxHeight: '300px',
+          },
+
+          '@media (max-width: 480px)': {
+            minHeight: '200px',
+            maxHeight: '200px',
+          },
+        }}
+      >
         {!imageLoaded && (
           <Skeleton variant='rectangular' width='100%' height='100%' />
         )}

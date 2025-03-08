@@ -1,133 +1,126 @@
-import { useState } from 'react';
-import { Box, Typography, FormControl, SelectChangeEvent } from '@mui/material';
+import { FC, ChangeEvent } from 'react';
+import {
+  Box,
+  Drawer,
+  Typography,
+  FormControl,
+  SelectChangeEvent,
+  IconButton,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import CustomSelect from '../common/CustomSelect';
-import CustomButton from '../common/CustomButton';
 import CustomSwitch from '../common/CustomSwitch';
 import {
   PLATFORM_OPTIONS,
   GENRE_OPTIONS,
   SORT_BY_OPTIONS,
 } from '../../constants/select-options';
-import CustomInput from '../common/CustomInput';
 
-type FiltersSidebarProps = {
-  setFilters: (filters: Record<string, string>) => void;
-};
-
-const FiltersSidebar = ({ setFilters }: FiltersSidebarProps) => {
-  const [formData, setFormData] = useState({
-    search: '',
-    platforms: '',
-    genres: '',
-    sort_by: '',
-    is_multiplayer: true,
-  });
-
-  const handleChange = (
-    event: SelectChangeEvent | React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value, type, checked } = event.target as HTMLInputElement;
-
-    const updatedData = {
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    };
-
-    setFormData(updatedData);
-
-    const queryParams: Record<string, string> = {};
-    if (updatedData.search) queryParams.search = updatedData.search;
-    if (updatedData.sort_by) queryParams.ordering = updatedData.sort_by;
-    if (updatedData.platforms) queryParams.platforms = updatedData.platforms;
-    if (updatedData.genres) queryParams.genres = updatedData.genres;
-    if (updatedData.is_multiplayer) queryParams.tags = 'multiplayer';
-    setFilters(queryParams);
+interface FiltersSidebarProps {
+  open: boolean;
+  onClose: () => void;
+  formData: {
+    search: string;
+    platforms: string;
+    genres: string;
+    sort_by: string;
+    is_multiplayer: boolean;
   };
+  handleChange: (
+    event: SelectChangeEvent | ChangeEvent<HTMLInputElement>
+  ) => void;
+}
 
-  const handleResetFilters = () => {
-    setFormData({
-      search: '',
-      platforms: '',
-      genres: '',
-      sort_by: '',
-      is_multiplayer: true,
-    });
-
-    setFilters({});
-  };
-
+const FiltersSidebar: FC<FiltersSidebarProps> = ({
+  open,
+  onClose,
+  formData,
+  handleChange,
+}) => {
   return (
-    <Box
-      sx={{
-        minWidth: '320px',
-        padding: '24px 16px',
-        backgroundColor: '#1e1e1e',
-        color: '#fff',
-        borderTopRightRadius: '6px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-        minHeight: 'calc(100vh - 68px)',
-        overflowY: 'auto',
+    <Drawer anchor='left' open={open} onClose={onClose}>
+      <Box
+        sx={{
+          width: 360,
+          padding: 3,
+          backgroundColor: '#121212',
+          color: '#fff',
+          height: '100%',
+          position: 'relative',
 
-        position: 'sticky',
-        top: 0,
-        height: '100vh',
-      }}
-    >
-      <Typography variant='h6' sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-        Filters
-      </Typography>
+          '@media (max-width: 1024px)': {
+            width: '50vw',
+          },
+          '@media (max-width: 768px)': {
+            width: '100vw',
+          },
+        }}
+      >
+        <Typography variant='h6' sx={{ mb: 2, mt: 3, textAlign: 'center' }}>
+          Filters
+        </Typography>
 
-      <CustomInput
-        placeholder='Search Games'
-        name='search'
-        value={formData.search}
-        onChange={handleChange}
-        sx={{ height: '52px' }}
-      />
+        <FormControl fullWidth sx={{ mb: 2 }}>
+          <Typography variant='body2' sx={{ mb: 0.8 }}>
+            Platforms:
+          </Typography>
+          <CustomSelect
+            name='platforms'
+            value={formData.platforms}
+            onChange={handleChange}
+            options={PLATFORM_OPTIONS}
+          />
+        </FormControl>
 
-      <FormControl fullWidth>
-        <Typography sx={{ marginBottom: '6px' }}>Platforms:</Typography>
-        <CustomSelect
-          name='platforms'
-          value={formData.platforms}
-          onChange={handleChange}
-          options={PLATFORM_OPTIONS}
-        />
-      </FormControl>
+        <FormControl fullWidth sx={{ mb: 2 }}>
+          <Typography variant='body2' sx={{ mb: 0.8 }}>
+            Genres:
+          </Typography>
+          <CustomSelect
+            name='genres'
+            value={formData.genres}
+            onChange={handleChange}
+            options={GENRE_OPTIONS}
+          />
+        </FormControl>
 
-      <FormControl fullWidth>
-        <Typography sx={{ marginBottom: '6px' }}>Genres:</Typography>
-        <CustomSelect
-          name='genres'
-          value={formData.genres}
-          onChange={handleChange}
-          options={GENRE_OPTIONS}
-        />
-      </FormControl>
+        <FormControl fullWidth sx={{ mb: 2 }}>
+          <Typography variant='body2' sx={{ mb: 0.8 }}>
+            Sort by:
+          </Typography>
+          <CustomSelect
+            name='sort_by'
+            value={formData.sort_by}
+            onChange={handleChange}
+            options={SORT_BY_OPTIONS}
+          />
+        </FormControl>
 
-      <FormControl fullWidth>
-        <Typography sx={{ marginBottom: '6px' }}>Sort by:</Typography>
-        <CustomSelect
-          name='sort_by'
-          value={formData.sort_by}
-          onChange={handleChange}
-          options={SORT_BY_OPTIONS}
-        />
-      </FormControl>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            mt: 1,
+            justifyContent: 'center',
+          }}
+        >
+          <CustomSwitch
+            leftLabel='Singleplayer'
+            rightLabel='Multiplayer'
+            name='is_multiplayer'
+            checked={formData.is_multiplayer}
+            onChange={handleChange}
+          />
+        </Box>
 
-      <CustomSwitch
-        rightLabel='Multiplayer'
-        name='is_multiplayer'
-        checked={formData.is_multiplayer}
-        onChange={handleChange}
-      />
-
-      <CustomButton variant='outlined' onClick={handleResetFilters}>
-        Reset Filters
-      </CustomButton>
-    </Box>
+        <IconButton
+          sx={{ position: 'absolute', top: 10, right: 10 }}
+          onClick={onClose}
+        >
+          <CloseIcon sx={{ color: 'white', fontSize: '22px' }} />
+        </IconButton>
+      </Box>
+    </Drawer>
   );
 };
 
