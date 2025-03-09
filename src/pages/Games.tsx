@@ -99,7 +99,6 @@ const Games = () => {
   return (
     <Box
       sx={{
-        backgroundColor: '#121212',
         color: '#fff',
         p: 3,
 
@@ -111,8 +110,7 @@ const Games = () => {
         minHeight: '100vh',
 
         '@media (max-width: 768px)': {
-          px: 1,
-          py: 2,
+          p: 2,
         },
       }}
     >
@@ -121,7 +119,8 @@ const Games = () => {
           fontSize: '2.3rem',
           textAlign: 'center',
           fontWeight: 'bold',
-          my: 2,
+          margin: '16px auto 8px',
+          padding: '0 10px',
           lineHeight: 1.4,
 
           '@media (max-width: 768px)': {
@@ -130,6 +129,24 @@ const Games = () => {
         }}
       >
         Discover the Best Games of All Time
+      </Typography>
+
+      <Typography
+        sx={{
+          fontSize: '1.1rem',
+          textAlign: 'center',
+          color: 'hsla(0, 0%, 100%, 0.6)',
+          maxWidth: '860px',
+          margin: '0 auto 32px',
+
+          '@media (max-width: 768px)': {
+            fontSize: '1rem',
+          },
+        }}
+      >
+        Browse through an extensive collection of legendary games across all
+        platforms and genres. Whether you're looking for timeless classics or
+        modern masterpieces, find your next adventure here.
       </Typography>
 
       <Box

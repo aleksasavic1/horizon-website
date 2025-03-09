@@ -5,6 +5,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import placeholderImg from '../../assets/game-placeholder.png';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ScreenshotsCarousel = ({ screenshots }: { screenshots: any[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -36,6 +37,13 @@ const ScreenshotsCarousel = ({ screenshots }: { screenshots: any[] }) => {
         justifyContent: 'center',
         border: '1px solid hsla(0, 0%, 100%, 0.12)',
         overflow: 'hidden',
+
+        '@media (min-width: 2048px)': {
+          height: '440px',
+        },
+        '@media (min-width: 2560px)': {
+          height: '520px',
+        },
       }}
     >
       <IconButton

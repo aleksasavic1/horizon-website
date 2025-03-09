@@ -2,17 +2,23 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress, Skeleton } from '@mui/material';
 import CustomButton from './common/CustomButton';
-import { GameTypes, Genre } from '../types/game-types';
+import { GameTypes, Genre, CarouselGameTypes } from '../types/game-types';
 import gamePlaceholder from '../assets/game-placeholder.png';
 import useLibraryStore from '../store/library-store';
 import { useGameStores } from '../hooks/games-hook';
+import { toast } from 'react-toastify';
 
 type GameCardProps = {
-  game: GameTypes;
+  game: GameTypes | CarouselGameTypes;
   isInLibrary?: boolean;
+  isCarousel?: boolean;
 };
 
-const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
+const GameCard = ({
+  game,
+  isInLibrary = false,
+  isCarousel = false,
+}: GameCardProps) => {
   const navigate = useNavigate();
   const { games, addGame, removeGame } = useLibraryStore();
   const isAdded = games.some((g) => g.id === game.id);
@@ -21,8 +27,22 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
 
   const handleAddOrRemove = (event: React.MouseEvent) => {
     event.stopPropagation();
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    isAdded ? removeGame(game.id) : addGame(game);
+
+    const formattedGame: GameTypes = {
+      ...game,
+      genres: game.genres ?? [],
+      reviews_count: game.reviews_count ?? 0,
+    };
+
+    if (isAdded) {
+      removeGame(formattedGame.id);
+      toast.success(
+        `${formattedGame.name} has been removed from your collection.`
+      );
+    } else {
+      addGame(formattedGame);
+      toast.success(`${formattedGame.name} has been added to your collection!`);
+    }
   };
 
   const handleStore = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,7 +69,7 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
       }}
       onMouseDown={(e) => e.button === 1 && e.preventDefault()}
       sx={{
-        width: 300,
+        width: '100%',
         backgroundColor: '#1e1e1e',
         color: 'white',
         borderRadius: '8px',
@@ -58,10 +78,6 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
         display: 'flex',
         flexDirection: 'column',
         cursor: 'pointer',
-
-        '@media (max-width: 767px)': {
-          minWidth: '80vw',
-        },
       }}
     >
       <Box
@@ -71,13 +87,13 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
           overflow: 'hidden',
 
           '@media (max-width: 767px)': {
-            minHeight: '300px',
-            maxHeight: '300px',
+            minHeight: isCarousel ? '170px' : '300px',
+            maxHeight: isCarousel ? '170px' : '300px',
           },
 
           '@media (max-width: 480px)': {
-            minHeight: '200px',
-            maxHeight: '200px',
+            minHeight: isCarousel ? '170px' : '200px',
+            maxHeight: isCarousel ? '170px' : '200px',
           },
         }}
       >
@@ -122,8 +138,13 @@ const GameCard = ({ game, isInLibrary = false }: GameCardProps) => {
             {game.name || 'No Name'}
           </Typography>
           <Typography variant='body2' sx={{ opacity: 0.7 }}>
-            {game.genres.length > 1 ? 'Genres: ' : 'Genre: '}
-            {game.genres.map((genre: Genre) => genre.name).join(', ')}
+            {(game.genres?.length ?? 0) > 1 ? 'Genres: ' : 'Genre: '}
+            {game.genres && game.genres.length > 0
+              ? game.genres
+                  .slice(0, 3)
+                  .map((genre: Genre) => genre.name)
+                  .join(', ') + (game.genres.length > 3 ? ', ...' : '')
+              : 'N/A'}
           </Typography>
           <Typography variant='body2' sx={{ opacity: 0.7 }}>
             Rating: {game.rating || 'No rating'}

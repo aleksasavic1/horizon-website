@@ -1,3 +1,7 @@
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
+@import "swiper/css";
+
 * {
   margin: 0;
   padding: 0;
@@ -23,4 +27,36 @@ input:-webkit-autofill {
 ::-webkit-scrollbar-thumb {
   background: #444;
   border-radius: 4px;
+}
+
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #55eecd !important;
+  background-color: #0c0c0c !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 45% !important;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 24px !important;
+}
+
+.swiper-button-prev::after {
+  margin-right: 3px;
+}
+
+.swiper-button-next::after {
+  margin-left: 3px;
+}
+
+.swiper-pagination {
+  top: unset !important;
+  bottom: 0 !important;
 }

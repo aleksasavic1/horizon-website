@@ -11,16 +11,17 @@ import {
 } from '@mui/material';
 import CustomTooltip from '../components/common/CustomTooltip';
 import CustomButton from '../components/common/CustomButton';
+import CustomModal from '../components/common/CustomModal';
 import ShowMore from '../components/common/ShowMore';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
+import { useGameDetails, useGameScreenshots } from '../hooks/games-hook';
+import ScreenshotsCarousel from '../components/games/ScreenshotsCarousel';
 import placeholderImg from '../assets/game-placeholder.png';
 import websiteLogo from '../assets/website-logo.png';
 import redditLogo from '../assets/reddit-logo.png';
 import returnIcon from '../assets/return-icon.png';
-import { useGameDetails, useGameScreenshots } from '../hooks/games-hook';
-import ScreenshotsCarousel from '../components/games/ScreenshotsCarousel';
 
 const GameDetails = () => {
   const theme = useTheme();
@@ -33,6 +34,7 @@ const GameDetails = () => {
   );
 
   const [isRecommended, setIsRecommended] = useState<boolean>(false);
+  const [isGenreModalOpen, setIsGenreModalOpen] = useState<boolean>(false);
 
   const rating = game?.rating || 0;
   const fullStars = Math.floor(rating);
@@ -274,7 +276,15 @@ const GameDetails = () => {
           })}
         </Box>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {game?.genres.map((genre: any, index: number) => {
+          {game?.genres.length > 4 && (
+            <CustomButton
+              variant='outlined'
+              onClick={() => setIsGenreModalOpen(true)}
+            >
+              See More
+            </CustomButton>
+          )}
+          {game?.genres.slice(0, 4).map((genre: any, index: number) => {
             return (
               <Typography
                 key={index}
@@ -295,14 +305,20 @@ const GameDetails = () => {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+          gridAutoColumns: 'minmax(0, 1fr)',
           gap: '40px 0',
           margin: '20px 0 40px 0',
+
+          '@media (max-width: 946px)': {
+            gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
+          },
         }}
       >
         <Box
           sx={{
             padding: '0 30px',
+            order: 1,
           }}
         >
           <Box>
@@ -362,7 +378,7 @@ const GameDetails = () => {
           </Box>
         </Box>
 
-        <Box sx={{ padding: '0 30px' }}>
+        <Box sx={{ padding: '0 30px', order: 2 }}>
           <Typography
             sx={{
               fontSize: '1.3rem',
@@ -381,6 +397,11 @@ const GameDetails = () => {
             flexDirection: 'column',
             alignItems: 'center',
             padding: '0 30px',
+            order: 3,
+
+            '@media (max-width: 946px)': {
+              order: 4,
+            },
           }}
         >
           <Box
@@ -426,7 +447,7 @@ const GameDetails = () => {
               color: '#fff',
               padding: '16px',
               borderRadius: '8px',
-              width: '680px',
+              width: '100%',
             }}
           >
             <Typography
@@ -477,7 +498,16 @@ const GameDetails = () => {
             )}
           </Box>
         </Box>
-        <Box sx={{ padding: '0 30px', position: 'relative' }}>
+        <Box
+          sx={{
+            padding: '0 30px',
+            position: 'relative',
+            order: 4,
+            '@media (max-width: 946px)': {
+              order: 3,
+            },
+          }}
+        >
           {scPending ? (
             <Skeleton
               variant='rectangular'
@@ -550,6 +580,42 @@ const GameDetails = () => {
           />
         </Box>
       </Box>
+
+      <CustomModal
+        open={isGenreModalOpen}
+        onClose={() => setIsGenreModalOpen(false)}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+
+            height: '100%',
+          }}
+        >
+          <Typography sx={{ textAlign: 'center', fontSize: '1.5rem', my: 2 }}>
+            All Genres
+          </Typography>
+          <Box sx={{ overflowY: 'auto' }}>
+            {game?.genres.map((genre: any, index: number) => {
+              return (
+                <Typography
+                  key={index}
+                  sx={{
+                    backgroundColor: theme.palette.blueBox.bg,
+                    padding: '12px 16px',
+                    borderRadius: '4px',
+                    my: 1,
+                  }}
+                >
+                  {genre?.name || ''}
+                </Typography>
+              );
+            })}
+          </Box>
+        </Box>
+      </CustomModal>
     </Box>
   );
 };
