@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Box, InputBase, SxProps, Theme } from '@mui/material';
 import { styled } from '@mui/system';
 
-const InputContainer = styled(Box)({
+const InputContainer = styled(Box)<{ disabled?: boolean }>(({ disabled }) => ({
   display: 'flex',
   alignItems: 'center',
   backgroundColor: 'transparent',
@@ -13,14 +13,16 @@ const InputContainer = styled(Box)({
   maxWidth: '640px',
   transition: 'all 0.3s ease',
 
+  opacity: disabled ? 0.5 : 1,
+
   '&:hover': {
-    borderColor: 'hsla(0, 0%, 100%, 0.4)',
+    borderColor: disabled ? 'hsla(0, 0%, 100%, 0.2)' : 'hsla(0, 0%, 100%, 0.4)',
   },
 
   '&:focus-within': {
-    borderColor: 'hsla(0, 0%, 100%, 0.6)',
+    borderColor: disabled ? 'hsla(0, 0%, 100%, 0.4)' : 'hsla(0, 0%, 100%, 0.6)',
   },
-});
+}));
 
 const StyledInput = styled(InputBase)({
   marginLeft: '8px',
@@ -34,6 +36,10 @@ const StyledInput = styled(InputBase)({
 
   '&:focus': {
     outline: 'none',
+  },
+
+  '&.Mui-disabled': {
+    color: 'rgba(255, 255, 255, 0.5)',
   },
 });
 
@@ -50,6 +56,7 @@ type CustomInputProps = {
   endAdornment?: ReactNode;
   sx?: SxProps<Theme>;
   inputStyle?: SxProps<Theme>;
+  disabled?: boolean;
 };
 
 const CustomInput = ({
@@ -65,9 +72,10 @@ const CustomInput = ({
   endAdornment,
   sx,
   inputStyle,
+  disabled = false,
 }: CustomInputProps) => {
   return (
-    <InputContainer sx={sx}>
+    <InputContainer sx={sx} disabled={disabled}>
       {startAdornment && (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {startAdornment}
@@ -82,6 +90,7 @@ const CustomInput = ({
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        disabled={disabled}
         sx={inputStyle}
       />
       {endAdornment && <Box>{endAdornment}</Box>}

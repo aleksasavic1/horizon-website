@@ -12,7 +12,7 @@ const NotFound = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        height: 'calc(90vh - 68px)',
+        minHeight: 'calc(100vh - 68px)',
         justifyContent: 'center',
       }}
     >

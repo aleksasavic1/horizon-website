@@ -23,6 +23,7 @@ import NotFound from './pages/NotFound';
 
 const App = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isUserSaved = useAuthStore((state) => state.isUserSaved);
 
   return (
     <Router>
@@ -47,7 +48,13 @@ const App = () => {
           />
           <Route
             path='/register'
-            element={isAuthenticated ? <Navigate to='/' /> : <Register />}
+            element={
+              isAuthenticated && isUserSaved ? (
+                <Navigate to='/' />
+              ) : (
+                <Register />
+              )
+            }
           />
           <Route
             path='/forgot-password'

@@ -107,7 +107,7 @@ const Games = () => {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
-        minHeight: '100vh',
+        minHeight: 'calc(100vh - 68px)',
 
         '@media (max-width: 768px)': {
           p: 2,

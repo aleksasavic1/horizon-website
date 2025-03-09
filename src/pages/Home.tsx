@@ -3,6 +3,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import GameCard from '../components/GameCard';
 import Carousel from '../components/common/Carousel';
 import { useGames } from '../hooks/games-hook';
+import codBg from '../assets/cod-bg.jpg';
 
 type Game = {
   id: number;
@@ -13,22 +14,38 @@ type Game = {
 };
 
 const Home = () => {
-  const [newestGames, setNewestGames] = useState<Game[]>([]);
+  const [cod, setCod] = useState<Game[]>([]);
+  const [gta, setGta] = useState<Game[]>([]);
 
   const {
-    data: games,
-    isPending,
-    error,
+    data: codGames,
+    isPending: isCodPending,
+    error: codError,
   } = useGames({
-    ordering: '-released',
-    page_size: '10',
+    search: 'call of duty',
+    page_size: '15',
+  });
+
+  const {
+    data: gtaGames,
+    isPending: isGtaPending,
+    error: gtaError,
+  } = useGames({
+    search: 'grand theft auto',
+    page_size: '15',
   });
 
   useEffect(() => {
-    if (games) {
-      setNewestGames(games);
+    if (codGames) {
+      setCod(codGames);
     }
-  }, [games]);
+  }, [codGames]);
+
+  useEffect(() => {
+    if (gtaGames) {
+      setGta(gtaGames);
+    }
+  }, [gtaGames]);
 
   return (
     <Box
@@ -36,29 +53,103 @@ const Home = () => {
         color: '#fff',
         p: 3,
 
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${codBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        minHeight: '100vh',
+
         '@media (max-width: 768px)': {
           p: 2,
         },
       }}
     >
-      {isPending ? (
-        <CircularProgress color='secondary' />
-      ) : error ? (
-        <Typography sx={{ textAlign: 'center', color: 'red', mt: 5 }}>
-          Failed to load games. Please try again.
+      <Typography
+        sx={{
+          fontSize: '2.3rem',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          margin: '16px auto 8px',
+          padding: '0 10px',
+          lineHeight: 1.4,
+
+          '@media (max-width: 768px)': {
+            fontSize: '2rem',
+          },
+        }}
+      >
+        Explore The Best Games
+      </Typography>
+
+      <Typography
+        sx={{
+          fontSize: '1.1rem',
+          textAlign: 'center',
+          color: 'hsla(0, 0%, 100%, 0.6)',
+          maxWidth: '860px',
+          margin: '0 auto 32px',
+
+          '@media (max-width: 768px)': {
+            fontSize: '1rem',
+          },
+        }}
+      >
+        Discover, explore, and track the most popular games of all time.
+      </Typography>
+
+      <Box>
+        <Typography sx={{ textAlign: 'center', fontSize: '2rem', mb: 3 }}>
+          Call of Duty Games
         </Typography>
-      ) : games.length > 0 ? (
-        <Carousel
-          items={newestGames}
-          renderItem={(game) => (
-            <GameCard key={game.id} game={game} isCarousel />
-          )}
-        />
-      ) : (
-        <Typography sx={{ textAlign: 'center', mt: 5 }}>
-          No games available.
+
+        {isCodPending ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+            <CircularProgress color='secondary' />
+          </Box>
+        ) : codError ? (
+          <Typography sx={{ textAlign: 'center', color: 'red', my: 4 }}>
+            Failed to load games. Please try again.
+          </Typography>
+        ) : codGames.length > 0 ? (
+          <Carousel
+            items={cod}
+            renderItem={(game) => (
+              <GameCard key={game.id} game={game} isCarousel />
+            )}
+          />
+        ) : (
+          <Typography sx={{ textAlign: 'center', my: 4 }}>
+            No games available.
+          </Typography>
+        )}
+      </Box>
+      <Box>
+        <Typography sx={{ textAlign: 'center', fontSize: '2rem', mb: 3 }}>
+          Grand Theft Auto Games
         </Typography>
-      )}
+
+        {isGtaPending ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+            <CircularProgress color='secondary' />
+          </Box>
+        ) : gtaError ? (
+          <Typography sx={{ textAlign: 'center', color: 'red', my: 4 }}>
+            Failed to load games. Please try again.
+          </Typography>
+        ) : gtaGames.length > 0 ? (
+          <Carousel
+            items={gta}
+            renderItem={(game) => (
+              <GameCard key={game.id} game={game} isCarousel />
+            )}
+          />
+        ) : (
+          <Typography sx={{ textAlign: 'center', my: 4 }}>
+            No games available.
+          </Typography>
+        )}
+      </Box>
     </Box>
   );
 };

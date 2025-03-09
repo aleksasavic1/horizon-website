@@ -85,7 +85,7 @@ const GameDetails = () => {
           color: '#fff',
           padding: '16px',
           overflow: 'auto',
-          height: 'calc(100vh - 68px)',
+          minHeight: 'calc(100vh - 68px)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
