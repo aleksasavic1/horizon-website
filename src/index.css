@@ -60,3 +60,7 @@ input:-webkit-autofill {
   top: unset !important;
   bottom: 0 !important;
 }
+
+.MuiInputBase-input.Mui-disabled {
+  -webkit-text-fill-color: unset !important;
+}
