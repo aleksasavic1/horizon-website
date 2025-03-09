@@ -11,6 +11,7 @@ const FAQ: React.FC = () => {
         backgroundColor: 'transparent',
         padding: '20px',
         borderRadius: '8px',
+        minHeight: 'calc(100vh - 68px)',
 
         '@media (max-width: 640px)': {
           padding: '10px',

@@ -1,16 +1,19 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { onAuthStateChanged, User, getIdToken, signOut } from 'firebase/auth';
-import { auth } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase';
 
 interface AuthState {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
+  isUserSaved: boolean;
   isLoading: boolean;
 
   setUser: (user: User | null) => void;
   setToken: (token: string | null) => void;
+  setIsUserSaved: (isSaved: boolean) => void;
   logout: () => void;
 }
 
@@ -20,6 +23,7 @@ const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       isAuthenticated: false,
+      isUserSaved: false,
       isLoading: true,
 
       setUser: (user) =>
@@ -30,9 +34,16 @@ const useAuthStore = create<AuthState>()(
 
       setToken: (token) => set({ token }),
 
+      setIsUserSaved: (isSaved) => set({ isUserSaved: isSaved }),
+
       logout: async () => {
         await signOut(auth);
-        set({ user: null, token: null, isAuthenticated: false });
+        set({
+          user: null,
+          token: null,
+          isAuthenticated: false,
+          isUserSaved: false,
+        });
       },
     }),
     {
@@ -47,9 +58,19 @@ onAuthStateChanged(auth, async (user) => {
     const token = await getIdToken(user);
     useAuthStore.getState().setUser(user);
     useAuthStore.getState().setToken(token);
+
+    const userRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      useAuthStore.getState().setIsUserSaved(true);
+    } else {
+      useAuthStore.getState().setIsUserSaved(false);
+    }
   } else {
     useAuthStore.getState().setUser(null);
     useAuthStore.getState().setToken(null);
+    useAuthStore.getState().setIsUserSaved(false);
   }
 
   useAuthStore.setState({ isLoading: false });

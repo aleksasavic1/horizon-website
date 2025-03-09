@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -15,10 +16,14 @@ import CustomSelect from '../components/common/CustomSelect';
 import { COUNTRY_OPTIONS } from '../constants/select-options';
 import { RegisterTypes } from '../types/auth-types';
 import { useRegister } from '../hooks/auth-hook';
+import { db } from '../firebase';
+import { setDoc, doc } from 'firebase/firestore';
+import useAuthStore from '../store/auth-store';
 
 const Register = () => {
   const navigate = useNavigate();
   const { mutate: register, isPending } = useRegister();
+  const setIsUserSaved = useAuthStore((state) => state.setIsUserSaved);
 
   const [formData, setFormData] = useState<RegisterTypes>({
     first_name: '',
@@ -76,20 +81,34 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!validateForm()) return;
 
-    if (validateForm()) {
-      const formDataSend = {
-        email: formData.email,
-        password: formData.password,
-        // confirm_password: formData.confirm_password,
-        // first_name: formData.first_name,
-        // last_name: formData.last_name,
-      };
+    register(
+      { email: formData.email, password: formData.password },
+      {
+        onSuccess: async (user: any) => {
+          if (!user?.uid) {
+            console.error('No user UID found.');
+            return;
+          }
 
-      register(formDataSend);
-    }
+          try {
+            await setDoc(doc(db, 'users', user.uid), {
+              first_name: formData.first_name,
+              last_name: formData.last_name,
+              email: formData.email,
+              country: formData.country,
+            });
+
+            setIsUserSaved(true);
+          } catch (error) {
+            console.error('Error saving user data:', error);
+          }
+        },
+      }
+    );
   };
 
   return (

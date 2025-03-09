@@ -1,10 +1,19 @@
+import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import CustomInput from '../components/common/CustomInput';
 import useLibraryStore from '../store/library-store';
 import GameCard from '../components/GameCard';
+import { filterGamesBySearch } from '../utils/helper-functions';
 import batmanBg from '../assets/batman-bg.jpg';
+import { GameTypes } from '../types/game-types';
 
 const MyLibrary = () => {
   const { games } = useLibraryStore();
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredGames = filterGamesBySearch(games, searchQuery);
 
   return (
     <Box
@@ -17,7 +26,7 @@ const MyLibrary = () => {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
-        minHeight: '100vh',
+        minHeight: 'calc(100vh - 68px)',
 
         '@media (max-width: 768px)': {
           p: 2,
@@ -31,6 +40,11 @@ const MyLibrary = () => {
           fontWeight: 'bold',
           margin: '16px auto 8px',
           padding: '0 10px',
+          lineHeight: 1.4,
+
+          '@media (max-width: 768px)': {
+            fontSize: '2rem',
+          },
         }}
       >
         My Library
@@ -53,10 +67,38 @@ const MyLibrary = () => {
         games, discover new ones, and build the ultimate gaming library.
       </Typography>
 
+      <Box
+        sx={{ display: 'flex', justifyContent: 'end', marginBottom: '32px' }}
+      >
+        <CustomInput
+          placeholder='Search Games'
+          name='search'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{
+            width: '340px',
+            height: '48px',
+            '@media (max-width: 768px)': {
+              width: '280px',
+            },
+            '@media (max-width: 640px)': {
+              width: '200px',
+            },
+          }}
+          startAdornment={
+            <SearchRoundedIcon sx={{ color: 'gray', fontSize: '24px' }} />
+          }
+        />
+      </Box>
+
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
         {games.length === 0 ? (
           <Typography sx={{ textAlign: 'center', opacity: 0.7 }}>
             No games in your library yet.
+          </Typography>
+        ) : filteredGames.length === 0 ? (
+          <Typography sx={{ textAlign: 'center', opacity: 0.7 }}>
+            No games found for your search.
           </Typography>
         ) : (
           <Box
@@ -82,7 +124,7 @@ const MyLibrary = () => {
               },
             }}
           >
-            {games.map((game) => (
+            {filteredGames.map((game: GameTypes) => (
               <GameCard key={game.id} game={game} isInLibrary />
             ))}
           </Box>

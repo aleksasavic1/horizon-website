@@ -14,7 +14,9 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       registerUser(email, password),
-    onSuccess: () => {},
+    onSuccess: (user) => {
+      return user;
+    },
     onError: (error: any) => {
       toast.error(error.slice(10));
     },

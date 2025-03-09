@@ -109,6 +109,7 @@ const GameCard = ({
           sx={{
             width: '100%',
             height: '100%',
+            minHeight: '170px',
             objectFit: 'cover',
             transition: '300ms ease',
             '&:hover': {
