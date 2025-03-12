@@ -48,6 +48,11 @@ const ForgotPassword = () => {
             flexDirection: 'column',
             gap: 2,
             width: '360px',
+            px: '16px',
+
+            '@media (max-width: 360px)': {
+              width: '100%',
+            },
           }}
         >
           <CustomInput

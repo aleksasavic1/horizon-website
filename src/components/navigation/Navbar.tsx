@@ -13,6 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import NavLinks from './NavLinks';
 import CustomButton from '../common/CustomButton';
+import profilePlaceholder from '../../assets/profile-placeholder.jpg';
 import useAuthStore from '../../store/auth-store';
 
 const ListItemStyles = {
@@ -133,13 +134,33 @@ const Navbar = () => {
             </CustomButton>
           </>
         ) : (
-          <CustomButton
-            variant='outlined'
-            sx={{ padding: '6px 16px' }}
-            onClick={handleLogout}
-          >
-            Logout
-          </CustomButton>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <CustomButton
+              variant='outlined'
+              sx={{ padding: '6px 16px' }}
+              onClick={handleLogout}
+            >
+              Logout
+            </CustomButton>
+            <Box
+              component='img'
+              src={profilePlaceholder}
+              alt='profile picture'
+              onClick={() => navigate('/my-profile')}
+              sx={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                transition: '0.3s ease-in-out',
+                filter: 'brightness(0.9)',
+
+                '&:hover': {
+                  filter: 'brightness(1)',
+                },
+              }}
+            />
+          </Box>
         )}
       </Box>
 
