@@ -19,6 +19,7 @@ import GameDetails from './pages/GameDetails';
 import MyLibrary from './pages/MyLibrary';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
+import MyProfile from './pages/MyProfile';
 import NotFound from './pages/NotFound';
 
 const App = () => {
@@ -68,6 +69,7 @@ const App = () => {
             <Route path='/library' element={<MyLibrary />} />
             <Route path='/faq' element={<FAQ />} />
             <Route path='/contact' element={<Contact />} />
+            <Route path='/my-profile' element={<MyProfile />} />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>

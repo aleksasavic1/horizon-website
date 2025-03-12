@@ -19,6 +19,7 @@ const TitleUpdater = () => {
       '/library': 'My Library',
       '/faq': 'FAQ',
       '/contact': 'Contact Us',
+      '/my-profile': 'My Profile',
     };
 
     if (gameId && game?.name) {
