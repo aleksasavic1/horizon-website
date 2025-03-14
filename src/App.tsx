@@ -38,6 +38,7 @@ const App = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        toastClassName='custom-toast'
       />
       <TitleUpdater />
       <Layout>

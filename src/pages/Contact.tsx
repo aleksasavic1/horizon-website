@@ -5,14 +5,8 @@ import CustomButton from '../components/common/CustomButton';
 import { db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import useAuthStore from '../store/auth-store';
+import { UserData } from '../types/auth-types';
 import flagPlaceholder from '../assets/flag-placeholder.webp';
-
-type UserData = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  country: string;
-};
 
 const Contact = () => {
   const { user, isAuthenticated } = useAuthStore();

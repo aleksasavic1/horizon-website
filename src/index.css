@@ -29,6 +29,19 @@ input:-webkit-autofill {
   border-radius: 4px;
 }
 
+.custom-toast {
+  max-width: 90%;
+  margin: 16px auto;
+}
+
+@media (min-width: 480px) {
+  .custom-toast {
+    max-width: 100%;
+    margin: 16px auto;
+  }
+}
+
+
 
 .swiper-button-prev,
 .swiper-button-next {
@@ -63,4 +76,26 @@ input:-webkit-autofill {
 
 .MuiInputBase-input.Mui-disabled {
   -webkit-text-fill-color: unset !important;
+}
+
+.MuiInputBase-root.Mui-disabled .MuiSelect-select {
+  -webkit-text-fill-color: unset !important;
+  color: hsla(0, 0%, 100%, 0.6) !important;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
+
+@media (max-width: 420px) {
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 20px !important;
+  }
+
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 44px !important;
+    height: 44px !important;
+  }
 }

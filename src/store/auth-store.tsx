@@ -6,12 +6,14 @@ import { auth, db } from '../firebase';
 
 interface AuthState {
   user: User | null;
+  profilePicture: string | null;
   token: string | null;
   isAuthenticated: boolean;
   isUserSaved: boolean;
   isLoading: boolean;
 
   setUser: (user: User | null) => void;
+  setProfilePicture: (picture: string | null) => void;
   setToken: (token: string | null) => void;
   setIsUserSaved: (isSaved: boolean) => void;
   logout: () => void;
@@ -21,6 +23,7 @@ const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
+      profilePicture: null,
       token: null,
       isAuthenticated: false,
       isUserSaved: false,
@@ -31,11 +34,9 @@ const useAuthStore = create<AuthState>()(
           user,
           isAuthenticated: !!user,
         }),
-
+      setProfilePicture: (picture) => set({ profilePicture: picture }),
       setToken: (token) => set({ token }),
-
       setIsUserSaved: (isSaved) => set({ isUserSaved: isSaved }),
-
       logout: async () => {
         await signOut(auth);
         set({
@@ -47,7 +48,7 @@ const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: 'auth-storage',
+      name: 'horizon-auth-storage',
       storage: createJSONStorage(() => localStorage),
     }
   )

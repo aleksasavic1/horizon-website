@@ -23,7 +23,7 @@ const useLibraryStore = create<LibraryState>()(
       },
     }),
     {
-      name: 'library-storage',
+      name: 'horizon-library-storage',
       storage: createJSONStorage(() => localStorage),
     }
   )

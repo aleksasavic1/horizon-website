@@ -11,6 +11,7 @@ interface CustomSelectProps {
   onChange: (event: SelectChangeEvent) => void;
   options: { value: string; label: string }[];
   sx?: object;
+  disabled?: boolean;
 }
 
 const CustomSelect = ({
@@ -19,6 +20,7 @@ const CustomSelect = ({
   onChange,
   options,
   sx,
+  disabled = false,
 }: CustomSelectProps) => {
   return (
     <FormControl fullWidth sx={sx}>
@@ -28,6 +30,7 @@ const CustomSelect = ({
         onChange={onChange}
         IconComponent={() => null}
         displayEmpty
+        disabled={disabled}
         sx={{
           color: 'white',
           backgroundColor: '#1e1e1e',
@@ -55,6 +58,7 @@ const CustomSelect = ({
               boxShadow: '0px 4px 10px rgba(0,0,0,0.7)',
               maxHeight: '240px',
               overflowY: 'auto',
+              width: '171px',
             },
           },
         }}
