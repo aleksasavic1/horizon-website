@@ -169,10 +169,10 @@ const Games = () => {
             width: '340px',
             height: '48px',
             '@media (max-width: 768px)': {
-              width: '280px',
+              width: '300px',
             },
-            '@media (max-width: 640px)': {
-              width: '200px',
+            '@media (max-width: 440px)': {
+              width: '220px',
             },
           }}
           startAdornment={

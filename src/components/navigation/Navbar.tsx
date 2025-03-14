@@ -13,8 +13,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import NavLinks from './NavLinks';
 import CustomButton from '../common/CustomButton';
-import profilePlaceholder from '../../assets/profile-placeholder.jpg';
 import useAuthStore from '../../store/auth-store';
+import profilePlaceholder from '../../assets/profile-placeholder.jpg';
 
 const ListItemStyles = {
   backgroundColor: 'transparent',
@@ -28,6 +28,7 @@ const Navbar = () => {
   const { isAuthenticated, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { profilePicture } = useAuthStore();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,10 +53,6 @@ const Navbar = () => {
         display: 'flex',
         alignItems: 'center',
         padding: '16px 48px',
-        '@media (max-width:1439px)': {
-          padding: '16px 25px',
-        },
-
         backgroundColor: isScrolled ? 'rgba(18, 18, 18, 0.8)' : '#121212',
         color: '#fff',
         boxShadow: isScrolled ? '0 2px 8px rgba(0, 0, 0, 0.2)' : 'none',
@@ -64,6 +61,13 @@ const Navbar = () => {
         left: 0,
         zIndex: 1000,
         backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+
+        '@media (max-width:1439px)': {
+          padding: '16px 25px',
+        },
+        '@media (max-width: 640px)': {
+          height: '60px',
+        },
       }}
     >
       <Box sx={{ flex: 1, display: 'flex' }}>
@@ -78,6 +82,10 @@ const Navbar = () => {
             transition: '400ms ease',
             '&:hover': {
               color: 'hsla(0, 0%, 100%, 0.9)',
+            },
+
+            '@media (max-width: 640px)': {
+              fontSize: '20px',
             },
           }}
         >
@@ -144,12 +152,12 @@ const Navbar = () => {
             </CustomButton>
             <Box
               component='img'
-              src={profilePlaceholder}
+              src={profilePicture || profilePlaceholder}
               alt='profile picture'
               onClick={() => navigate('/my-profile')}
               sx={{
-                width: '44px',
-                height: '44px',
+                width: '46px',
+                height: '46px',
                 borderRadius: '50%',
                 cursor: 'pointer',
                 transition: '0.3s ease-in-out',
@@ -175,7 +183,7 @@ const Navbar = () => {
         }}
       >
         <IconButton onClick={() => setOpen(true)} sx={{ color: '#fff' }}>
-          <MenuIcon />
+          <MenuIcon sx={{ fontSize: '28px', transform: 'scaleY(1.2)' }} />
         </IconButton>
       </Box>
 
@@ -184,9 +192,12 @@ const Navbar = () => {
           sx={{
             width: '40vw',
             backgroundColor: '#1e1e1e',
-            height: '100vh',
+            minHeight: '100vh',
             padding: '16px',
             color: '#fff',
+            display: 'flex',
+            flexDirection: 'column',
+            overflowY: 'auto',
 
             '@media (max-width: 814px)': {
               width: '50vw',
@@ -204,6 +215,16 @@ const Navbar = () => {
           </Box>
 
           <List>
+            <ListItem
+              component='div'
+              onClick={() => {
+                navigate('/my-profile');
+                setOpen(false);
+              }}
+              sx={ListItemStyles}
+            >
+              <ListItemText primary='My Profile' />
+            </ListItem>
             <ListItem
               component='div'
               onClick={() => {
@@ -258,8 +279,9 @@ const Navbar = () => {
 
           <Box
             sx={{
-              marginTop: '12px',
               textAlign: 'center',
+              mt: 'auto',
+              mb: '12px',
             }}
           >
             {!isAuthenticated ? (
