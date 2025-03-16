@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -5,6 +6,8 @@ import {
   Navigate,
 } from 'react-router-dom';
 import TitleUpdater from './components/navigation/TitleUpdater';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from './firebase';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from './layouts/Layout';
@@ -25,6 +28,27 @@ import NotFound from './pages/NotFound';
 const App = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const isUserSaved = useAuthStore((state) => state.isUserSaved);
+  const { user } = useAuthStore();
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!user?.uid) return;
+
+    const fetchProfilePicture = async () => {
+      try {
+        const userRef = doc(db, 'users', user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+          setProfilePicture(userSnap.data().profile_picture);
+        }
+      } catch (error) {
+        console.error('Error fetching profile picture:', error);
+      }
+    };
+
+    fetchProfilePicture();
+  }, [user]);
 
   return (
     <Router>
@@ -41,7 +65,7 @@ const App = () => {
         toastClassName='custom-toast'
       />
       <TitleUpdater />
-      <Layout>
+      <Layout profilePicture={profilePicture}>
         <Routes>
           <Route
             index
@@ -70,7 +94,15 @@ const App = () => {
             <Route path='/library' element={<MyLibrary />} />
             <Route path='/faq' element={<FAQ />} />
             <Route path='/contact' element={<Contact />} />
-            <Route path='/my-profile' element={<MyProfile />} />
+            <Route
+              path='/my-profile'
+              element={
+                <MyProfile
+                  profilePicture={profilePicture}
+                  setProfilePicture={setProfilePicture}
+                />
+              }
+            />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>

@@ -10,25 +10,28 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import useAuthStore from '../store/auth-store';
 import { UserData } from '../types/auth-types';
 import { toast } from 'react-toastify';
+import { resetPassword } from '../services/auth-api';
 import profilePlaceholder from '../assets/profile-placeholder.jpg';
 
-const MyProfile = () => {
+type MyProfileProps = {
+  profilePicture: string | null;
+  setProfilePicture: (picture: string) => void;
+};
+
+const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
   const [isEditEnabled, setIsEditEnabled] = useState<boolean>(false);
 
-  const { user, isAuthenticated, setProfilePicture } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
   const [userData, setUserData] = useState<UserData>({
     first_name: '',
     last_name: '',
     email: '',
     country: '',
-    profile_picture: profilePlaceholder,
+    profile_picture: profilePicture || '',
   });
 
   useEffect(() => {
     if (!isAuthenticated || !user?.uid) return;
-
-    const userId = user?.uid;
-    if (!userId) return;
 
     const fetchUserData = async () => {
       try {
@@ -75,10 +78,8 @@ const MyProfile = () => {
           profile_picture: base64String,
         });
         setProfilePicture(base64String);
-        toast.success('Profile picture updated successfully!');
       } catch (error) {
         console.error('Error saving image:', error);
-        toast.error('Failed to update profile picture.');
       }
     };
   };
@@ -89,10 +90,35 @@ const MyProfile = () => {
     try {
       await updateDoc(doc(db, 'users', user.uid), userData);
       setIsEditEnabled(false);
+
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists() && userSnap.data().profile_picture) {
+        setUserData((prev) => ({
+          ...prev,
+          profile_picture: userSnap.data().profile_picture,
+        }));
+      }
+
       toast.success('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating user data:', error);
       toast.error('Failed to update profile.');
+    }
+  };
+
+  const handleChangePassword = async () => {
+    if (!user?.email) {
+      toast.error('No email associated with this account.');
+      return;
+    }
+
+    try {
+      const message = await resetPassword(user.email);
+      toast.success(message);
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+      toast.error('Failed to send password reset email.');
     }
   };
 
@@ -161,6 +187,7 @@ const MyProfile = () => {
               width: '100px',
               height: '100px',
               borderRadius: '50%',
+              objectFit: 'cover',
 
               '@media (max-width: 640px)': {
                 width: '90px',
@@ -252,7 +279,10 @@ const MyProfile = () => {
               disabled
             />
             <Box sx={{ display: 'flex', justifyContent: 'end', mt: '6px' }}>
-              <Link sx={{ cursor: 'pointer', fontSize: '0.9rem' }}>
+              <Link
+                sx={{ cursor: 'pointer', fontSize: '0.9rem' }}
+                onClick={handleChangePassword}
+              >
                 Change password
               </Link>
             </Box>

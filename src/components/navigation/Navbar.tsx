@@ -23,12 +23,15 @@ const ListItemStyles = {
   textAlign: 'center',
 };
 
-const Navbar = () => {
+type NavbarProps = {
+  profilePicture: string | null;
+};
+
+const Navbar = ({ profilePicture }: NavbarProps) => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { profilePicture } = useAuthStore();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -162,6 +165,7 @@ const Navbar = () => {
                 cursor: 'pointer',
                 transition: '0.3s ease-in-out',
                 filter: 'brightness(0.9)',
+                objectFit: 'cover',
 
                 '&:hover': {
                   filter: 'brightness(1)',
