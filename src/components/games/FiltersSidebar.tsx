@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import {
   Box,
   Drawer,
@@ -15,6 +15,7 @@ import {
   GENRE_OPTIONS,
   SORT_BY_OPTIONS,
 } from '../../constants/select-options';
+import CustomButton from '../common/CustomButton';
 
 interface FiltersSidebarProps {
   open: boolean;
@@ -29,14 +30,18 @@ interface FiltersSidebarProps {
   handleChange: (
     event: SelectChangeEvent | ChangeEvent<HTMLInputElement>
   ) => void;
+  handleReset: () => void;
+  handleApply: () => void;
 }
 
-const FiltersSidebar: FC<FiltersSidebarProps> = ({
+const FiltersSidebar = ({
   open,
   onClose,
   formData,
   handleChange,
-}) => {
+  handleReset,
+  handleApply,
+}: FiltersSidebarProps) => {
   return (
     <Drawer anchor='left' open={open} onClose={onClose}>
       <Box
@@ -111,6 +116,23 @@ const FiltersSidebar: FC<FiltersSidebarProps> = ({
             checked={formData.is_multiplayer}
             onChange={handleChange}
           />
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: '10px', mt: 3 }}>
+          <CustomButton
+            variant='outlined'
+            sx={{ width: '100%' }}
+            onClick={handleReset}
+          >
+            Reset
+          </CustomButton>
+          <CustomButton
+            variant='outlined'
+            sx={{ width: '100%' }}
+            onClick={handleApply}
+          >
+            Apply
+          </CustomButton>
         </Box>
 
         <IconButton
