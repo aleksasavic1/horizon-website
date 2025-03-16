@@ -15,7 +15,7 @@ import profilePlaceholder from '../assets/profile-placeholder.jpg';
 const MyProfile = () => {
   const [isEditEnabled, setIsEditEnabled] = useState<boolean>(false);
 
-  const { user, isAuthenticated, setProfilePicture } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
   const [userData, setUserData] = useState<UserData>({
     first_name: '',
     last_name: '',
@@ -24,11 +24,25 @@ const MyProfile = () => {
     profile_picture: profilePlaceholder,
   });
 
+  const fetchUserData = async () => {
+    if (!user?.uid) return;
+
+    try {
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        setUserData((prev) => ({ ...prev, ...userSnap.data() }));
+      } else {
+        console.log('No user data found in Firestore');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
   useEffect(() => {
     if (!isAuthenticated || !user?.uid) return;
-
-    const userId = user?.uid;
-    if (!userId) return;
 
     const fetchUserData = async () => {
       try {
@@ -74,7 +88,9 @@ const MyProfile = () => {
         await updateDoc(doc(db, 'users', user.uid), {
           profile_picture: base64String,
         });
-        setProfilePicture(base64String);
+
+        fetchUserData();
+
         toast.success('Profile picture updated successfully!');
       } catch (error) {
         console.error('Error saving image:', error);
@@ -89,6 +105,16 @@ const MyProfile = () => {
     try {
       await updateDoc(doc(db, 'users', user.uid), userData);
       setIsEditEnabled(false);
+
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists() && userSnap.data().profile_picture) {
+        setUserData((prev) => ({
+          ...prev,
+          profile_picture: userSnap.data().profile_picture,
+        }));
+      }
+
       toast.success('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating user data:', error);
@@ -161,6 +187,7 @@ const MyProfile = () => {
               width: '100px',
               height: '100px',
               borderRadius: '50%',
+              objectFit: 'cover',
 
               '@media (max-width: 640px)': {
                 width: '90px',
