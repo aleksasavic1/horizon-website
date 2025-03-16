@@ -13,6 +13,7 @@ import CustomInput from '../components/common/CustomInput';
 import GameCard from '../components/GameCard';
 import FiltersSidebar from '../components/games/FiltersSidebar';
 import { useGames } from '../hooks/games-hook';
+import { GameTypes } from '../types/game-types';
 import spidermanBg from '../assets/spiderman-bg.jpg';
 
 const Games = () => {
@@ -25,9 +26,10 @@ const Games = () => {
   });
   const [filters, setFilters] = useState<Record<string, string>>({
     page_size: '20',
+    tags: 'multiplayer',
   });
   const [page, setPage] = useState(1);
-  const [allGames, setAllGames] = useState<any[]>([]);
+  const [allGames, setAllGames] = useState<GameTypes[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -42,21 +44,11 @@ const Games = () => {
     event: SelectChangeEvent | React.ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value, type, checked } = event.target as HTMLInputElement;
-    const updatedData = {
-      ...formData,
+
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: type === 'checkbox' ? checked : value,
-    };
-
-    setFormData(updatedData);
-
-    const queryParams: Record<string, string> = {};
-    if (updatedData.search) queryParams.search = updatedData.search;
-    if (updatedData.sort_by) queryParams.ordering = updatedData.sort_by;
-    if (updatedData.platforms) queryParams.platforms = updatedData.platforms;
-    if (updatedData.genres) queryParams.genres = updatedData.genres;
-    if (updatedData.is_multiplayer) queryParams.tags = 'multiplayer';
-
-    setFilters(queryParams);
+    }));
   };
 
   const toggleFilterMenu = () => {
@@ -64,6 +56,16 @@ const Games = () => {
   };
 
   useEffect(() => {
+    if (
+      !filters.search &&
+      !filters.sort_by &&
+      !filters.platforms &&
+      !filters.genres &&
+      filters.page_size === '20'
+    ) {
+      return;
+    }
+
     setAllGames([]);
     setPage(1);
   }, [filters]);
@@ -95,6 +97,34 @@ const Games = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isFetching, isQueryFetching]);
+
+  const handleApply = () => {
+    const queryParams: Record<string, string> = {};
+
+    if (formData.search) queryParams.search = formData.search;
+    if (formData.sort_by) queryParams.ordering = formData.sort_by;
+    if (formData.platforms) queryParams.platforms = formData.platforms;
+    if (formData.genres) queryParams.genres = formData.genres;
+    if (formData.is_multiplayer) queryParams.tags = 'multiplayer';
+
+    setFilters(queryParams);
+    setIsFilterOpen(false);
+  };
+
+  const handleReset = () => {
+    setFormData({
+      search: '',
+      platforms: '',
+      genres: '',
+      sort_by: '',
+      is_multiplayer: true,
+    });
+
+    setFilters({ page_size: '20' });
+    setAllGames([]);
+    setPage(1);
+    setIsFilterOpen(false);
+  };
 
   return (
     <Box
@@ -186,6 +216,8 @@ const Games = () => {
         onClose={toggleFilterMenu}
         formData={formData}
         handleChange={handleChange}
+        handleApply={handleApply}
+        handleReset={handleReset}
       />
 
       <Box sx={{ display: 'flex', justifyContent: 'center', py: 3 }}>
