@@ -14,8 +14,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import NavLinks from './NavLinks';
 import CustomButton from '../common/CustomButton';
 import useAuthStore from '../../store/auth-store';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
 import profilePlaceholder from '../../assets/profile-placeholder.jpg';
 
 const ListItemStyles = {
@@ -25,12 +23,15 @@ const ListItemStyles = {
   textAlign: 'center',
 };
 
-const Navbar = () => {
+type NavbarProps = {
+  profilePicture: string | null;
+};
+
+const Navbar = ({ profilePicture }: NavbarProps) => {
   const navigate = useNavigate();
-  const { isAuthenticated, logout, user } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [profilePicture, setProfilePicture] = useState(profilePlaceholder);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,25 +47,6 @@ const Navbar = () => {
     navigate('/login');
     setOpen(false);
   };
-
-  useEffect(() => {
-    if (!isAuthenticated || !user?.uid) return;
-
-    const fetchProfilePicture = async () => {
-      try {
-        const userRef = doc(db, 'users', user.uid);
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists() && userSnap.data().profile_picture) {
-          setProfilePicture(userSnap.data().profile_picture);
-        }
-      } catch (error) {
-        console.error('Error fetching profile picture:', error);
-      }
-    };
-
-    fetchProfilePicture();
-  }, [user, isAuthenticated]);
 
   return (
     <Box

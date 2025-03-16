@@ -12,7 +12,12 @@ import { UserData } from '../types/auth-types';
 import { toast } from 'react-toastify';
 import profilePlaceholder from '../assets/profile-placeholder.jpg';
 
-const MyProfile = () => {
+type MyProfileProps = {
+  profilePicture: string | null;
+  setProfilePicture: (picture: string) => void;
+};
+
+const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
   const [isEditEnabled, setIsEditEnabled] = useState<boolean>(false);
 
   const { user, isAuthenticated } = useAuthStore();
@@ -21,25 +26,8 @@ const MyProfile = () => {
     last_name: '',
     email: '',
     country: '',
-    profile_picture: profilePlaceholder,
+    profile_picture: profilePicture || '',
   });
-
-  const fetchUserData = async () => {
-    if (!user?.uid) return;
-
-    try {
-      const userRef = doc(db, 'users', user.uid);
-      const userSnap = await getDoc(userRef);
-
-      if (userSnap.exists()) {
-        setUserData((prev) => ({ ...prev, ...userSnap.data() }));
-      } else {
-        console.log('No user data found in Firestore');
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
 
   useEffect(() => {
     if (!isAuthenticated || !user?.uid) return;
@@ -88,13 +76,9 @@ const MyProfile = () => {
         await updateDoc(doc(db, 'users', user.uid), {
           profile_picture: base64String,
         });
-
-        fetchUserData();
-
-        toast.success('Profile picture updated successfully!');
+        setProfilePicture(base64String);
       } catch (error) {
         console.error('Error saving image:', error);
-        toast.error('Failed to update profile picture.');
       }
     };
   };
