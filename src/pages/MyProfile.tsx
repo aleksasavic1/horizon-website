@@ -10,6 +10,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import useAuthStore from '../store/auth-store';
 import { UserData } from '../types/auth-types';
 import { toast } from 'react-toastify';
+import { resetPassword } from '../services/auth-api';
 import profilePlaceholder from '../assets/profile-placeholder.jpg';
 
 type MyProfileProps = {
@@ -103,6 +104,21 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
     } catch (error) {
       console.error('Error updating user data:', error);
       toast.error('Failed to update profile.');
+    }
+  };
+
+  const handleChangePassword = async () => {
+    if (!user?.email) {
+      toast.error('No email associated with this account.');
+      return;
+    }
+
+    try {
+      const message = await resetPassword(user.email);
+      toast.success(message);
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+      toast.error('Failed to send password reset email.');
     }
   };
 
@@ -263,7 +279,10 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
               disabled
             />
             <Box sx={{ display: 'flex', justifyContent: 'end', mt: '6px' }}>
-              <Link sx={{ cursor: 'pointer', fontSize: '0.9rem' }}>
+              <Link
+                sx={{ cursor: 'pointer', fontSize: '0.9rem' }}
+                onClick={handleChangePassword}
+              >
                 Change password
               </Link>
             </Box>
