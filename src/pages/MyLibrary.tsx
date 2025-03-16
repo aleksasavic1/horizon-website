@@ -31,6 +31,10 @@ const MyLibrary = () => {
         '@media (max-width: 768px)': {
           p: 2,
         },
+
+        '@media (max-width: 640px)': {
+          p: 1,
+        },
       }}
     >
       <Typography

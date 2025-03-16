@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -29,6 +29,9 @@ type NavbarProps = {
 
 const Navbar = ({ profilePicture }: NavbarProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isActive = (path: string) => location.pathname === path;
+
   const { isAuthenticated, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -219,23 +222,37 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
           </Box>
 
           <List>
-            <ListItem
-              component='div'
-              onClick={() => {
-                navigate('/my-profile');
-                setOpen(false);
-              }}
-              sx={ListItemStyles}
-            >
-              <ListItemText primary='My Profile' />
-            </ListItem>
+            {isAuthenticated && (
+              <ListItem
+                component='div'
+                onClick={() => {
+                  navigate('/my-profile');
+                  setOpen(false);
+                }}
+                sx={{
+                  ...ListItemStyles,
+                  backgroundColor: isActive('/my-profile')
+                    ? 'hsla(0, 0%, 100%, 0.075)'
+                    : 'transparent',
+                  borderRadius: '6px',
+                }}
+              >
+                <ListItemText primary='My Profile' />
+              </ListItem>
+            )}
             <ListItem
               component='div'
               onClick={() => {
                 navigate('/');
                 setOpen(false);
               }}
-              sx={ListItemStyles}
+              sx={{
+                ...ListItemStyles,
+                backgroundColor: isActive('/')
+                  ? 'hsla(0, 0%, 100%, 0.075)'
+                  : 'transparent',
+                borderRadius: '6px',
+              }}
             >
               <ListItemText primary='Home' />
             </ListItem>
@@ -245,7 +262,13 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 navigate('/games');
                 setOpen(false);
               }}
-              sx={ListItemStyles}
+              sx={{
+                ...ListItemStyles,
+                backgroundColor: isActive('/games')
+                  ? 'hsla(0, 0%, 100%, 0.075)'
+                  : 'transparent',
+                borderRadius: '6px',
+              }}
             >
               <ListItemText primary='Games' />
             </ListItem>
@@ -255,9 +278,15 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 navigate('/library');
                 setOpen(false);
               }}
-              sx={ListItemStyles}
+              sx={{
+                ...ListItemStyles,
+                backgroundColor: isActive('/library')
+                  ? 'hsla(0, 0%, 100%, 0.075)'
+                  : 'transparent',
+                borderRadius: '6px',
+              }}
             >
-              <ListItemText primary='Library' />
+              <ListItemText primary='My Library' />
             </ListItem>
             <ListItem
               component='div'
@@ -265,7 +294,13 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 navigate('/faq');
                 setOpen(false);
               }}
-              sx={ListItemStyles}
+              sx={{
+                ...ListItemStyles,
+                backgroundColor: isActive('/faq')
+                  ? 'hsla(0, 0%, 100%, 0.075)'
+                  : 'transparent',
+                borderRadius: '6px',
+              }}
             >
               <ListItemText primary='FAQ' />
             </ListItem>
@@ -275,7 +310,13 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 navigate('/contact');
                 setOpen(false);
               }}
-              sx={ListItemStyles}
+              sx={{
+                ...ListItemStyles,
+                backgroundColor: isActive('/contact')
+                  ? 'hsla(0, 0%, 100%, 0.075)'
+                  : 'transparent',
+                borderRadius: '6px',
+              }}
             >
               <ListItemText primary='Contact Us' />
             </ListItem>
@@ -283,9 +324,16 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
 
           <Box
             sx={{
+              position: 'absolute',
+              bottom: 16,
+              left: 0,
+              right: 0,
               textAlign: 'center',
-              mt: 'auto',
-              mb: '12px',
+              padding: '16px',
+
+              '@media (max-height: 480px)': {
+                bottom: 2,
+              },
             }}
           >
             {!isAuthenticated ? (
