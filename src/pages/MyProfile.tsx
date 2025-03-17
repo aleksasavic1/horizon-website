@@ -188,6 +188,7 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
               height: '100px',
               borderRadius: '50%',
               objectFit: 'cover',
+              userSelect: 'none',
 
               '@media (max-width: 640px)': {
                 width: '90px',
