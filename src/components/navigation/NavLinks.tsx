@@ -47,6 +47,7 @@ const NavLinks = () => {
               display: 'flex',
               alignItems: 'center',
               padding: '8px 32px',
+              userSelect: 'none',
               '@media (max-width:1439px)': {
                 padding: '8px 24px',
               },

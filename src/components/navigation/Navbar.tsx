@@ -86,6 +86,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
             color: 'hsla(0, 0%, 100%, 0.8)',
             cursor: 'pointer',
             transition: '400ms ease',
+            userSelect: 'none',
             '&:hover': {
               color: 'hsla(0, 0%, 100%, 0.9)',
             },
@@ -169,6 +170,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 transition: '0.3s ease-in-out',
                 filter: 'brightness(0.9)',
                 objectFit: 'cover',
+                userSelect: 'none',
 
                 '&:hover': {
                   filter: 'brightness(1)',

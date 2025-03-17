@@ -1,47 +1,56 @@
+import { Box } from '@mui/material';
 import CustomAccordion from '../components/common/CustomAccordion';
 import { Container, Typography } from '@mui/material';
 import { FAQ_DATA } from '../constants/faq-data';
+import godOfWarImg from '../assets/god-of-war-bg.jpg';
 
-const FAQ: React.FC = () => {
+const FAQ = () => {
   return (
-    <Container
-      maxWidth='md'
+    <Box
       sx={{
+        p: 3,
         color: '#fff',
-        backgroundColor: 'transparent',
-        padding: '20px',
-        borderRadius: '8px',
+
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${godOfWarImg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
         minHeight: 'calc(100vh - 68px)',
 
-        '@media (max-width: 640px)': {
-          padding: '10px',
-        },
-
-        '@media (max-width: 480px)': {
-          padding: '4px',
+        '@media (max-width: 768px)': {
+          p: 2,
         },
       }}
     >
-      <Typography
+      <Container
+        maxWidth='md'
         sx={{
-          fontSize: '2.3rem',
-          textAlign: 'center',
-          fontWeight: 'bold',
-          margin: '16px',
-          lineHeight: 1.4,
-          '@media (max-width: 768px)': {
-            fontSize: '2rem',
-          },
-          '@media (max-width: 640px)': {
-            fontSize: '1.7rem',
-            margin: '16px 16px 8px 16px',
-          },
+          color: '#fff',
+          backgroundColor: 'transparent',
+          borderRadius: '8px',
+          p: 0,
         }}
       >
-        Frequently Asked Questions
-      </Typography>
-      <CustomAccordion items={FAQ_DATA} />
-    </Container>
+        <Typography
+          sx={{
+            fontSize: '2.3rem',
+            textAlign: 'center',
+            fontWeight: 'bold',
+            margin: '16px auto 32px',
+            padding: '0 10px',
+            lineHeight: 1.4,
+
+            '@media (max-width: 768px)': {
+              fontSize: '2rem',
+            },
+          }}
+        >
+          Frequently Asked Questions
+        </Typography>
+        <CustomAccordion items={FAQ_DATA} />
+      </Container>
+    </Box>
   );
 };
 
