@@ -22,6 +22,7 @@ import placeholderImg from '../assets/game-placeholder.png';
 import websiteLogo from '../assets/website-logo.png';
 import redditLogo from '../assets/reddit-logo.png';
 import returnIcon from '../assets/return-icon.png';
+import gameDetailsBg from '../assets/game-details-bg.jpg';
 
 const GameDetails = () => {
   const theme = useTheme();
@@ -122,10 +123,16 @@ const GameDetails = () => {
     <Box
       sx={{
         flex: 1,
-        backgroundColor: '#121212',
         color: '#fff',
         overflow: 'auto',
         maxHeight: 'calc(100vh - 68px)',
+
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6)), url(${gameDetailsBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        minHeight: 'calc(100vh - 68px)',
       }}
     >
       <Box
@@ -163,6 +170,7 @@ const GameDetails = () => {
               objectFit: 'cover',
               objectPosition: '50% 20%',
               position: 'absolute',
+              borderBottom: '1px solid hsla(0, 0%, 100%, 0.33)',
               top: 0,
               left: 0,
               zIndex: 2,

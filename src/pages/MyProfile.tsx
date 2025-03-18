@@ -12,6 +12,7 @@ import { UserData } from '../types/auth-types';
 import { toast } from 'react-toastify';
 import { resetPassword } from '../services/auth-api';
 import profilePlaceholder from '../assets/profile-placeholder.jpg';
+import profileBg from '../assets/profile-bg.webp';
 
 type MyProfileProps = {
   profilePicture: string | null;
@@ -129,25 +130,33 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: 'calc(100vh - 68px)',
+
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url(${profileBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
       }}
     >
       <Box
-        sx={{
+        sx={(theme) => ({
           p: 4,
-          border: '1px solid hsla(0, 0%, 100%, 0.2)',
           borderRadius: '20px',
           display: 'flex',
           flexDirection: 'column',
           gap: 4,
           width: '720px',
           mx: 2,
+          backgroundColor: theme.palette.background.default,
+          boxShadow: '0 0 6px hsla(0, 0%, 0%, 0.4)',
+          zIndex: 0,
 
           '@media (max-width: 440px)': {
             mx: 1,
             py: 4,
             px: 2,
           },
-        }}
+        })}
       >
         <Box
           sx={{

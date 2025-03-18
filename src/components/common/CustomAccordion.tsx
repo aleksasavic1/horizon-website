@@ -24,8 +24,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({ items }) => {
       style={{
         backgroundColor: '#121212',
         color: '#fff',
-        boxShadow: '4px 4px 4px hsla(0, 0%, 0%, 0.2)',
-        padding: 1,
+        boxShadow: '0 0 12px hsla(0, 0%, 0%, 0.4)',
         borderRadius: '8px',
       }}
     >

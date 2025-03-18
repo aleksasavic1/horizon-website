@@ -206,7 +206,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
             color: '#fff',
             display: 'flex',
             flexDirection: 'column',
-            overflowY: 'auto',
+            overflowY: 'hidden',
 
             '@media (max-width: 814px)': {
               width: '50vw',
