@@ -10,59 +10,30 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CustomInput from '../components/common/CustomInput';
 import CustomButton from '../components/common/CustomButton';
-import { LoginTypes } from '../types/auth-types';
 import { useLogin } from '../hooks/auth-hook';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema, LoginSchemaTypes } from '../utils/validation';
 
 const Login = () => {
   const navigate = useNavigate();
   const { mutate: login, isPending } = useLogin();
-
-  const [formData, setFormData] = useState<LoginTypes>({
-    email: '',
-    password: '',
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
   const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchemaTypes>({
+    resolver: zodResolver(loginSchema),
+  });
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.email) {
-      newErrors.email = 'This field is required';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'This field is required';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (validateForm()) {
-      const formDataSend = {
-        email: formData.email,
-        password: formData.password,
-      };
-
-      login(formDataSend);
-    }
+  const onSubmit = (data: LoginSchemaTypes) => {
+    login(data);
   };
 
   return (
@@ -89,7 +60,7 @@ const Login = () => {
 
         <Box
           component='form'
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -102,52 +73,41 @@ const Login = () => {
             },
           }}
         >
-          <CustomInput
-            label='Email:'
-            name='email'
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && (
-            <Typography
-              sx={{
-                color: 'hsl(0, 50%, 60%)',
-                fontSize: '12px',
-                marginTop: '-8px',
-              }}
-            >
-              {errors.email}
-            </Typography>
-          )}
-          <CustomInput
-            label='Password:'
-            type={showPassword ? 'text' : 'password'}
-            name='password'
-            value={formData.password}
-            onChange={handleChange}
-            endAdornment={
-              <InputAdornment position='end'>
-                <IconButton onClick={togglePasswordVisibility} edge='end'>
-                  {showPassword ? (
-                    <VisibilityOff sx={{ color: 'white', fontSize: '20px' }} />
-                  ) : (
-                    <Visibility sx={{ color: 'white', fontSize: '20px' }} />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-          {errors.password && (
-            <Typography
-              sx={{
-                color: 'hsl(0, 50%, 60%)',
-                fontSize: '12px',
-                marginTop: '-8px',
-              }}
-            >
-              {errors.password}
-            </Typography>
-          )}
+          <Box>
+            <CustomInput label='Email:' {...register('email')} />
+            {errors.email && (
+              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+                {errors.email.message}
+              </Typography>
+            )}
+          </Box>
+
+          <Box>
+            <CustomInput
+              label='Password:'
+              type={showPassword ? 'text' : 'password'}
+              {...register('password')}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton onClick={togglePasswordVisibility} edge='end'>
+                    {showPassword ? (
+                      <VisibilityOff
+                        sx={{ fontSize: '20px', color: 'white' }}
+                      />
+                    ) : (
+                      <Visibility sx={{ fontSize: '20px', color: 'white' }} />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {errors.password && (
+              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+                {errors.password.message}
+              </Typography>
+            )}
+          </Box>
+
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Link
               sx={{ cursor: 'pointer', fontSize: '0.9rem' }}

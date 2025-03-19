@@ -5,7 +5,6 @@ import {
   Box,
   Typography,
   Link,
-  SelectChangeEvent,
   InputAdornment,
   IconButton,
 } from '@mui/material';
@@ -14,26 +13,30 @@ import CustomInput from '../components/common/CustomInput';
 import CustomButton from '../components/common/CustomButton';
 import CustomSelect from '../components/common/CustomSelect';
 import { COUNTRY_OPTIONS } from '../constants/select-options';
-import { RegisterTypes } from '../types/auth-types';
 import { useRegister } from '../hooks/auth-hook';
 import { db } from '../firebase';
 import { setDoc, doc } from 'firebase/firestore';
 import useAuthStore from '../store/auth-store';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { registerSchema, RegisterSchemaTypes } from '../utils/validation';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { mutate: register, isPending } = useRegister();
+  const { mutate: registration, isPending } = useRegister();
   const setIsUserSaved = useAuthStore((state) => state.setIsUserSaved);
 
-  const [formData, setFormData] = useState<RegisterTypes>({
-    first_name: '',
-    last_name: '',
-    country: COUNTRY_OPTIONS[0].value,
-    email: '',
-    password: '',
-    confirm_password: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<RegisterSchemaTypes>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      country: COUNTRY_OPTIONS[0].value,
+    },
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -45,48 +48,9 @@ const Register = () => {
     setShowConfirmPassword((prev) => !prev);
   };
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent
-  ) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.first_name) {
-      newErrors.first_name = 'This field is required';
-    }
-
-    if (!formData.last_name) {
-      newErrors.last_name = 'This field is required';
-    }
-
-    if (!formData.email) {
-      newErrors.email = 'This field is required';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'This field is required';
-    }
-    if (!formData.confirm_password) {
-      newErrors.confirm_password = 'This field is required';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!validateForm()) return;
-
-    register(
-      { email: formData.email, password: formData.password },
+  const onSubmit = async (data: RegisterSchemaTypes) => {
+    registration(
+      { email: data.email, password: data.password },
       {
         onSuccess: async (user: any) => {
           if (!user?.uid) {
@@ -96,10 +60,10 @@ const Register = () => {
 
           try {
             await setDoc(doc(db, 'users', user.uid), {
-              first_name: formData.first_name,
-              last_name: formData.last_name,
-              email: formData.email,
-              country: formData.country,
+              first_name: data.first_name,
+              last_name: data.last_name,
+              email: data.email,
+              country: data.country,
             });
 
             setIsUserSaved(true);
@@ -135,7 +99,7 @@ const Register = () => {
 
         <Box
           component='form'
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -148,124 +112,94 @@ const Register = () => {
             },
           }}
         >
-          <CustomInput
-            label='First name:'
-            name='first_name'
-            value={formData.first_name}
-            onChange={handleChange}
-          />
-          {errors.first_name && (
-            <Typography
-              sx={{
-                color: 'hsl(0, 50%, 60%)',
-                fontSize: '12px',
-                marginTop: '-8px',
-              }}
-            >
-              {errors.first_name}
-            </Typography>
-          )}
-          <CustomInput
-            label='Last name:'
-            name='last_name'
-            value={formData.last_name}
-            onChange={handleChange}
-          />
-          {errors.last_name && (
-            <Typography
-              sx={{
-                color: 'hsl(0, 50%, 60%)',
-                fontSize: '12px',
-                marginTop: '-8px',
-              }}
-            >
-              {errors.last_name}
-            </Typography>
-          )}
+          <Box>
+            <CustomInput label='First name:' {...register('first_name')} />
+            {errors.first_name && (
+              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+                {errors.first_name.message}
+              </Typography>
+            )}
+          </Box>
+
+          <Box>
+            <CustomInput label='Last name:' {...register('last_name')} />
+            {errors.last_name && (
+              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+                {errors.last_name.message}
+              </Typography>
+            )}
+          </Box>
+
           <CustomSelect
+            value={watch('country')}
             options={COUNTRY_OPTIONS}
-            name='country'
-            value={formData.country}
-            onChange={handleChange}
+            {...register('country')}
           />
-          <CustomInput
-            label='Email:'
-            name='email'
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && (
-            <Typography
-              sx={{
-                color: 'hsl(0, 50%, 60%)',
-                fontSize: '12px',
-                marginTop: '-8px',
-              }}
-            >
-              {errors.email}
-            </Typography>
-          )}
-          <CustomInput
-            label='Password:'
-            type={showPassword ? 'text' : 'password'}
-            name='password'
-            value={formData.password}
-            onChange={handleChange}
-            endAdornment={
-              <InputAdornment position='end'>
-                <IconButton onClick={togglePasswordVisibility} edge='end'>
-                  {showPassword ? (
-                    <VisibilityOff sx={{ color: 'white', fontSize: '20px' }} />
-                  ) : (
-                    <Visibility sx={{ color: 'white', fontSize: '20px' }} />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-          {errors.password && (
-            <Typography
-              sx={{
-                color: 'hsl(0, 50%, 60%)',
-                fontSize: '12px',
-                marginTop: '-8px',
-              }}
-            >
-              {errors.password}
-            </Typography>
-          )}
-          <CustomInput
-            label='Confirm password:'
-            type={showConfirmPassword ? 'text' : 'password'}
-            name='confirm_password'
-            value={formData.confirm_password}
-            onChange={handleChange}
-            endAdornment={
-              <InputAdornment position='end'>
-                <IconButton
-                  onClick={toggleConfirmPasswordVisibility}
-                  edge='end'
-                >
-                  {showPassword ? (
-                    <VisibilityOff sx={{ color: 'white', fontSize: '20px' }} />
-                  ) : (
-                    <Visibility sx={{ color: 'white', fontSize: '20px' }} />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-          {errors.confirm_password && (
-            <Typography
-              sx={{
-                color: 'hsl(0, 50%, 60%)',
-                fontSize: '12px',
-                marginTop: '-8px',
-              }}
-            >
-              {errors.confirm_password}
-            </Typography>
-          )}
+
+          <Box>
+            <CustomInput label='Email:' {...register('email')} />
+            {errors.email && (
+              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+                {errors.email.message}
+              </Typography>
+            )}
+          </Box>
+
+          <Box>
+            <CustomInput
+              label='Password:'
+              type={showPassword ? 'text' : 'password'}
+              {...register('password')}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton onClick={togglePasswordVisibility} edge='end'>
+                    {showPassword ? (
+                      <VisibilityOff
+                        sx={{ fontSize: '20px', color: 'white' }}
+                      />
+                    ) : (
+                      <Visibility sx={{ fontSize: '20px', color: 'white' }} />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {errors.password && (
+              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+                {errors.password.message}
+              </Typography>
+            )}
+          </Box>
+
+          <Box>
+            <CustomInput
+              label='Confirm password:'
+              type={showConfirmPassword ? 'text' : 'password'}
+              {...register('confirm_password')}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    onClick={toggleConfirmPasswordVisibility}
+                    edge='end'
+                  >
+                    {showConfirmPassword ? (
+                      <VisibilityOff
+                        sx={{ fontSize: '20px', color: 'white' }}
+                      />
+                    ) : (
+                      <Visibility sx={{ fontSize: '20px', color: 'white' }} />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {errors.confirm_password && (
+              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+                {errors.confirm_password.message}
+              </Typography>
+            )}
+          </Box>
+
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
             <CustomButton type='submit' disabled={isPending}>
               {isPending ? 'Registering...' : 'Register'}
