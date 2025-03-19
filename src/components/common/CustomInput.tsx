@@ -50,8 +50,9 @@ type CustomInputProps = {
   type?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
-  onBlur?: () => void;
+  ref?: React.Ref<HTMLInputElement>;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
   sx?: SxProps<Theme>;
@@ -68,6 +69,7 @@ const CustomInput = ({
   onChange,
   onFocus,
   onBlur,
+  ref,
   startAdornment,
   endAdornment,
   sx,
@@ -90,6 +92,7 @@ const CustomInput = ({
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        inputRef={ref}
         disabled={disabled}
         sx={inputStyle}
       />

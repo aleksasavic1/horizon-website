@@ -196,7 +196,12 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
         </IconButton>
       </Box>
 
-      <Drawer anchor='right' open={open} onClose={() => setOpen(false)}>
+      <Drawer
+        anchor='right'
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{ overflowY: 'hidden' }}
+      >
         <Box
           sx={{
             width: '40vw',
@@ -206,7 +211,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
             color: '#fff',
             display: 'flex',
             flexDirection: 'column',
-            overflowY: 'hidden',
+            overflowY: 'auto',
 
             '@media (max-width: 814px)': {
               width: '50vw',

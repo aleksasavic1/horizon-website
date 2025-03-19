@@ -1,21 +1,27 @@
-import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import CustomInput from '../components/common/CustomInput';
 import CustomButton from '../components/common/CustomButton';
 import { useResetPassword } from '../hooks/auth-hook';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  forgotPasswordSchema,
+  ForgotPasswordSchemaTypes,
+} from '../utils/validation';
 
 const ForgotPassword = () => {
   const { mutate: resetPassword, isPending } = useResetPassword();
 
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ForgotPasswordSchemaTypes>({
+    resolver: zodResolver(forgotPasswordSchema),
+  });
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!email) return setError('Email is required');
-
-    resetPassword(email);
-    setError('');
+  const onSubmit = (data: ForgotPasswordSchemaTypes) => {
+    resetPassword(data.email);
   };
 
   return (
@@ -42,7 +48,7 @@ const ForgotPassword = () => {
 
         <Box
           component='form'
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -55,23 +61,14 @@ const ForgotPassword = () => {
             },
           }}
         >
-          <CustomInput
-            label='Email:'
-            name='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {error && (
-            <Typography
-              sx={{
-                color: 'hsl(0, 50%, 60%)',
-                fontSize: '12px',
-                marginTop: '-8px',
-              }}
-            >
-              {error}
-            </Typography>
-          )}
+          <Box>
+            <CustomInput label='Email:' {...register('email')} />
+            {errors.email && (
+              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+                {errors.email.message}
+              </Typography>
+            )}
+          </Box>
 
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
             <CustomButton type='submit' disabled={isPending}>
