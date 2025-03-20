@@ -36,6 +36,8 @@ const GameDetails = () => {
 
   const [isRecommended, setIsRecommended] = useState<boolean>(false);
   const [isGenreModalOpen, setIsGenreModalOpen] = useState<boolean>(false);
+  const [isDeveloperModalOpen, setIsDeveloperModalOpen] =
+    useState<boolean>(false);
 
   const rating = game?.rating || 0;
   const fullStars = Math.floor(rating);
@@ -210,6 +212,11 @@ const GameDetails = () => {
             color: 'white',
             textShadow: '2px 2px 10px rgba(0,0,0,0.8)',
             textAlign: 'center',
+            mx: 2,
+
+            '@media (max-width: 640px)': {
+              fontSize: '2.3rem',
+            },
           }}
         >
           {game?.name || ''}
@@ -224,9 +231,27 @@ const GameDetails = () => {
             color: 'white',
             textShadow: '2px 2px 10px rgba(0,0,0,0.8)',
             textAlign: 'center',
+
+            '@media (max-width: 640px)': {
+              right: 14,
+            },
+            '@media (max-width: 400px)': {
+              display: 'flex',
+              flexDirection: 'column',
+            },
           }}
         >
-          Released: {formattedDate}
+          <Box
+            component='span'
+            sx={{
+              '@media (max-width: 400px)': {
+                marginBottom: '-4px',
+              },
+            }}
+          >
+            Released:{' '}
+          </Box>
+          {formattedDate}
         </Typography>
         <Box
           sx={{
@@ -236,6 +261,12 @@ const GameDetails = () => {
             zIndex: 3,
             display: 'flex',
             alignItems: 'center',
+
+            '@media (max-width: 640px)': {
+              // display: 'flex',
+              // flexDirection: 'column',
+              left: 14,
+            },
           }}
         >
           <CustomTooltip title={`Rating: ${game?.rating || 'N/A'}`}>
@@ -264,34 +295,79 @@ const GameDetails = () => {
           margin: '15px 30px',
           display: 'flex',
           justifyContent: 'space-between',
+
+          '@media (max-width: 640px)': {
+            margin: '16px',
+          },
         }}
       >
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {game?.developers.map((developer: any, index: number) => {
-            return (
-              <Typography
-                key={index}
-                sx={{
-                  backgroundColor: theme.palette.blueBox.bg,
-                  border: `1px solid ${theme.palette.blueBox.border}`,
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                }}
-              >
-                {developer?.name || ''}
-              </Typography>
-            );
-          })}
+          {game?.developers.slice(0, 2).map((developer: any, index: number) => (
+            <Typography
+              key={index}
+              sx={{
+                backgroundColor: theme.palette.blueBox.bg,
+                border: `1px solid ${theme.palette.blueBox.border}`,
+                padding: '4px 8px',
+                borderRadius: '4px',
+                display: { xs: 'none', md: 'flex' },
+              }}
+            >
+              {developer?.name || ''}
+            </Typography>
+          ))}
+
+          <CustomButton
+            variant='outlined'
+            onClick={() => setIsDeveloperModalOpen(true)}
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+              alignSelf: 'center',
+              padding: '4px 8px',
+            }}
+          >
+            See Developers
+          </CustomButton>
+
+          {game?.developers.length > 2 && (
+            <CustomButton
+              variant='outlined'
+              onClick={() => setIsDeveloperModalOpen(true)}
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                alignSelf: 'center',
+                padding: '4px 8px',
+              }}
+            >
+              See More
+            </CustomButton>
+          )}
         </Box>
+
         <Box sx={{ display: 'flex', gap: 2 }}>
           {game?.genres.length > 4 && (
             <CustomButton
               variant='outlined'
               onClick={() => setIsGenreModalOpen(true)}
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                padding: '4px 8px',
+              }}
             >
               See More
             </CustomButton>
           )}
+          <CustomButton
+            variant='outlined'
+            onClick={() => setIsGenreModalOpen(true)}
+            sx={{
+              display: { xs: 'flex', md: 'none' },
+              alignSelf: 'center',
+              padding: '4px 8px',
+            }}
+          >
+            See Genres
+          </CustomButton>
           {game?.genres.slice(0, 4).map((genre: any, index: number) => {
             return (
               <Typography
@@ -301,6 +377,7 @@ const GameDetails = () => {
                   border: `1px solid ${theme.palette.blueBox.border}`,
                   padding: '4px 8px',
                   borderRadius: '4px',
+                  display: { xs: 'none', md: 'flex' },
                 }}
               >
                 {genre?.name || ''}
@@ -327,6 +404,10 @@ const GameDetails = () => {
           sx={{
             padding: '0 30px',
             order: 1,
+
+            '@media (max-width: 640px)': {
+              padding: '0 16px',
+            },
           }}
         >
           <Box>
@@ -386,7 +467,16 @@ const GameDetails = () => {
           </Box>
         </Box>
 
-        <Box sx={{ padding: '0 30px', order: 2 }}>
+        <Box
+          sx={{
+            padding: '0 30px',
+            order: 2,
+
+            '@media (max-width: 640px)': {
+              padding: '0 16px',
+            },
+          }}
+        >
           <Typography
             sx={{
               fontSize: '1.3rem',
@@ -409,6 +499,10 @@ const GameDetails = () => {
 
             '@media (max-width: 946px)': {
               order: 4,
+            },
+
+            '@media (max-width: 640px)': {
+              padding: '0 16px',
             },
           }}
         >
@@ -460,7 +554,7 @@ const GameDetails = () => {
           >
             <Typography
               variant='h6'
-              sx={{ fontWeight: 'bold', marginBottom: '8px' }}
+              sx={{ fontWeight: 'bold', marginBottom: '8px', lineHeight: 1.3 }}
             >
               {!isRecommended
                 ? 'Minimum Requirements:'
@@ -511,8 +605,13 @@ const GameDetails = () => {
             padding: '0 30px',
             position: 'relative',
             order: 4,
+
             '@media (max-width: 946px)': {
               order: 3,
+            },
+
+            '@media (max-width: 640px)': {
+              padding: '0 16px',
             },
           }}
         >
@@ -590,6 +689,39 @@ const GameDetails = () => {
       </Box>
 
       <CustomModal
+        open={isDeveloperModalOpen}
+        onClose={() => setIsDeveloperModalOpen(false)}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+          }}
+        >
+          <Typography sx={{ textAlign: 'center', fontSize: '1.5rem', my: 2 }}>
+            All Developers
+          </Typography>
+          <Box sx={{ overflowY: 'auto' }}>
+            {game?.developers.map((developer: any, index: number) => (
+              <Typography
+                key={index}
+                sx={{
+                  backgroundColor: theme.palette.blueBox.bg,
+                  padding: '12px 16px',
+                  borderRadius: '4px',
+                  my: 1,
+                  border: `1px solid ${theme.palette.blueBox.border}`,
+                }}
+              >
+                {developer?.name || ''}
+              </Typography>
+            ))}
+          </Box>
+        </Box>
+      </CustomModal>
+
+      <CustomModal
         open={isGenreModalOpen}
         onClose={() => setIsGenreModalOpen(false)}
       >
@@ -597,8 +729,6 @@ const GameDetails = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-
             height: '100%',
           }}
         >

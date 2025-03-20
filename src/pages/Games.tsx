@@ -82,6 +82,19 @@ const Games = () => {
   }, [games]);
 
   useEffect(() => {
+    const delaySearch = setTimeout(() => {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        search: formData.search,
+      }));
+      setPage(1);
+      setAllGames([]);
+    }, 500);
+
+    return () => clearTimeout(delaySearch);
+  }, [formData.search]);
+
+  useEffect(() => {
     const handleScroll = () => {
       if (
         window.innerHeight + window.scrollY >=
@@ -99,9 +112,10 @@ const Games = () => {
   }, [isFetching, isQueryFetching]);
 
   const handleApply = () => {
-    const queryParams: Record<string, string> = {};
+    const queryParams: Record<string, string> = {
+      search: formData.search,
+    };
 
-    if (formData.search) queryParams.search = formData.search;
     if (formData.sort_by) queryParams.ordering = formData.sort_by;
     if (formData.platforms) queryParams.platforms = formData.platforms;
     if (formData.genres) queryParams.genres = formData.genres;

@@ -200,13 +200,13 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
         anchor='right'
         open={open}
         onClose={() => setOpen(false)}
-        sx={{ overflowY: 'hidden' }}
       >
         <Box
           sx={{
             width: '40vw',
             backgroundColor: '#1e1e1e',
-            minHeight: '100vh',
+            minHeight: '100%',
+            height: '100%',
             padding: '16px',
             color: '#fff',
             display: 'flex',
