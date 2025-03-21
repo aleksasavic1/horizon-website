@@ -68,6 +68,8 @@ const CustomSelect = ({
             key={option.value}
             value={option.value}
             sx={{
+              cursor: "url('/cursor/link_select_pointer.cur') 0 0, pointer",
+
               '&:hover': {
                 backgroundColor: '#252525',
               },

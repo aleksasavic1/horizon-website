@@ -67,6 +67,7 @@ const CustomModal = ({
         {children}
         {onClose && !hideCloseButton && (
           <CustomButton
+            className='cursor-hover'
             variant='outlined'
             onClick={onClose}
             disableRipple
@@ -77,7 +78,6 @@ const CustomModal = ({
               position: 'absolute',
               top: 0,
               right: 0,
-              cursor: 'pointer',
               border: 'none',
 
               '&:hover': {

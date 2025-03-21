@@ -11,6 +11,7 @@ const GradientButton = styled(Button)({
   borderRadius: '6px',
   transition: 'all 0.3s ease',
   border: 'none',
+  cursor: "url('/cursor/link_select_pointer.cur') 0 0, pointer",
 
   '&:hover': {
     boxShadow: '0 0 3px hsla(0, 0%, 100%, 0.2)',
@@ -35,6 +36,7 @@ const OutlineButton = styled(Button)({
   borderRadius: '6px',
   border: '1px solid hsla(0, 0%, 100%, 0.4)',
   transition: 'all 0.3s ease',
+  cursor: "url('/cursor/link_select_pointer.cur') 0 0, pointer",
 
   '&:hover': {
     boxShadow: '0 0 3px hsla(0, 0%, 100%, 0.2)',
@@ -57,6 +59,7 @@ const OrangeButton = styled(Button)({
   transition: 'all 0.3s ease',
   border: 'none',
   minWidth: '180px',
+  cursor: "url('/cursor/link_select_pointer.cur') 0 0, pointer",
 
   '&:hover': {
     boxShadow: '0 0 3px hsla(0, 0%, 100%, 0.2)',

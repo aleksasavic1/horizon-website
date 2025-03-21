@@ -78,13 +78,13 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
     >
       <Box sx={{ flex: 1, display: 'flex' }}>
         <Typography
+          className='cursor-hover'
           onClick={() => navigate('/')}
           sx={{
             fontFamily: 'Orbitron, sans-serif',
             fontSize: '24px',
             fontWeight: 'bold',
             color: 'hsla(0, 0%, 100%, 0.8)',
-            cursor: 'pointer',
             transition: '400ms ease',
             userSelect: 'none',
             '&:hover': {
@@ -162,11 +162,11 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               src={profilePicture || profilePlaceholder}
               alt='profile picture'
               onClick={() => navigate('/my-profile')}
+              className='cursor-hover'
               sx={{
                 width: '46px',
                 height: '46px',
                 borderRadius: '50%',
-                cursor: 'pointer',
                 transition: '0.3s ease-in-out',
                 filter: 'brightness(0.9)',
                 objectFit: 'cover',
@@ -196,11 +196,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
         </IconButton>
       </Box>
 
-      <Drawer
-        anchor='right'
-        open={open}
-        onClose={() => setOpen(false)}
-      >
+      <Drawer anchor='right' open={open} onClose={() => setOpen(false)}>
         <Box
           sx={{
             width: '40vw',

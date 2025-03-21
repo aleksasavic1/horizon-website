@@ -222,7 +222,7 @@ const Contact = () => {
           />
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'end', my: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2, mb: 3 }}>
           <CustomButton
             variant='outlined'
             onClick={handleSendEmail}

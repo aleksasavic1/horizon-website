@@ -208,7 +208,8 @@ const Register = () => {
           <Typography sx={{ fontSize: '0.9rem', textAlign: 'center' }}>
             Already have an account?&nbsp;
             <Link
-              sx={{ cursor: 'pointer', fontSize: '0.9rem' }}
+              className='cursor-hover'
+              sx={{ fontSize: '0.9rem' }}
               onClick={() => navigate('/login')}
             >
               Sign in

@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import { resetPassword } from '../services/auth-api';
 import profilePlaceholder from '../assets/profile-placeholder.jpg';
 import profileBg from '../assets/profile-bg.webp';
+import { alpha } from '@mui/material/styles';
 
 type MyProfileProps = {
   profilePicture: string | null;
@@ -131,7 +132,7 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
         alignItems: 'center',
         minHeight: 'calc(100vh - 68px)',
 
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url(${profileBg})`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url(${profileBg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -147,12 +148,20 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
           gap: 4,
           width: '720px',
           mx: 2,
-          backgroundColor: theme.palette.background.default,
+          backgroundColor: alpha(theme.palette.background.default, 0.95),
           boxShadow: '0 0 6px hsla(0, 0%, 0%, 0.4)',
           zIndex: 0,
+          border: '1px solid hsla(0, 0%, 100%, 0.05)',
+
+          '@media (max-width: 768px)': {
+            m: 0,
+            height: '100vh',
+            border: 'none',
+            borderRadius: 0,
+            backgroundColor: alpha(theme.palette.background.default, 0.85),
+          },
 
           '@media (max-width: 440px)': {
-            mx: 1,
             py: 4,
             px: 2,
           },
@@ -208,6 +217,7 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
 
           {isEditEnabled && (
             <Box
+              className='cursor-hover'
               sx={{
                 position: 'absolute',
                 bottom: 0,
@@ -220,7 +230,6 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                cursor: isEditEnabled ? 'pointer' : 'not-allowed',
                 transition: '300ms ease',
 
                 '&:hover': {
@@ -229,8 +238,11 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
                 },
               }}
             >
-              <IconButton component='label'>
-                <EditIcon sx={{ color: 'white', fontSize: 16 }} />
+              <IconButton component='label' className='cursor-hover'>
+                <EditIcon
+                  className='cursor-hover'
+                  sx={{ color: 'white', fontSize: 16 }}
+                />
                 <input
                   type='file'
                   hidden
@@ -290,7 +302,8 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
             />
             <Box sx={{ display: 'flex', justifyContent: 'end', mt: '6px' }}>
               <Link
-                sx={{ cursor: 'pointer', fontSize: '0.9rem' }}
+                className='cursor-hover'
+                sx={{ fontSize: '0.9rem' }}
                 onClick={handleChangePassword}
               >
                 Change password

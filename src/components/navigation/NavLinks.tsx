@@ -39,9 +39,9 @@ const NavLinks = () => {
           <Typography
             key={link.path}
             onClick={() => handleClick(link.path)}
+            className='cursor-hover'
             sx={{
               fontFamily: 'sans-serif',
-              cursor: 'pointer',
               fontSize: '15px',
               color: 'hsla(0, 0%, 100%, 0.8)',
               display: 'flex',

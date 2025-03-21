@@ -68,6 +68,7 @@ const GameCard = ({
         }
       }}
       onMouseDown={(e) => e.button === 1 && e.preventDefault()}
+      className='cursor-hover'
       sx={{
         width: '100%',
         backgroundColor: '#1e1e1e',
@@ -77,7 +78,6 @@ const GameCard = ({
         boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
         display: 'flex',
         flexDirection: 'column',
-        cursor: 'pointer',
       }}
     >
       <Box
