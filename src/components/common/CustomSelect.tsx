@@ -33,7 +33,7 @@ const CustomSelect = ({
         disabled={disabled}
         sx={{
           color: 'white',
-          backgroundColor: '#1e1e1e',
+          // backgroundColor: '#1e1e1e',
           border: '1px solid hsla(0, 0%, 100%, 0.3)',
           borderRadius: '4px',
           transition: 'border 0.3s ease',

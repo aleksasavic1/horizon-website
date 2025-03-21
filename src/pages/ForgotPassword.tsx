@@ -8,6 +8,7 @@ import {
   forgotPasswordSchema,
   ForgotPasswordSchemaTypes,
 } from '../utils/validation';
+import nfsBg from '../assets/nfs-bg.png';
 
 const ForgotPassword = () => {
   const { mutate: resetPassword, isPending } = useResetPassword();
@@ -30,6 +31,12 @@ const ForgotPassword = () => {
         minHeight: 'calc(100vh - 68px)',
         display: 'flex',
         flexDirection: 'column',
+
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), url(${nfsBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
       }}
     >
       <Box

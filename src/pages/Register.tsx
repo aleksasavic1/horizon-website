@@ -20,6 +20,7 @@ import useAuthStore from '../store/auth-store';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, RegisterSchemaTypes } from '../utils/validation';
+import nfsBg from '../assets/nfs-bg.png';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -81,6 +82,12 @@ const Register = () => {
         minHeight: 'calc(100vh - 68px)',
         display: 'flex',
         flexDirection: 'column',
+
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), url(${nfsBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
       }}
     >
       <Box

@@ -74,14 +74,14 @@ input:-webkit-autofill {
 }
 
 .custom-toast {
-  max-width: 90%;
-  margin: 16px auto;
+  max-width: 95%;
+  margin: 12px auto;
 }
 
 @media (min-width: 480px) {
   .custom-toast {
     max-width: 100%;
-    margin: 16px auto;
+    margin: 12px auto;
   }
 }
 
@@ -98,6 +98,7 @@ input:-webkit-autofill {
   align-items: center;
   justify-content: center;
   top: 45% !important;
+  cursor: url('/cursor/link_select_pointer.cur') 0 0, pointer !important;
 }
 
 .swiper-button-prev::after,
@@ -145,4 +146,9 @@ input:-webkit-autofill {
     width: 44px !important;
     height: 44px !important;
   }
+}
+
+.css-1l87d87-MuiTypography-root-MuiLink-root {
+  color: #6ddff3 !important;
+  text-decoration-color: #6ddff3 !important;
 }
