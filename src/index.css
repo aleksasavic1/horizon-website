@@ -10,6 +10,50 @@
 
 body {
   overflow-x: hidden;
+  cursor: url('/cursor/standard_pointer.cur'), auto !important;
+}
+
+a,
+button,
+[role="button"],
+.MuiButtonBase-root,
+.MuiIconButton-root {
+  cursor: url('/cursor/link_select_pointer.cur') 0 0, pointer !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+.MuiInputBase-input {
+  cursor: url('/cursor/text_select.cur') 0 0, text !important;
+}
+
+[disabled],
+.Mui-disabled {
+  cursor: url('/cursor/unavailable_pointer.cur') 0 0, not-allowed !important;
+}
+
+label,
+.MuiFormLabel-root {
+  cursor: url('/cursor/standard_pointer.cur') 0 0, auto !important;
+}
+
+.cursor-hover {
+  cursor: url('/cursor/link_select_pointer.cur') 0 0, pointer !important;
+}
+
+.cursor-text-select {
+  cursor: url('/cursor/text_select.cur') 0 0, text !important;
+}
+
+.css-yimnyd-MuiInputBase-input {
+  cursor: url('/cursor/text_select.cur') 0 0, text !important;
+}
+
+.Toastify__toast,
+.Toastify__toast-body {
+  cursor: url('/cursor/standard_pointer.cur') 0 0, auto !important;
 }
 
 input:-webkit-autofill {
@@ -82,7 +126,11 @@ input:-webkit-autofill {
   -webkit-text-fill-color: unset !important;
   color: hsla(0, 0%, 100%, 0.6) !important;
   opacity: 1 !important;
-  cursor: not-allowed;
+  cursor: url('/cursor/unavailable_pointer.cur') 0 0, not-allowed !important;
+}
+
+.MuiInputBase-root:not(.Mui-disabled) .MuiSelect-select {
+  cursor: url('/cursor/link_select_pointer.cur') 0 0, pointer !important;
 }
 
 @media (max-width: 420px) {
@@ -91,7 +139,6 @@ input:-webkit-autofill {
   .swiper-button-next::after {
     font-size: 20px !important;
   }
-
 
   .swiper-button-prev,
   .swiper-button-next {

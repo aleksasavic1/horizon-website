@@ -18,10 +18,10 @@ const ShowMore = ({ text }: { text: string }) => {
 
       {text.length > MAX_LENGTH && (
         <Typography
+          className='cursor-hover'
           onClick={toggleExpanded}
           sx={{
             color: 'darkorange',
-            cursor: 'pointer',
             fontSize: '14px',
             display: 'inline-block',
             marginTop: '4px',

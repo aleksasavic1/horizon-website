@@ -186,6 +186,7 @@ const GameDetails = () => {
 
         <Box
           component='img'
+          className='cursor-hover'
           src={returnIcon}
           alt='Return Icon'
           onClick={() => navigate(-1)}
@@ -194,7 +195,6 @@ const GameDetails = () => {
             top: 15,
             left: 15,
             width: '40px',
-            cursor: 'pointer',
             transition: '300ms ease',
             zIndex: 200,
             '&:hover': {
@@ -643,6 +643,7 @@ const GameDetails = () => {
             component='img'
             src={redditLogo}
             alt='Reddit Logo'
+            className='cursor-hover'
             onClick={() => openLink(game?.reddit_url || '')}
             sx={{
               margin: '0 30px',
@@ -654,7 +655,6 @@ const GameDetails = () => {
               justifyContent: 'center',
               width: '38px',
               height: '38px',
-              cursor: 'pointer',
               transition: '300ms ease',
               filter: 'drop-shadow(2px 2px 2px black) brightness(84%)',
               '&:hover': {
@@ -666,6 +666,7 @@ const GameDetails = () => {
             component='img'
             src={websiteLogo}
             alt='Website Logo'
+            className='cursor-hover'
             onClick={() => openLink(game?.website || '')}
             sx={{
               margin: '0 30px',
@@ -677,7 +678,6 @@ const GameDetails = () => {
               justifyContent: 'center',
               width: '40px',
               height: '40px',
-              cursor: 'pointer',
               transition: '300ms ease',
               filter: 'drop-shadow(2px 2px 2px black) brightness(84%)',
               '&:hover': {

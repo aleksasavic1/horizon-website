@@ -110,7 +110,8 @@ const Login = () => {
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Link
-              sx={{ cursor: 'pointer', fontSize: '0.9rem' }}
+              className='cursor-hover'
+              sx={{ fontSize: '0.9rem' }}
               onClick={() => navigate('/forgot-password')}
             >
               Forgot Password?
@@ -122,7 +123,8 @@ const Login = () => {
           <Typography sx={{ fontSize: '0.9rem', textAlign: 'center' }}>
             Don't have an account?&nbsp;
             <Link
-              sx={{ cursor: 'pointer', fontSize: '0.9rem' }}
+              className='cursor-hover'
+              sx={{ fontSize: '0.9rem' }}
               onClick={() => navigate('/register')}
             >
               Sign up
