@@ -100,7 +100,14 @@ const Register = () => {
         }}
       >
         <Typography
-          sx={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '20px' }}
+          sx={{
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            marginBottom: '20px',
+            '@media (min-width: 1921px)': {
+              fontSize: '2.4rem',
+            },
+          }}
         >
           Sign Up
         </Typography>
@@ -117,6 +124,9 @@ const Register = () => {
 
             '@media (max-width: 360px)': {
               width: '100%',
+            },
+            '@media (min-width: 1921px)': {
+              width: '420px',
             },
           }}
         >
@@ -209,11 +219,27 @@ const Register = () => {
           </Box>
 
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-            <CustomButton type='submit' disabled={isPending}>
+            <CustomButton
+              type='submit'
+              disabled={isPending}
+              sx={{
+                '@media (min-width: 1921px)': {
+                  fontSize: '15px',
+                },
+              }}
+            >
               {isPending ? 'Registering...' : 'Register'}
             </CustomButton>
           </Box>
-          <Typography sx={{ fontSize: '0.9rem', textAlign: 'center' }}>
+          <Typography
+            sx={{
+              fontSize: '0.9rem',
+              textAlign: 'center',
+              '@media (min-width: 1921px)': {
+                fontSize: '1rem',
+              },
+            }}
+          >
             Already have an account?&nbsp;
             <Link
               className='cursor-hover'

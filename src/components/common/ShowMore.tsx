@@ -12,7 +12,14 @@ const ShowMore = ({ text }: { text: string }) => {
 
   return (
     <Box>
-      <Typography sx={{ fontSize: '14px' }}>
+      <Typography
+        sx={{
+          fontSize: '14px',
+          '@media (min-width: 1921px)': {
+            fontSize: '16px',
+          },
+        }}
+      >
         {isExpanded ? text : `${text.substring(0, MAX_LENGTH)}...`}
       </Typography>
 
@@ -26,6 +33,9 @@ const ShowMore = ({ text }: { text: string }) => {
             display: 'inline-block',
             marginTop: '4px',
             textDecoration: 'underline',
+            '@media (min-width: 1921px)': {
+              fontSize: '16px',
+            },
           }}
         >
           {isExpanded ? 'Show less' : 'Show more'}

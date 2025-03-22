@@ -437,11 +437,24 @@ const GameDetails = () => {
         >
           <Box>
             <Typography
-              sx={{ fontSize: '1.3rem', fontWeight: 'bold', margin: '4px 0' }}
+              sx={{
+                fontSize: '1.3rem',
+                fontWeight: 'bold',
+                margin: '4px 0',
+                '@media (min-width: 1921px)': {
+                  fontSize: '1.5rem',
+                },
+              }}
             >
               Available platforms:
             </Typography>
-            <Typography>
+            <Typography
+              sx={{
+                '@media (min-width: 1921px)': {
+                  fontSize: '18px',
+                },
+              }}
+            >
               {game?.platforms
                 ?.map((platform: any) => platform?.platform?.name)
                 .filter(Boolean)
@@ -454,6 +467,9 @@ const GameDetails = () => {
                 fontSize: '1rem',
                 display: 'flex',
                 alignItems: 'baseline',
+                '@media (min-width: 1921px)': {
+                  fontSize: '18px',
+                },
               }}
             >
               Youtube:{' '}
@@ -468,6 +484,9 @@ const GameDetails = () => {
                 fontSize: '1rem',
                 display: 'flex',
                 alignItems: 'baseline',
+                '@media (min-width: 1921px)': {
+                  fontSize: '18px',
+                },
               }}
             >
               Twitch:{' '}
@@ -482,6 +501,9 @@ const GameDetails = () => {
                 fontSize: '1rem',
                 display: 'flex',
                 alignItems: 'baseline',
+                '@media (min-width: 1921px)': {
+                  fontSize: '18px',
+                },
               }}
             >
               Reddit:{' '}
@@ -507,6 +529,10 @@ const GameDetails = () => {
               fontSize: '1.3rem',
               fontWeight: 'bold',
               margin: '4px 0',
+
+              '@media (min-width: 1921px)': {
+                fontSize: '1.5rem',
+              },
             }}
           >
             Overview:
@@ -549,6 +575,10 @@ const GameDetails = () => {
                 borderColor: isRecommended
                   ? 'hsla(0, 0%, 100%, 0.4)'
                   : theme.palette.orangeBox.border,
+
+                '@media (min-width: 1921px)': {
+                  fontSize: '16px',
+                },
               }}
             >
               Minimum
@@ -563,6 +593,9 @@ const GameDetails = () => {
                 borderColor: isRecommended
                   ? theme.palette.orangeBox.border
                   : 'hsla(0, 0%, 100%, 0.4)',
+                '@media (min-width: 1921px)': {
+                  fontSize: '16px',
+                },
               }}
             >
               Recommended
@@ -579,7 +612,14 @@ const GameDetails = () => {
           >
             <Typography
               variant='h6'
-              sx={{ fontWeight: 'bold', marginBottom: '8px', lineHeight: 1.3 }}
+              sx={{
+                fontWeight: 'bold',
+                marginBottom: '8px',
+                lineHeight: 1.3,
+                '@media (min-width: 1921px)': {
+                  fontSize: '22px',
+                },
+              }}
             >
               {!isRecommended
                 ? 'Minimum Requirements:'
@@ -593,14 +633,28 @@ const GameDetails = () => {
                   return (
                     <Typography
                       key={index}
-                      sx={{ opacity: 0.9, lineHeight: '1.65' }}
+                      sx={{
+                        opacity: 0.9,
+                        lineHeight: '1.65',
+                        '@media (min-width: 1921px)': {
+                          fontSize: '16px',
+                        },
+                      }}
                     >
                       <strong>{key.trim()}:</strong> {value.join(':').trim()}
                     </Typography>
                   );
                 })
               ) : (
-                <Typography sx={{ opacity: 0.9, lineHeight: '1.65' }}>
+                <Typography
+                  sx={{
+                    opacity: 0.9,
+                    lineHeight: '1.65',
+                    '@media (min-width: 1921px)': {
+                      fontSize: '16px',
+                    },
+                  }}
+                >
                   No minimum requirements available.
                 </Typography>
               )
@@ -612,14 +666,28 @@ const GameDetails = () => {
                   return (
                     <Typography
                       key={index}
-                      sx={{ opacity: 0.9, lineHeight: '1.65' }}
+                      sx={{
+                        opacity: 0.9,
+                        lineHeight: '1.65',
+                        '@media (min-width: 1921px)': {
+                          fontSize: '16px',
+                        },
+                      }}
                     >
                       <strong>{key.trim()}:</strong> {value.join(':').trim()}
                     </Typography>
                   );
                 })
             ) : (
-              <Typography sx={{ opacity: 0.9, lineHeight: '1.65' }}>
+              <Typography
+                sx={{
+                  opacity: 0.9,
+                  lineHeight: '1.65',
+                  '@media (min-width: 1921px)': {
+                    fontSize: '16px',
+                  },
+                }}
+              >
                 No recommended requirements available.
               </Typography>
             )}

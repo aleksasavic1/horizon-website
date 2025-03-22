@@ -55,6 +55,9 @@ const NavLinks = () => {
                 padding: '8px 16px',
               },
               '&:hover': { opacity: 1 },
+              '@media (min-width: 1921px)': {
+                fontSize: '18px',
+              },
             }}
           >
             {link.label}

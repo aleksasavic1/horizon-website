@@ -49,7 +49,14 @@ const ForgotPassword = () => {
         }}
       >
         <Typography
-          sx={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '20px' }}
+          sx={{
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            marginBottom: '20px',
+            '@media (min-width: 1921px)': {
+              fontSize: '2.4rem',
+            },
+          }}
         >
           Forgot Password
         </Typography>
@@ -67,6 +74,9 @@ const ForgotPassword = () => {
             '@media (max-width: 360px)': {
               width: '100%',
             },
+            '@media (min-width: 1921px)': {
+              width: '420px',
+            },
           }}
         >
           <Box>
@@ -79,7 +89,15 @@ const ForgotPassword = () => {
           </Box>
 
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-            <CustomButton type='submit' disabled={isPending}>
+            <CustomButton
+              type='submit'
+              disabled={isPending}
+              sx={{
+                '@media (min-width: 1921px)': {
+                  fontSize: '15px',
+                },
+              }}
+            >
               {isPending ? 'Sending...' : 'Send'}
             </CustomButton>
           </Box>

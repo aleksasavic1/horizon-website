@@ -33,6 +33,9 @@ const NotFound = () => {
           '@media (max-width: 640px)': {
             fontSize: 58,
           },
+          '@media (min-width: 1921px)': {
+            fontSize: 80,
+          },
         }}
       />
 
@@ -47,6 +50,9 @@ const NotFound = () => {
 
           '@media (max-width: 640px)': {
             fontSize: '30px',
+          },
+          '@media (min-width: 1921px)': {
+            fontSize: '44px',
           },
         }}
       >
@@ -67,13 +73,24 @@ const NotFound = () => {
             fontSize: '14px',
             mb: 2,
           },
+          '@media (min-width: 1921px)': {
+            fontSize: '18px',
+          },
         }}
       >
         Oops! The page you're looking for doesn't exist. It might have been
         moved or deleted.
       </Typography>
 
-      <CustomButton variant='contained' onClick={() => navigate('/')}>
+      <CustomButton
+        variant='contained'
+        onClick={() => navigate('/')}
+        sx={{
+          '@media (min-width: 1921px)': {
+            fontSize: '18px',
+          },
+        }}
+      >
         Go to Homepage
       </CustomButton>
     </Box>

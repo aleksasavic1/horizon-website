@@ -165,6 +165,10 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
             py: 4,
             px: 2,
           },
+          '@media (min-width: 1921px)': {
+            width: '900px',
+            py: 6,
+          },
         })}
       >
         <Box

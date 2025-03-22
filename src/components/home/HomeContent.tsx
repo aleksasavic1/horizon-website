@@ -18,9 +18,6 @@ const imgStyle = {
     maxWidth: '520px',
   },
   '@media (max-width: 900px)': {
-    maxWidth: '620px',
-  },
-  '@media (max-width: 640px)': {
     maxWidth: '100%',
   },
 };
@@ -29,6 +26,9 @@ const textStyle = {
   overflowY: 'auto',
   '@media (max-width: 768px)': {
     fontSize: '14px',
+  },
+  '@media (min-width: 1921px)': {
+    fontSize: '20px',
   },
 };
 
@@ -44,6 +44,9 @@ const HomeContent = () => {
           },
           '@media (max-width: 640px)': {
             fontSize: '1.3rem',
+          },
+          '@media (min-width: 1921px)': {
+            fontSize: '1.7rem',
           },
         }}
       >
@@ -119,6 +122,9 @@ const HomeContent = () => {
           '@media (max-width: 768px)': {
             fontSize: '14px',
           },
+          '@media (min-width: 1921px)': {
+            fontSize: '20px',
+          },
         }}
       >
         With a clean design and user-friendly interface, <b>Horizon</b> lets you
@@ -138,6 +144,9 @@ const HomeContent = () => {
           },
           '@media (max-width: 640px)': {
             fontSize: '1.3rem',
+          },
+          '@media (min-width: 1921px)': {
+            fontSize: '1.7rem',
           },
         }}
       >
@@ -221,18 +230,19 @@ const HomeContent = () => {
           muted
           playsInline
           sx={{
-            maxWidth: '860px',
+            maxHeight: '720px',
             width: '100%',
             borderRadius: '8px',
             border: '1px solid hsla(0, 0%, 100%, 0.4)',
             boxShadow: '3px 3px 6px hsla(0, 0%, 0%, 0.4)',
             filter: 'brightness(30%)',
+            objectFit: 'cover',
 
-            '@media (max-width: 1440px)': {
-              maxWidth: '780px',
+            '@media (min-width: 1921px)': {
+              maxHeight: '840px',
             },
-            '@media (max-width: 1280px)': {
-              maxWidth: '720px',
+            '@media (min-width: 2561px)': {
+              maxHeight: '980px',
             },
           }}
         />
