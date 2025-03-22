@@ -18,6 +18,9 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import { useGameDetails, useGameScreenshots } from '../hooks/games-hook';
 import ScreenshotsCarousel from '../components/games/ScreenshotsCarousel';
+import useLibraryStore from '../store/library-store';
+import { toast } from 'react-toastify';
+import { GameTypes } from '../types/game-types';
 import placeholderImg from '../assets/game-placeholder.png';
 import websiteLogo from '../assets/website-logo.png';
 import redditLogo from '../assets/reddit-logo.png';
@@ -29,6 +32,8 @@ const GameDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { data: game, isPending, error } = useGameDetails(id || '');
+  const { games, addGame, removeGame } = useLibraryStore();
+  const isAdded = game ? games.some((g) => g.id === game.id) : false;
 
   const { data: screenshots, isPending: scPending } = useGameScreenshots(
     id || ''
@@ -77,6 +82,26 @@ const GameDetails = () => {
 
   const openLink = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleAddOrRemove = (event: React.MouseEvent) => {
+    event.stopPropagation();
+
+    const formattedGame: GameTypes = {
+      ...game,
+      genres: game.genres ?? [],
+      reviews_count: game.reviews_count ?? 0,
+    };
+
+    if (isAdded) {
+      removeGame(formattedGame.id);
+      toast.success(
+        `${formattedGame.name} has been removed from your collection.`
+      );
+    } else {
+      addGame(formattedGame);
+      toast.success(`${formattedGame.name} has been added to your collection!`);
+    }
   };
 
   if (isPending) {
@@ -687,7 +712,6 @@ const GameDetails = () => {
           />
         </Box>
       </Box>
-
       <CustomModal
         open={isDeveloperModalOpen}
         onClose={() => setIsDeveloperModalOpen(false)}
@@ -720,6 +744,37 @@ const GameDetails = () => {
           </Box>
         </Box>
       </CustomModal>
+
+      <Box
+        sx={{
+          mt: 6,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Box
+          onClick={handleAddOrRemove}
+          className='cursor-hover'
+          sx={(theme) => ({
+            backgroundColor: isAdded
+              ? theme.palette.orangeBox.bg
+              : theme.palette.blueBox.bg,
+            border: isAdded
+              ? `1px solid ${theme.palette.orangeBox.border}`
+              : `1px solid ${theme.palette.blueBox.border}`,
+            borderBottom: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '6px 6px 0 0',
+            height: '40px',
+            width: '180px',
+          })}
+        >
+          {isAdded ? 'Remove' : 'Add to My Library'}
+        </Box>
+      </Box>
 
       <CustomModal
         open={isGenreModalOpen}
