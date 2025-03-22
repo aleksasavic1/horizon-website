@@ -30,6 +30,7 @@ const FAQ = () => {
           backgroundColor: 'transparent',
           borderRadius: '8px',
           p: 0,
+          mb: 3,
         }}
       >
         <Typography

@@ -745,6 +745,7 @@ const GameDetails = () => {
                     padding: '12px 16px',
                     borderRadius: '4px',
                     my: 1,
+                    border: `1px solid ${theme.palette.blueBox.border}`,
                   }}
                 >
                   {genre?.name || ''}
