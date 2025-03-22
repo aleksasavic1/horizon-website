@@ -59,14 +59,35 @@ const FiltersSidebar = ({
           '@media (max-width: 768px)': {
             width: '100vw',
           },
+          '@media (min-width: 1921px)': {
+            width: 420,
+          },
         }}
       >
-        <Typography variant='h6' sx={{ mb: 2, mt: 3, textAlign: 'center' }}>
+        <Typography
+          variant='h6'
+          sx={{
+            mb: 2,
+            mt: 3,
+            textAlign: 'center',
+            '@media (min-width: 1921px)': {
+              fontSize: '22px',
+            },
+          }}
+        >
           Filters
         </Typography>
 
         <FormControl fullWidth sx={{ mb: 2 }}>
-          <Typography variant='body2' sx={{ mb: 0.8 }}>
+          <Typography
+            variant='body2'
+            sx={{
+              mb: 0.8,
+              '@media (min-width: 1921px)': {
+                fontSize: '18px',
+              },
+            }}
+          >
             Platforms:
           </Typography>
           <CustomSelect
@@ -78,7 +99,15 @@ const FiltersSidebar = ({
         </FormControl>
 
         <FormControl fullWidth sx={{ mb: 2 }}>
-          <Typography variant='body2' sx={{ mb: 0.8 }}>
+          <Typography
+            variant='body2'
+            sx={{
+              mb: 0.8,
+              '@media (min-width: 1921px)': {
+                fontSize: '18px',
+              },
+            }}
+          >
             Genres:
           </Typography>
           <CustomSelect
@@ -89,7 +118,15 @@ const FiltersSidebar = ({
           />
         </FormControl>
 
-        <FormControl fullWidth sx={{ mb: 2 }}>
+        <FormControl
+          fullWidth
+          sx={{
+            mb: 2,
+            '@media (min-width: 1921px)': {
+              fontSize: '18px',
+            },
+          }}
+        >
           <Typography variant='body2' sx={{ mb: 0.8 }}>
             Sort by:
           </Typography>
@@ -121,14 +158,24 @@ const FiltersSidebar = ({
         <Box sx={{ display: 'flex', gap: '10px', mt: 3 }}>
           <CustomButton
             variant='outlined'
-            sx={{ width: '100%' }}
+            sx={{
+              width: '100%',
+              '@media (min-width: 1921px)': {
+                fontSize: '16px',
+              },
+            }}
             onClick={handleReset}
           >
             Reset
           </CustomButton>
           <CustomButton
             variant='outlined'
-            sx={{ width: '100%' }}
+            sx={{
+              width: '100%',
+              '@media (min-width: 1921px)': {
+                fontSize: '16px',
+              },
+            }}
             onClick={handleApply}
           >
             Apply
@@ -139,7 +186,15 @@ const FiltersSidebar = ({
           sx={{ position: 'absolute', top: 10, right: 10 }}
           onClick={onClose}
         >
-          <CloseIcon sx={{ color: 'white', fontSize: '22px' }} />
+          <CloseIcon
+            sx={{
+              color: 'white',
+              fontSize: '22px',
+              '@media (min-width: 1921px)': {
+                fontSize: '26px',
+              },
+            }}
+          />
         </IconButton>
       </Box>
     </Drawer>
