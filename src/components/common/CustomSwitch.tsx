@@ -58,7 +58,15 @@ const CustomSwitch = ({
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
       {leftLabel && (
-        <Typography sx={{ fontSize: '14px', color: '#fff' }}>
+        <Typography
+          sx={{
+            fontSize: '14px',
+            color: '#fff',
+            '@media (min-width: 1921px)': {
+              fontSize: '15px',
+            },
+          }}
+        >
           {leftLabel}
         </Typography>
       )}
@@ -66,7 +74,15 @@ const CustomSwitch = ({
       <StyledSwitch {...props} />
 
       {rightLabel && (
-        <Typography sx={{ fontSize: '14px', color: '#fff' }}>
+        <Typography
+          sx={{
+            fontSize: '14px',
+            color: '#fff',
+            '@media (min-width: 1921px)': {
+              fontSize: '15px',
+            },
+          }}
+        >
           {rightLabel}
         </Typography>
       )}
