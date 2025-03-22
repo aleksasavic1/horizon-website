@@ -4,6 +4,7 @@ import GameCard from '../components/GameCard';
 import Carousel from '../components/common/Carousel';
 import { useGames } from '../hooks/games-hook';
 import codBg from '../assets/cod-bg.jpg';
+import HomeContent from '../components/home/HomeContent';
 
 type Game = {
   id: number;
@@ -72,7 +73,7 @@ const Home = () => {
           fontWeight: 'bold',
           margin: '16px auto 8px',
           padding: '0 10px',
-          lineHeight: 1.4,
+          lineHeight: 1.3,
 
           '@media (max-width: 768px)': {
             fontSize: '2rem',
@@ -98,8 +99,12 @@ const Home = () => {
         Discover, explore, and track the most popular games of all time.
       </Typography>
 
-      <Box>
-        <Typography sx={{ textAlign: 'center', fontSize: '2rem', mb: 3 }}>
+      <HomeContent />
+
+      <Box sx={{ mb: 3 }}>
+        <Typography
+          sx={{ textAlign: 'center', fontSize: '2rem', mb: 3, lineHeight: 1.3 }}
+        >
           Call of Duty Games
         </Typography>
 
@@ -124,8 +129,10 @@ const Home = () => {
           </Typography>
         )}
       </Box>
-      <Box>
-        <Typography sx={{ textAlign: 'center', fontSize: '2rem', mb: 3 }}>
+      <Box sx={{ mb: 3 }}>
+        <Typography
+          sx={{ textAlign: 'center', fontSize: '2rem', mb: 3, lineHeight: 1.3 }}
+        >
           Grand Theft Auto Games
         </Typography>
 

@@ -57,6 +57,7 @@ const Login = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          mb: 6,
         }}
       >
         <Typography
