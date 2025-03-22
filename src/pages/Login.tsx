@@ -61,7 +61,14 @@ const Login = () => {
         }}
       >
         <Typography
-          sx={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '20px' }}
+          sx={{
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            marginBottom: '20px',
+            '@media (min-width: 1921px)': {
+              fontSize: '2.4rem',
+            },
+          }}
         >
           Sign In
         </Typography>
@@ -78,6 +85,9 @@ const Login = () => {
 
             '@media (max-width: 360px)': {
               width: '100%',
+            },
+            '@media (min-width: 1921px)': {
+              width: '420px',
             },
           }}
         >
@@ -119,12 +129,25 @@ const Login = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Link
               className='cursor-hover'
-              sx={{ fontSize: '0.9rem' }}
+              sx={{
+                fontSize: '0.9rem',
+                '@media (min-width: 1921px)': {
+                  fontSize: '1rem',
+                },
+              }}
               onClick={() => navigate('/forgot-password')}
             >
               Forgot Password?
             </Link>
-            <CustomButton type='submit' disabled={isPending}>
+            <CustomButton
+              type='submit'
+              disabled={isPending}
+              sx={{
+                '@media (min-width: 1921px)': {
+                  fontSize: '15px',
+                },
+              }}
+            >
               {isPending ? 'Logging in...' : 'Login'}
             </CustomButton>
           </Box>
@@ -132,7 +155,12 @@ const Login = () => {
             Don't have an account?&nbsp;
             <Link
               className='cursor-hover'
-              sx={{ fontSize: '0.9rem' }}
+              sx={{
+                fontSize: '0.9rem',
+                '@media (min-width: 1921px)': {
+                  fontSize: '1rem',
+                },
+              }}
               onClick={() => navigate('/register')}
             >
               Sign up

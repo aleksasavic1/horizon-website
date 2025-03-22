@@ -78,6 +78,10 @@ const Home = () => {
           '@media (max-width: 768px)': {
             fontSize: '2rem',
           },
+
+          '@media (min-width: 1921px)': {
+            fontSize: '2.4rem',
+          },
         }}
       >
         Explore The Best Games
@@ -94,6 +98,10 @@ const Home = () => {
           '@media (max-width: 768px)': {
             fontSize: '1rem',
           },
+
+          '@media (min-width: 1921px)': {
+            fontSize: '1.3rem',
+          },
         }}
       >
         Discover, explore, and track the most popular games of all time.
@@ -103,7 +111,15 @@ const Home = () => {
 
       <Box sx={{ mb: 3 }}>
         <Typography
-          sx={{ textAlign: 'center', fontSize: '2rem', mb: 3, lineHeight: 1.3 }}
+          sx={{
+            textAlign: 'center',
+            fontSize: '2rem',
+            mb: 3,
+            lineHeight: 1.3,
+            '@media (min-width: 1921px)': {
+              fontSize: '2.3rem',
+            },
+          }}
         >
           Call of Duty Games
         </Typography>
@@ -131,7 +147,15 @@ const Home = () => {
       </Box>
       <Box sx={{ mb: 3 }}>
         <Typography
-          sx={{ textAlign: 'center', fontSize: '2rem', mb: 3, lineHeight: 1.3 }}
+          sx={{
+            textAlign: 'center',
+            fontSize: '2rem',
+            mb: 3,
+            lineHeight: 1.3,
+            '@media (min-width: 1921px)': {
+              fontSize: '2.3rem',
+            },
+          }}
         >
           Grand Theft Auto Games
         </Typography>

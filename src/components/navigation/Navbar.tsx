@@ -74,6 +74,9 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
         '@media (max-width: 640px)': {
           height: '60px',
         },
+        '@media (min-width: 1921px)': {
+          height: '84px',
+        },
       }}
     >
       <Box sx={{ flex: 1, display: 'flex' }}>
@@ -93,6 +96,9 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
 
             '@media (max-width: 640px)': {
               fontSize: '20px',
+            },
+            '@media (min-width: 1921px)': {
+              fontSize: '28px',
             },
           }}
         >
@@ -131,6 +137,9 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 padding: '6px 20px',
                 fontSize: '13px',
                 fontFamily: 'Orbitron, sans-serif',
+                '@media (min-width: 1921px)': {
+                  fontSize: '16px',
+                },
               }}
               onClick={() => navigate('/login')}
             >
@@ -142,6 +151,9 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 padding: '6px 16px',
                 fontSize: '13px',
                 fontFamily: 'Orbitron, sans-serif',
+                '@media (min-width: 1921px)': {
+                  fontSize: '16px',
+                },
               }}
               onClick={() => navigate('/register')}
             >
@@ -152,7 +164,12 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <CustomButton
               variant='outlined'
-              sx={{ padding: '6px 16px' }}
+              sx={{
+                padding: '6px 16px',
+                '@media (min-width: 1921px)': {
+                  fontSize: '18px',
+                },
+              }}
               onClick={handleLogout}
             >
               Logout

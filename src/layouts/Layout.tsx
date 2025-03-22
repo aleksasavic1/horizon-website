@@ -17,6 +17,9 @@ const Layout = ({ children, profilePicture }: LayoutProps) => {
           '@media (max-width: 640px)': {
             paddingTop: '60px',
           },
+          '@media (min-width: 1921px)': {
+            paddingTop: '84px',
+          },
         }}
       >
         {children}

@@ -145,6 +145,9 @@ const Contact = () => {
             '@media (max-width: 768px)': {
               fontSize: '2rem',
             },
+            '@media (min-width: 1921px)': {
+              fontSize: '2.4rem',
+            },
           }}
         >
           Contact Us
@@ -160,6 +163,9 @@ const Contact = () => {
 
             '@media (max-width: 768px)': {
               fontSize: '1rem',
+            },
+            '@media (min-width: 1921px)': {
+              fontSize: '1.3rem',
             },
           }}
         >
@@ -190,12 +196,20 @@ const Contact = () => {
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
             <Typography>Country: </Typography>
             {countryCode === '' ? (
-              <img src={flagPlaceholder} alt='flag placeholder' height='22' />
+              <img
+                src={flagPlaceholder}
+                alt='flag placeholder'
+                height='22'
+                width='35'
+                style={{ objectFit: 'cover' }}
+              />
             ) : (
               <img
                 src={`https://flagcdn.com/w80/${countryCode.toLowerCase()}.png`}
                 alt='flag'
                 height='22'
+                width='35'
+                style={{ objectFit: 'cover' }}
               />
             )}
           </Box>

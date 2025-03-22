@@ -45,6 +45,9 @@ const FAQ = () => {
             '@media (max-width: 768px)': {
               fontSize: '2rem',
             },
+            '@media (min-width: 1921px)': {
+              fontSize: '2.4rem',
+            },
           }}
         >
           Frequently Asked Questions

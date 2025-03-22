@@ -170,6 +170,9 @@ const Games = () => {
           '@media (max-width: 768px)': {
             fontSize: '2rem',
           },
+          '@media (min-width: 1921px)': {
+            fontSize: '2.4rem',
+          },
         }}
       >
         Discover the Best Games of All Time
@@ -185,6 +188,9 @@ const Games = () => {
 
           '@media (max-width: 768px)': {
             fontSize: '1rem',
+          },
+          '@media (min-width: 1921px)': {
+            fontSize: '1.3rem',
           },
         }}
       >

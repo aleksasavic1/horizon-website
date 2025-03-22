@@ -45,6 +45,9 @@ const MyLibrary = () => {
           '@media (max-width: 768px)': {
             fontSize: '2rem',
           },
+          '@media (min-width: 1921px)': {
+            fontSize: '2.4rem',
+          },
         }}
       >
         My Library
@@ -60,6 +63,9 @@ const MyLibrary = () => {
 
           '@media (max-width: 768px)': {
             fontSize: '1rem',
+          },
+          '@media (min-width: 1921px)': {
+            fontSize: '1.3rem',
           },
         }}
       >
@@ -93,11 +99,27 @@ const MyLibrary = () => {
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
         {games.length === 0 ? (
-          <Typography sx={{ textAlign: 'center', opacity: 0.7 }}>
+          <Typography
+            sx={{
+              textAlign: 'center',
+              opacity: 0.7,
+              '@media (min-width: 1921px)': {
+                fontSize: '1.1rem',
+              },
+            }}
+          >
             No games in your library yet.
           </Typography>
         ) : filteredGames.length === 0 ? (
-          <Typography sx={{ textAlign: 'center', opacity: 0.7 }}>
+          <Typography
+            sx={{
+              textAlign: 'center',
+              opacity: 0.7,
+              '@media (min-width: 1921px)': {
+                fontSize: '1.1rem',
+              },
+            }}
+          >
             No games found for your search.
           </Typography>
         ) : (
