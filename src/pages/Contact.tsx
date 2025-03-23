@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import CustomInput from '../components/common/CustomInput';
 import CustomButton from '../components/common/CustomButton';
@@ -44,32 +44,32 @@ const Contact = () => {
     }));
   };
 
-  useEffect(() => {
-    if (!isAuthenticated || !user?.uid) return;
+  const fetchUserData = useCallback(async () => {
+    try {
+      const userRef = doc(db, 'users', user!.uid);
+      const userSnap = await getDoc(userRef);
 
-    const fetchUserData = async () => {
-      try {
-        const userRef = doc(db, 'users', user.uid);
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists()) {
-          const data = userSnap.data() as UserData;
-          setUserData(data);
-          setFormData((prevData) => ({
-            ...prevData,
-            from_name: `${data.first_name} ${data.last_name}`,
-            from_email: data.email,
-          }));
-        } else {
-          console.log('No user data found in Firestore');
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      if (userSnap.exists()) {
+        const data = userSnap.data() as UserData;
+        setUserData(data);
+        setFormData((prevData) => ({
+          ...prevData,
+          from_name: `${data.first_name} ${data.last_name}`,
+          from_email: data.email,
+        }));
+      } else {
+        console.log('No user data found in Firestore');
       }
-    };
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }, [user]);
 
-    fetchUserData();
-  }, [user, isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated && user?.uid) {
+      fetchUserData();
+    }
+  }, [isAuthenticated, user?.uid, fetchUserData]);
 
   const countryCode = userData.country ? userData.country.toUpperCase() : '';
 

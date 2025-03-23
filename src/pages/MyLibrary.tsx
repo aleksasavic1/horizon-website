@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import CustomInput from '../components/common/CustomInput';
@@ -6,14 +6,15 @@ import useLibraryStore from '../store/library-store';
 import GameCard from '../components/GameCard';
 import { filterGamesBySearch } from '../utils/helper-functions';
 import batmanBg from '../assets/images/batman-bg.jpg';
-import { GameTypes } from '../types/game-types';
 
 const MyLibrary = () => {
   const { games } = useLibraryStore();
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredGames = filterGamesBySearch(games, searchQuery);
+  const filteredGames = useMemo(() => {
+    return filterGamesBySearch(games, searchQuery);
+  }, [games, searchQuery]);
 
   return (
     <Box
@@ -146,9 +147,11 @@ const MyLibrary = () => {
               },
             }}
           >
-            {filteredGames.map((game: GameTypes) => (
-              <GameCard key={game.id} game={game} isInLibrary />
-            ))}
+            {filteredGames.map((game) =>
+              game.name && game.background_image ? (
+                <GameCard key={game.id} game={game} isInLibrary />
+              ) : null
+            )}
           </Box>
         )}
       </Box>

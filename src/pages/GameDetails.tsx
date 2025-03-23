@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import GameHeader from '../components/game-details/GameHeader';
@@ -21,19 +21,30 @@ const GameDetails = () => {
   const [isDeveloperModalOpen, setIsDeveloperModalOpen] =
     useState<boolean>(false);
 
-  const rating = game?.rating || 0;
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 >= 0.5;
-  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  const rating = useMemo(() => game?.rating || 0, [game?.rating]);
+  const fullStars = useMemo(() => Math.floor(rating), [rating]);
+  const hasHalfStar = useMemo(() => rating % 1 >= 0.5, [rating]);
+  const emptyStars = useMemo(
+    () => 5 - fullStars - (hasHalfStar ? 1 : 0),
+    [fullStars, hasHalfStar]
+  );
 
   const rawMinimumReq = game?.platforms?.[0]?.requirements?.minimum || '';
   const rawRecommendedReq =
     game?.platforms?.[0]?.requirements?.recommended || '';
 
-  const parsedMinimumReq = parseRequirements(rawMinimumReq);
-  const parsedRecommendedReq = parseRequirements(rawRecommendedReq);
+  const parsedMinimumReq = useMemo(
+    () => parseRequirements(rawMinimumReq),
+    [rawMinimumReq]
+  );
+  const parsedRecommendedReq = useMemo(
+    () => parseRequirements(rawRecommendedReq),
+    [rawRecommendedReq]
+  );
 
-  const formattedDate = game?.released ? formatDate(game.released) : 'N/A';
+  const formattedDate = useMemo(() => {
+    return game?.released ? formatDate(game.released) : 'N/A';
+  }, [game?.released]);
 
   if (isPending) {
     return (

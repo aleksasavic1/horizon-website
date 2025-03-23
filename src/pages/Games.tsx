@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Typography,
@@ -38,6 +38,9 @@ const Games = () => {
     error,
     isFetching: isQueryFetching,
   } = useGames({ ...filters, page: page.toString() });
+
+  const isFetchingRef = useRef(isFetching);
+  const isQueryFetchingRef = useRef(isQueryFetching);
 
   const handleChange = (
     event: SelectChangeEvent | React.ChangeEvent<HTMLInputElement>
@@ -94,12 +97,17 @@ const Games = () => {
   }, [formData.search]);
 
   useEffect(() => {
+    isFetchingRef.current = isFetching;
+    isQueryFetchingRef.current = isQueryFetching;
+  }, [isFetching, isQueryFetching]);
+
+  useEffect(() => {
     const handleScroll = () => {
       if (
         window.innerHeight + window.scrollY >=
           document.body.offsetHeight - 100 &&
-        !isFetching &&
-        !isQueryFetching
+        !isFetchingRef.current &&
+        !isQueryFetchingRef.current
       ) {
         setIsFetching(true);
         setPage((prevPage) => prevPage + 1);
@@ -108,7 +116,7 @@ const Games = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isFetching, isQueryFetching]);
+  }, []);
 
   const handleApply = () => {
     const queryParams: Record<string, string> = {

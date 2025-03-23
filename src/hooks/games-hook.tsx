@@ -5,9 +5,10 @@ import {
   fetchGameScreenshots,
   fetchGameStores,
 } from '../services/games-api';
+import { GameTypes } from '../types/game-types';
 
 export const useGames = (filters: Record<string, string>) => {
-  return useQuery({
+  return useQuery<GameTypes[]>({
     queryKey: ['games', filters],
     queryFn: () => fetchGames(filters),
   });

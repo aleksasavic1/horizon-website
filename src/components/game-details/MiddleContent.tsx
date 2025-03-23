@@ -36,7 +36,7 @@ const MiddleContent = ({
       >
         <Box sx={{ display: 'flex', gap: 2 }}>
           {game?.developers
-            .slice(0, 2)
+            ?.slice(0, 2)
             .map((developer: { name: string }, index: number) => (
               <Typography
                 key={index}
