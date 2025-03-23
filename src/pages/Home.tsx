@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
+import HomeContent from '../components/home/HomeContent';
 import GameCard from '../components/GameCard';
 import Carousel from '../components/common/Carousel';
 import { useGames } from '../hooks/games-hook';
 import codBg from '../assets/images/cod-bg.jpg';
-import HomeContent from '../components/home/HomeContent';
 
 type Game = {
   id: number;
