@@ -133,7 +133,13 @@ const Register = () => {
           <Box>
             <CustomInput label='First name:' {...register('first_name')} />
             {errors.first_name && (
-              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.red.default,
+                  fontSize: '12px',
+                  mt: '5px',
+                }}
+              >
                 {errors.first_name.message}
               </Typography>
             )}
@@ -142,7 +148,13 @@ const Register = () => {
           <Box>
             <CustomInput label='Last name:' {...register('last_name')} />
             {errors.last_name && (
-              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.red.default,
+                  fontSize: '12px',
+                  mt: '5px',
+                }}
+              >
                 {errors.last_name.message}
               </Typography>
             )}
@@ -157,7 +169,13 @@ const Register = () => {
           <Box>
             <CustomInput label='Email:' {...register('email')} />
             {errors.email && (
-              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.red.default,
+                  fontSize: '12px',
+                  mt: '5px',
+                }}
+              >
                 {errors.email.message}
               </Typography>
             )}
@@ -183,7 +201,13 @@ const Register = () => {
               }
             />
             {errors.password && (
-              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.red.default,
+                  fontSize: '12px',
+                  mt: '5px',
+                }}
+              >
                 {errors.password.message}
               </Typography>
             )}
@@ -212,7 +236,13 @@ const Register = () => {
               }
             />
             {errors.confirm_password && (
-              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.red.default,
+                  fontSize: '12px',
+                  mt: '5px',
+                }}
+              >
                 {errors.confirm_password.message}
               </Typography>
             )}

@@ -89,6 +89,19 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
   const handleSave = async () => {
     if (!user?.uid) return;
 
+    const firstName = userData.first_name.trim();
+    const lastName = userData.last_name.trim();
+
+    if (!firstName) {
+      toast.error('First name cannot be empty.');
+      return;
+    }
+
+    if (!lastName) {
+      toast.error('Last name cannot be empty.');
+      return;
+    }
+
     try {
       await updateDoc(doc(db, 'users', user.uid), userData);
       setIsEditEnabled(false);
