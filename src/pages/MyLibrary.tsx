@@ -5,7 +5,7 @@ import CustomInput from '../components/common/CustomInput';
 import useLibraryStore from '../store/library-store';
 import GameCard from '../components/GameCard';
 import { filterGamesBySearch } from '../utils/helper-functions';
-import batmanBg from '../assets/batman-bg.jpg';
+import batmanBg from '../assets/images/batman-bg.jpg';
 import { GameTypes } from '../types/game-types';
 
 const MyLibrary = () => {

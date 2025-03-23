@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Screenshot } from '../../types/game-types';
-import placeholderImg from '../../assets/game-placeholder.png';
+import placeholderImg from '../../assets/images/game-placeholder.png';
 
 const ScreenshotsCarousel = ({
   screenshots,

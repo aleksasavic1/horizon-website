@@ -9,8 +9,8 @@ import useAuthStore from '../store/auth-store';
 import { UserData } from '../types/auth-types';
 import emailjs from 'emailjs-com';
 import { toast } from 'react-toastify';
-import flagPlaceholder from '../assets/flag-placeholder.webp';
-import csgoBg from '../assets/csgo-bg.jpg';
+import flagPlaceholder from '../assets/icons/flag-placeholder.webp';
+import csgoBg from '../assets/images/csgo-bg.jpg';
 
 const SERVICE_ID = import.meta.env.VITE_MAIL_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_MAIL_TEMPLATE_ID;

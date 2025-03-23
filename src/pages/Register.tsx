@@ -20,7 +20,7 @@ import useAuthStore from '../store/auth-store';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, RegisterSchemaTypes } from '../utils/validation';
-import nfsBg from '../assets/nfs-bg.png';
+import nfsBg from '../assets/images/nfs-bg.png';
 
 const Register = () => {
   const navigate = useNavigate();

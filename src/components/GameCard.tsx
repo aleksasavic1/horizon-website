@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress, Skeleton } from '@mui/material';
 import CustomButton from './common/CustomButton';
 import { GameTypes, Genre, CarouselGameTypes } from '../types/game-types';
-import gamePlaceholder from '../assets/game-placeholder.png';
+import gamePlaceholder from '../assets/images/game-placeholder.png';
 import useLibraryStore from '../store/library-store';
 import { useGameStores } from '../hooks/games-hook';
 import { toast } from 'react-toastify';

@@ -14,7 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import NavLinks from './NavLinks';
 import CustomButton from '../common/CustomButton';
 import useAuthStore from '../../store/auth-store';
-import profilePlaceholder from '../../assets/profile-placeholder.jpg';
+import profilePlaceholder from '../../assets/images/profile-placeholder.jpg';
 
 const ListItemStyles = {
   backgroundColor: 'transparent',

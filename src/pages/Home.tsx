@@ -3,7 +3,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import GameCard from '../components/GameCard';
 import Carousel from '../components/common/Carousel';
 import { useGames } from '../hooks/games-hook';
-import codBg from '../assets/cod-bg.jpg';
+import codBg from '../assets/images/cod-bg.jpg';
 import HomeContent from '../components/home/HomeContent';
 
 type Game = {

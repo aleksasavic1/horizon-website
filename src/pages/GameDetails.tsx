@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
@@ -16,6 +16,7 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import { useGameDetails, useGameScreenshots } from '../hooks/games-hook';
+import { GameTypes, PlatformInfo } from '../types/game-types';
 import ScreenshotsCarousel from '../components/games/ScreenshotsCarousel';
 import {
   formatNumber,
@@ -23,16 +24,14 @@ import {
   formatDate,
   openLink,
 } from '../utils/helper-functions';
-import placeholderImg from '../assets/game-placeholder.png';
-import websiteLogo from '../assets/website-logo.png';
-import redditLogo from '../assets/reddit-logo.png';
-import returnIcon from '../assets/return-icon.png';
-import gameDetailsBg from '../assets/game-details-bg.jpg';
-import { GameTypes, PlatformInfo } from '../types/game-types';
+import placeholderImg from '../assets/images/game-placeholder.png';
+import websiteLogo from '../assets/images/website-logo.png';
+import redditLogo from '../assets/images/reddit-logo.png';
+import gameDetailsBg from '../assets/images/game-details-bg.jpg';
+import ReturnBack from '../components/common/ReturnBack';
 
 const GameDetails = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { data: game, isPending, error } = useGameDetails(id || '');
 
@@ -164,24 +163,7 @@ const GameDetails = () => {
           />
         )}
 
-        <Box
-          component='img'
-          className='cursor-hover'
-          src={returnIcon}
-          alt='Return Icon'
-          onClick={() => navigate(-1)}
-          sx={{
-            position: 'absolute',
-            top: 15,
-            left: 15,
-            width: '40px',
-            transition: '300ms ease',
-            zIndex: 200,
-            '&:hover': {
-              transform: 'scale(1.1)',
-            },
-          }}
-        />
+        <ReturnBack />
 
         <Typography
           variant='h3'

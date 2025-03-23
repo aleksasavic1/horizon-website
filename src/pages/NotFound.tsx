@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '../components/common/CustomButton';
-import notFoundBg from '../assets/not-found-bg.jpg';
+import notFoundBg from '../assets/images/not-found-bg.jpg';
 
 const NotFound = () => {
   const navigate = useNavigate();

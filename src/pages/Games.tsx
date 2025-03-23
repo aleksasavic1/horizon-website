@@ -13,7 +13,7 @@ import GameCard from '../components/GameCard';
 import FiltersSidebar from '../components/games/FiltersSidebar';
 import { useGames } from '../hooks/games-hook';
 import { GameTypes } from '../types/game-types';
-import spidermanBg from '../assets/spiderman-bg.jpg';
+import spidermanBg from '../assets/images/spiderman-bg.jpg';
 
 const Games = () => {
   const [formData, setFormData] = useState({
