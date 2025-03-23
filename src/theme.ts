@@ -31,6 +31,7 @@ declare module '@mui/material/styles' {
       mintGreen: string;
     };
     red: {
+      default: string;
       coralRed: string;
     };
     yellow: {
@@ -65,6 +66,7 @@ declare module '@mui/material/styles' {
       mintGreen: string;
     };
     red?: {
+      default: string;
       coralRed: string;
     };
     yellow?: {
@@ -108,6 +110,7 @@ const theme = createTheme({
       mintGreen: '#53b896',
     },
     red: {
+      default: '#FF0000',
       coralRed: '#FF6B6B',
     },
     yellow: {

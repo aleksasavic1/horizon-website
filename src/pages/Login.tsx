@@ -94,7 +94,13 @@ const Login = () => {
           <Box>
             <CustomInput label='Email:' {...register('email')} />
             {errors.email && (
-              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.red.default,
+                  fontSize: '12px',
+                  mt: '5px',
+                }}
+              >
                 {errors.email.message}
               </Typography>
             )}
@@ -120,7 +126,13 @@ const Login = () => {
               }
             />
             {errors.password && (
-              <Typography sx={{ color: 'red', fontSize: '12px', mt: '5px' }}>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.red.default,
+                  fontSize: '12px',
+                  mt: '5px',
+                }}
+              >
                 {errors.password.message}
               </Typography>
             )}
