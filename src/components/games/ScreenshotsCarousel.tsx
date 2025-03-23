@@ -3,10 +3,14 @@ import { Box, IconButton } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import placeholderImg from '../../assets/game-placeholder.png';
+import { Screenshot } from '../../types/game-types';
+import placeholderImg from '../../assets/images/game-placeholder.png';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ScreenshotsCarousel = ({ screenshots }: { screenshots: any[] }) => {
+const ScreenshotsCarousel = ({
+  screenshots,
+}: {
+  screenshots: Screenshot[];
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
 

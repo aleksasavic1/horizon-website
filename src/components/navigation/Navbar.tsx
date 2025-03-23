@@ -14,7 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import NavLinks from './NavLinks';
 import CustomButton from '../common/CustomButton';
 import useAuthStore from '../../store/auth-store';
-import profilePlaceholder from '../../assets/profile-placeholder.jpg';
+import profilePlaceholder from '../../assets/images/profile-placeholder.jpg';
 
 const ListItemStyles = {
   backgroundColor: 'transparent',
@@ -48,19 +48,22 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
   const handleLogout = () => {
     logout();
     navigate('/login');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setOpen(false);
   };
 
   return (
     <Box
-      sx={{
+      sx={(theme) => ({
         width: '100%',
         height: '68px',
         display: 'flex',
         alignItems: 'center',
         padding: '16px 48px',
-        backgroundColor: isScrolled ? 'rgba(18, 18, 18, 0.8)' : '#121212',
-        color: '#fff',
+        backgroundColor: isScrolled
+          ? 'rgba(18, 18, 18, 0.8)'
+          : theme.palette.background.default,
+        color: 'white',
         boxShadow: isScrolled ? '0 2px 8px rgba(0, 0, 0, 0.2)' : 'none',
         position: 'fixed',
         top: 0,
@@ -77,7 +80,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
         '@media (min-width: 1921px)': {
           height: '84px',
         },
-      }}
+      })}
     >
       <Box sx={{ flex: 1, display: 'flex' }}>
         <Typography
@@ -208,20 +211,20 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
           },
         }}
       >
-        <IconButton onClick={() => setOpen(true)} sx={{ color: '#fff' }}>
+        <IconButton onClick={() => setOpen(true)} sx={{ color: 'white' }}>
           <MenuIcon sx={{ fontSize: '28px', transform: 'scaleY(1.2)' }} />
         </IconButton>
       </Box>
 
       <Drawer anchor='right' open={open} onClose={() => setOpen(false)}>
         <Box
-          sx={{
+          sx={(theme) => ({
             width: '40vw',
-            backgroundColor: '#1e1e1e',
+            backgroundColor: theme.palette.black.jetBlack,
             minHeight: '100%',
             height: '100%',
             padding: '16px',
-            color: '#fff',
+            color: 'white',
             display: 'flex',
             flexDirection: 'column',
             overflowY: 'auto',
@@ -233,10 +236,10 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
             '@media (max-width: 640px)': {
               width: '100vw',
             },
-          }}
+          })}
         >
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <IconButton onClick={() => setOpen(false)} sx={{ color: '#fff' }}>
+            <IconButton onClick={() => setOpen(false)} sx={{ color: 'white' }}>
               <CloseIcon />
             </IconButton>
           </Box>
@@ -247,6 +250,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 component='div'
                 onClick={() => {
                   navigate('/my-profile');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                   setOpen(false);
                 }}
                 sx={{
@@ -264,6 +268,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -280,6 +285,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/games');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -296,6 +302,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/library');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -312,6 +319,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/faq');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -328,6 +336,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/contact');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -374,6 +383,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                   }}
                   onClick={() => {
                     navigate('/login');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     setOpen(false);
                   }}
                 >
@@ -389,6 +399,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                   }}
                   onClick={() => {
                     navigate('/register');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     setOpen(false);
                   }}
                 >

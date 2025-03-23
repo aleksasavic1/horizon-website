@@ -14,7 +14,7 @@ import { useLogin } from '../hooks/auth-hook';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginSchemaTypes } from '../utils/validation';
-import nfsBg from '../assets/nfs-bg.png';
+import nfsBg from '../assets/images/nfs-bg.png';
 
 const Login = () => {
   const navigate = useNavigate();

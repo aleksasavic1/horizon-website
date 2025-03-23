@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import {
   Box,
@@ -14,7 +13,7 @@ import GameCard from '../components/GameCard';
 import FiltersSidebar from '../components/games/FiltersSidebar';
 import { useGames } from '../hooks/games-hook';
 import { GameTypes } from '../types/game-types';
-import spidermanBg from '../assets/spiderman-bg.jpg';
+import spidermanBg from '../assets/images/spiderman-bg.jpg';
 
 const Games = () => {
   const [formData, setFormData] = useState({
@@ -74,7 +73,7 @@ const Games = () => {
     if (games) {
       setAllGames((prevGames) => {
         const uniqueGames = new Map(prevGames.map((game) => [game.id, game]));
-        games.forEach((game: any) => uniqueGames.set(game.id, game));
+        games.forEach((game: GameTypes) => uniqueGames.set(game.id, game));
         return Array.from(uniqueGames.values());
       });
       setIsFetching(false);
@@ -143,7 +142,7 @@ const Games = () => {
   return (
     <Box
       sx={{
-        color: '#fff',
+        color: 'white',
         p: 3,
 
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${spidermanBg})`,
@@ -207,7 +206,7 @@ const Games = () => {
           mb: 1,
         }}
       >
-        <IconButton onClick={toggleFilterMenu} sx={{ color: '#fff' }}>
+        <IconButton onClick={toggleFilterMenu} sx={{ color: 'white' }}>
           <TuneIcon sx={{ fontSize: '30px' }} />
         </IconButton>
         <CustomInput

@@ -10,14 +10,14 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import CustomSelect from '../common/CustomSelect';
 import CustomSwitch from '../common/CustomSwitch';
+import CustomButton from '../common/CustomButton';
 import {
   PLATFORM_OPTIONS,
   GENRE_OPTIONS,
   SORT_BY_OPTIONS,
 } from '../../constants/select-options';
-import CustomButton from '../common/CustomButton';
 
-interface FiltersSidebarProps {
+type FiltersSidebarProps = {
   open: boolean;
   onClose: () => void;
   formData: {
@@ -32,7 +32,7 @@ interface FiltersSidebarProps {
   ) => void;
   handleReset: () => void;
   handleApply: () => void;
-}
+};
 
 const FiltersSidebar = ({
   open,
@@ -45,11 +45,11 @@ const FiltersSidebar = ({
   return (
     <Drawer anchor='left' open={open} onClose={onClose}>
       <Box
-        sx={{
+        sx={(theme) => ({
           width: 360,
           padding: 3,
-          backgroundColor: '#121212',
-          color: '#fff',
+          backgroundColor: theme.palette.background.default,
+          color: 'white',
           height: '100%',
           position: 'relative',
 
@@ -62,7 +62,7 @@ const FiltersSidebar = ({
           '@media (min-width: 1921px)': {
             width: 420,
           },
-        }}
+        })}
       >
         <Typography
           variant='h6'

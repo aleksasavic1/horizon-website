@@ -8,7 +8,7 @@ import {
   forgotPasswordSchema,
   ForgotPasswordSchemaTypes,
 } from '../utils/validation';
-import nfsBg from '../assets/nfs-bg.png';
+import nfsBg from '../assets/images/nfs-bg.png';
 
 const ForgotPassword = () => {
   const { mutate: resetPassword, isPending } = useResetPassword();

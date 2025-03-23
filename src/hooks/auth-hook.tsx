@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import {
@@ -8,6 +7,7 @@ import {
   resetPassword,
 } from '../services/auth-api';
 import useAuthStore from '../store/auth-store';
+import { FirebaseError } from 'firebase/app';
 import { toast } from 'react-toastify';
 
 export const useRegister = () => {
@@ -17,8 +17,8 @@ export const useRegister = () => {
     onSuccess: (user) => {
       return user;
     },
-    onError: (error: any) => {
-      toast.error(error.slice(10));
+    onError: (error: FirebaseError) => {
+      toast.error(error.message);
     },
   });
 };
@@ -34,8 +34,8 @@ export const useLogin = () => {
       setUser(user);
       navigate('/');
     },
-    onError: (error: any) => {
-      toast.error(error.slice(10));
+    onError: (error: FirebaseError) => {
+      toast.error(error.message);
     },
   });
 };
@@ -48,8 +48,8 @@ export const useLogout = () => {
     onSuccess: () => {
       setUser(null);
     },
-    onError: (error: any) => {
-      toast.error(error.slice(10));
+    onError: (error: FirebaseError) => {
+      toast.error(error.message);
     },
   });
 };
@@ -60,8 +60,8 @@ export const useResetPassword = () => {
     onSuccess: (message) => {
       toast.success(message);
     },
-    onError: (error: any) => {
-      toast.error(error.slice(10));
+    onError: (error: FirebaseError) => {
+      toast.error(error.message);
     },
   });
 };

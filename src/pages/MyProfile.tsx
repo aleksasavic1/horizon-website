@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Box, IconButton, SelectChangeEvent, Link } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import CustomInput from '../components/common/CustomInput';
 import CustomSelect from '../components/common/CustomSelect';
@@ -11,9 +12,8 @@ import useAuthStore from '../store/auth-store';
 import { UserData } from '../types/auth-types';
 import { toast } from 'react-toastify';
 import { resetPassword } from '../services/auth-api';
-import profilePlaceholder from '../assets/profile-placeholder.jpg';
-import profileBg from '../assets/profile-bg.webp';
-import { alpha } from '@mui/material/styles';
+import profilePlaceholder from '../assets/images/profile-placeholder.jpg';
+import profileBg from '../assets/images/profile-bg.webp';
 
 type MyProfileProps = {
   profilePicture: string | null;

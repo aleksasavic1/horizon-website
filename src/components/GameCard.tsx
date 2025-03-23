@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, CircularProgress, Skeleton } from '@mui/material';
 import CustomButton from './common/CustomButton';
 import { GameTypes, Genre, CarouselGameTypes } from '../types/game-types';
-import gamePlaceholder from '../assets/game-placeholder.png';
+import gamePlaceholder from '../assets/images/game-placeholder.png';
 import useLibraryStore from '../store/library-store';
 import { useGameStores } from '../hooks/games-hook';
 import { toast } from 'react-toastify';
@@ -28,11 +28,11 @@ const GameCard = ({
   const handleAddOrRemove = (event: React.MouseEvent) => {
     event.stopPropagation();
 
-    const formattedGame: GameTypes = {
+    const formattedGame = {
       ...game,
       genres: game.genres ?? [],
       reviews_count: game.reviews_count ?? 0,
-    };
+    } as GameTypes;
 
     if (isAdded) {
       removeGame(formattedGame.id);
@@ -69,16 +69,16 @@ const GameCard = ({
       }}
       onMouseDown={(e) => e.button === 1 && e.preventDefault()}
       className='cursor-hover'
-      sx={{
+      sx={(theme) => ({
         width: '100%',
-        backgroundColor: '#1e1e1e',
+        backgroundColor: theme.palette.black.jetBlack,
         color: 'white',
         borderRadius: '8px',
         overflow: 'hidden',
         boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
         display: 'flex',
         flexDirection: 'column',
-      }}
+      })}
     >
       <Box
         sx={{

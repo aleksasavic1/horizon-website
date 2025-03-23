@@ -1,19 +1,17 @@
-// TODO: use this modal somewhere
-
 import ReactDOM from 'react-dom';
 import { Box, Modal } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomButton from './CustomButton';
 
-interface ModalProps {
+type ModalProps = {
   open: boolean;
   onClose?: () => void;
   title?: string;
   children: React.ReactNode;
   customStyle?: SxProps<Theme>;
   hideCloseButton?: boolean;
-}
+};
 
 const modalRoot = document.getElementById('modal') as HTMLElement;
 
@@ -34,7 +32,7 @@ const CustomModal = ({
     minWidth: '50%',
     height: '75%',
     overflowY: 'auto',
-    bgcolor: '#1c1c1c',
+    bgcolor: 'rgb(28, 28, 28)',
     boxShadow: 24,
     padding: '12px',
     borderRadius: '30px',

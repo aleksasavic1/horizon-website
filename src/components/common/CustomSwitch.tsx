@@ -8,7 +8,7 @@ interface CustomSwitchProps extends SwitchProps {
 
 const StyledSwitch = styled((props: SwitchProps) => (
   <Switch disableRipple focusVisibleClassName='.Mui-focusVisible' {...props} />
-))(() => ({
+))(({ theme }) => ({
   width: 46,
   height: 24,
   padding: 0,
@@ -22,10 +22,10 @@ const StyledSwitch = styled((props: SwitchProps) => (
 
     '&.Mui-checked': {
       transform: 'translateX(20px)',
-      color: '#f1f1f1',
+      color: theme.palette.gray.snowGray,
 
       '& + .MuiSwitch-track': {
-        backgroundColor: '#696969',
+        backgroundColor: theme.palette.gray.mediumGray,
         opacity: 1,
       },
     },
@@ -34,19 +34,19 @@ const StyledSwitch = styled((props: SwitchProps) => (
   '& .MuiSwitch-thumb': {
     width: 20,
     height: 20,
-    backgroundColor: '#d3d3d3',
+    backgroundColor: theme.palette.gray.softGray,
     transition: 'all 0.3s ease',
   },
 
   '& .MuiSwitch-track': {
     borderRadius: 13,
-    backgroundColor: '#696969',
+    backgroundColor: theme.palette.gray.mediumGray,
     opacity: 1,
     transition: 'all 0.3s ease',
   },
 
   '& .Mui-checked .MuiSwitch-thumb': {
-    backgroundColor: '#d3d3d3',
+    backgroundColor: theme.palette.gray.softGray,
   },
 }));
 
@@ -61,7 +61,7 @@ const CustomSwitch = ({
         <Typography
           sx={{
             fontSize: '14px',
-            color: '#fff',
+            color: 'white',
             '@media (min-width: 1921px)': {
               fontSize: '15px',
             },
@@ -77,7 +77,7 @@ const CustomSwitch = ({
         <Typography
           sx={{
             fontSize: '14px',
-            color: '#fff',
+            color: 'white',
             '@media (min-width: 1921px)': {
               fontSize: '15px',
             },

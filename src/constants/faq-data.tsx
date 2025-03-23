@@ -1,7 +1,6 @@
-import { Link, Typography } from '@mui/material';
+import { Link, Typography, Box } from '@mui/material';
 
 const contentColor = 'hsla(0, 0%, 100%, 0.9)';
-const spanColor = '#53b896';
 
 export const FAQ_DATA = [
   {
@@ -9,8 +8,13 @@ export const FAQ_DATA = [
     content: (
       <Typography sx={{ color: contentColor }}>
         The project was created by{' '}
-        <span style={{ color: spanColor }}>Aleksa Savic.</span> You can find his
-        GitHub profile here:{' '}
+        <Box
+          component='span'
+          sx={(theme) => ({ color: theme.palette.green.mintGreen })}
+        >
+          Aleksa Savic.
+        </Box>{' '}
+        You can find his GitHub profile here:{' '}
         <Link
           href='https://github.com/aleksasavic1'
           target='_blank'
@@ -26,14 +30,34 @@ export const FAQ_DATA = [
     content: (
       <Typography sx={{ color: contentColor }}>
         This project was built using{' '}
-        <span style={{ color: spanColor }}>React</span> with{' '}
-        <span style={{ color: spanColor }}>Vite, TypeScript, </span>
-        and styled with <span style={{ color: spanColor }}>
+        <Box
+          component='span'
+          sx={(theme) => ({ color: theme.palette.green.mintGreen })}
+        >
+          React
+        </Box>{' '}
+        with{' '}
+        <Box
+          component='span'
+          sx={(theme) => ({ color: theme.palette.green.mintGreen })}
+        >
+          Vite, TypeScript,{' '}
+        </Box>
+        and styled with{' '}
+        <Box
+          component='span'
+          sx={(theme) => ({ color: theme.palette.green.mintGreen })}
+        >
           Material UI
-        </span>{' '}
+        </Box>{' '}
         for a modern and responsive design. User authentication is handled using{' '}
-        <span style={{ color: spanColor }}>Firebase Authentication</span> for
-        secure and seamless login and registration.
+        <Box
+          component='span'
+          sx={(theme) => ({ color: theme.palette.green.mintGreen })}
+        >
+          Firebase Authentication
+        </Box>{' '}
+        for secure and seamless login and registration.
       </Typography>
     ),
   },
@@ -42,8 +66,13 @@ export const FAQ_DATA = [
     content: (
       <Typography sx={{ color: contentColor }}>
         These games are fetched using the{' '}
-        <span style={{ color: spanColor }}>RAWG API,</span> which provides
-        comprehensive data on video games from various platforms.
+        <Box
+          component='span'
+          sx={(theme) => ({ color: theme.palette.green.mintGreen })}
+        >
+          RAWG API,
+        </Box>{' '}
+        which provides comprehensive data on video games from various platforms.
       </Typography>
     ),
   },

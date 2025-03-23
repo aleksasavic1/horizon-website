@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
-import nfsImg from '../../assets/nfs.jpg';
-import lolImg from '../../assets/lol.jpg';
-import homeVideo from '../../assets/home-video.mp4';
+import nfsImg from '../../assets/images/nfs.jpg';
+import lolImg from '../../assets/images/lol.jpg';
+import homeVideo from '../../assets/videos/home-video.mp4';
 
 const imgStyle = {
   maxWidth: '680px',

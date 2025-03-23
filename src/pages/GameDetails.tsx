@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
@@ -17,16 +16,22 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import { useGameDetails, useGameScreenshots } from '../hooks/games-hook';
+import { GameTypes, PlatformInfo } from '../types/game-types';
 import ScreenshotsCarousel from '../components/games/ScreenshotsCarousel';
-import placeholderImg from '../assets/game-placeholder.png';
-import websiteLogo from '../assets/website-logo.png';
-import redditLogo from '../assets/reddit-logo.png';
-import returnIcon from '../assets/return-icon.png';
-import gameDetailsBg from '../assets/game-details-bg.jpg';
+import {
+  formatNumber,
+  parseRequirements,
+  formatDate,
+  openLink,
+} from '../utils/helper-functions';
+import placeholderImg from '../assets/images/game-placeholder.png';
+import websiteLogo from '../assets/images/website-logo.png';
+import redditLogo from '../assets/images/reddit-logo.png';
+import gameDetailsBg from '../assets/images/game-details-bg.jpg';
+import ReturnBack from '../components/common/ReturnBack';
 
 const GameDetails = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { data: game, isPending, error } = useGameDetails(id || '');
 
@@ -48,51 +53,25 @@ const GameDetails = () => {
   const rawRecommendedReq =
     game?.platforms?.[0]?.requirements?.recommended || '';
 
-  const cleanedMinimumReq = rawMinimumReq.replace(/^Minimum:/, '').trim();
-  const cleanedRecommendedReq = rawRecommendedReq
-    .replace(/^Recommended:/, '')
-    .trim();
+  const parsedMinimumReq = parseRequirements(rawMinimumReq);
+  const parsedRecommendedReq = parseRequirements(rawRecommendedReq);
 
-  const parsedMinimumReq = cleanedMinimumReq
-    .split(/(?=[A-Z][a-z]+:)/)
-    .map((line: any) => line.trim())
-    .filter((line: any) => line.includes(':'));
-  const parsedRecommendedReq = cleanedRecommendedReq
-    .split(/(?=[A-Z][a-z]+:)/)
-    .map((line: any) => line.trim())
-    .filter((line: any) => line.includes(':'));
-
-  const formattedDate = game?.released
-    ? new Date(game.released).toLocaleDateString('en-GB')
-    : 'N/A';
-
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1).replace('.0', '') + 'M+';
-    } else if (num >= 1000) {
-      return (num / 1000).toFixed(1).replace('.0', '') + 'K+';
-    }
-    return num.toString();
-  };
-
-  const openLink = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
+  const formattedDate = game?.released ? formatDate(game.released) : 'N/A';
 
   if (isPending) {
     return (
       <Box
-        sx={{
+        sx={(theme) => ({
           flex: 1,
-          backgroundColor: '#121212',
-          color: '#fff',
+          backgroundColor: theme.palette.background.default,
+          color: 'white',
           padding: '16px',
           overflow: 'auto',
           minHeight: 'calc(100vh - 68px)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-        }}
+        })}
       >
         <CircularProgress color='secondary' />
       </Box>
@@ -102,17 +81,17 @@ const GameDetails = () => {
   if (error) {
     return (
       <Box
-        sx={{
+        sx={(theme) => ({
           flex: 1,
-          backgroundColor: '#121212',
-          color: '#fff',
+          backgroundColor: theme.palette.background.default,
+          color: 'white',
           padding: '16px',
           overflow: 'auto',
           height: 'calc(100vh - 68px)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-        }}
+        })}
       >
         <Typography sx={{ textAlign: 'center', color: 'red', mt: 5 }}>
           Failed to load game details. Please try again.
@@ -125,7 +104,7 @@ const GameDetails = () => {
     <Box
       sx={{
         flex: 1,
-        color: '#fff',
+        color: 'white',
         overflow: 'auto',
         maxHeight: 'calc(100vh - 68px)',
 
@@ -184,24 +163,7 @@ const GameDetails = () => {
           />
         )}
 
-        <Box
-          component='img'
-          className='cursor-hover'
-          src={returnIcon}
-          alt='Return Icon'
-          onClick={() => navigate(-1)}
-          sx={{
-            position: 'absolute',
-            top: 15,
-            left: 15,
-            width: '40px',
-            transition: '300ms ease',
-            zIndex: 200,
-            '&:hover': {
-              transform: 'scale(1.1)',
-            },
-          }}
-        />
+        <ReturnBack />
 
         <Typography
           variant='h3'
@@ -263,8 +225,6 @@ const GameDetails = () => {
             alignItems: 'center',
 
             '@media (max-width: 640px)': {
-              // display: 'flex',
-              // flexDirection: 'column',
               left: 14,
             },
           }}
@@ -272,17 +232,23 @@ const GameDetails = () => {
           <CustomTooltip title={`Rating: ${game?.rating || 'N/A'}`}>
             <Stack direction='row' spacing={0.25}>
               {[...Array(fullStars)].map((_, index) => (
-                <StarIcon key={`full-${index}`} sx={{ color: '#FFD700' }} />
+                <StarIcon
+                  key={`full-${index}`}
+                  sx={(theme) => ({ color: theme.palette.yellow.gold })}
+                />
               ))}
 
               {hasHalfStar && (
-                <StarHalfIcon key='half' sx={{ color: '#FFD700' }} />
+                <StarHalfIcon
+                  key='half'
+                  sx={(theme) => ({ color: theme.palette.yellow.gold })}
+                />
               )}
 
               {[...Array(emptyStars)].map((_, index) => (
                 <StarBorderIcon
                   key={`empty-${index}`}
-                  sx={{ color: '#FFD700' }}
+                  sx={(theme) => ({ color: theme.palette.yellow.gold })}
                 />
               ))}
             </Stack>
@@ -302,20 +268,22 @@ const GameDetails = () => {
         }}
       >
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {game?.developers.slice(0, 2).map((developer: any, index: number) => (
-            <Typography
-              key={index}
-              sx={{
-                backgroundColor: theme.palette.blueBox.bg,
-                border: `1px solid ${theme.palette.blueBox.border}`,
-                padding: '4px 8px',
-                borderRadius: '4px',
-                display: { xs: 'none', md: 'flex' },
-              }}
-            >
-              {developer?.name || ''}
-            </Typography>
-          ))}
+          {game?.developers
+            .slice(0, 2)
+            .map((developer: GameTypes, index: number) => (
+              <Typography
+                key={index}
+                sx={{
+                  backgroundColor: theme.palette.blueBox.bg,
+                  border: `1px solid ${theme.palette.blueBox.border}`,
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  display: { xs: 'none', md: 'flex' },
+                }}
+              >
+                {developer?.name || ''}
+              </Typography>
+            ))}
 
           <CustomButton
             variant='outlined'
@@ -368,7 +336,7 @@ const GameDetails = () => {
           >
             See Genres
           </CustomButton>
-          {game?.genres.slice(0, 4).map((genre: any, index: number) => {
+          {game?.genres.slice(0, 4).map((genre: GameTypes, index: number) => {
             return (
               <Typography
                 key={index}
@@ -431,7 +399,7 @@ const GameDetails = () => {
               }}
             >
               {game?.platforms
-                ?.map((platform: any) => platform?.platform?.name)
+                ?.map((platform: PlatformInfo) => platform?.platform?.name)
                 .filter(Boolean)
                 .join(', ')}{' '}
             </Typography>
@@ -577,13 +545,13 @@ const GameDetails = () => {
             </CustomButton>
           </Box>
           <Box
-            sx={{
-              backgroundColor: '#1e1e1e',
-              color: '#fff',
+            sx={(theme) => ({
+              backgroundColor: theme.palette.black.jetBlack,
+              color: 'white',
               padding: '16px',
               borderRadius: '8px',
               width: '100%',
-            }}
+            })}
           >
             <Typography
               sx={{
@@ -603,24 +571,26 @@ const GameDetails = () => {
 
             {!isRecommended ? (
               parsedMinimumReq.length > 0 ? (
-                parsedMinimumReq.slice(0, 5).map((line: any, index: number) => {
-                  const [key, ...value] = line.split(':');
-                  return (
-                    <Typography
-                      key={index}
-                      sx={{
-                        opacity: 0.9,
-                        lineHeight: '1.65',
-                        fontSize: '14px',
-                        '@media (min-width: 1921px)': {
-                          fontSize: '16px',
-                        },
-                      }}
-                    >
-                      <strong>{key.trim()}:</strong> {value.join(':').trim()}
-                    </Typography>
-                  );
-                })
+                parsedMinimumReq
+                  .slice(0, 5)
+                  .map((line: string, index: number) => {
+                    const [key, ...value] = line.split(':');
+                    return (
+                      <Typography
+                        key={index}
+                        sx={{
+                          opacity: 0.9,
+                          lineHeight: '1.65',
+                          fontSize: '14px',
+                          '@media (min-width: 1921px)': {
+                            fontSize: '16px',
+                          },
+                        }}
+                      >
+                        <strong>{key.trim()}:</strong> {value.join(':').trim()}
+                      </Typography>
+                    );
+                  })
               ) : (
                 <Typography
                   sx={{
@@ -638,7 +608,7 @@ const GameDetails = () => {
             ) : parsedRecommendedReq.length > 0 ? (
               parsedRecommendedReq
                 .slice(0, 5)
-                .map((line: any, index: number) => {
+                .map((line: string, index: number) => {
                   const [key, ...value] = line.split(':');
                   return (
                     <Typography
@@ -720,8 +690,8 @@ const GameDetails = () => {
             sx={{
               margin: '0 30px',
               position: 'absolute',
-              bottom: 15,
-              left: 10,
+              bottom: 12,
+              left: 15,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -731,6 +701,10 @@ const GameDetails = () => {
               filter: 'drop-shadow(2px 2px 2px black) brightness(84%)',
               '&:hover': {
                 transform: 'scale(1.1)',
+              },
+
+              '@media (max-width: 640px)': {
+                left: 0,
               },
             }}
           />
@@ -743,8 +717,8 @@ const GameDetails = () => {
             sx={{
               margin: '0 30px',
               position: 'absolute',
-              bottom: 15,
-              left: 54,
+              bottom: 12,
+              left: 60,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -754,6 +728,9 @@ const GameDetails = () => {
               filter: 'drop-shadow(2px 2px 2px black) brightness(84%)',
               '&:hover': {
                 transform: 'scale(1.08)',
+              },
+              '@media (max-width: 640px)': {
+                left: 44,
               },
             }}
           />
@@ -774,7 +751,7 @@ const GameDetails = () => {
             All Developers
           </Typography>
           <Box sx={{ overflowY: 'auto' }}>
-            {game?.developers.map((developer: any, index: number) => (
+            {game?.developers.map((developer: GameTypes, index: number) => (
               <Typography
                 key={index}
                 sx={{
@@ -807,7 +784,7 @@ const GameDetails = () => {
             All Genres
           </Typography>
           <Box sx={{ overflowY: 'auto' }}>
-            {game?.genres.map((genre: any, index: number) => {
+            {game?.genres.map((genre: GameTypes, index: number) => {
               return (
                 <Typography
                   key={index}

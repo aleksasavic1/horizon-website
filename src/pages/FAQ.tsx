@@ -1,15 +1,14 @@
-import { Box } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import CustomAccordion from '../components/common/CustomAccordion';
-import { Container, Typography } from '@mui/material';
 import { FAQ_DATA } from '../constants/faq-data';
-import godOfWarImg from '../assets/god-of-war-bg.jpg';
+import godOfWarImg from '../assets/images/god-of-war-bg.jpg';
 
 const FAQ = () => {
   return (
     <Box
       sx={{
         p: 3,
-        color: '#fff',
+        color: 'white',
 
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${godOfWarImg})`,
         backgroundSize: 'cover',
@@ -26,7 +25,7 @@ const FAQ = () => {
       <Container
         maxWidth='md'
         sx={{
-          color: '#fff',
+          color: 'white',
           backgroundColor: 'transparent',
           borderRadius: '8px',
           p: 0,
