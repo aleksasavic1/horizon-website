@@ -24,8 +24,8 @@ const CustomTooltip = ({ title, children, ...props }: CustomTooltipProps) => {
         },
         tooltip: {
           sx: {
-            backgroundColor: 'black',
-            color: 'white',
+            backgroundColor: 'hsl(0, 0%, 0%)',
+            color: 'hsl(0, 0%, 100%)',
             fontSize: '14px',
             padding: '6px 12px',
             borderRadius: '6px',
@@ -33,7 +33,7 @@ const CustomTooltip = ({ title, children, ...props }: CustomTooltipProps) => {
         },
         arrow: {
           sx: {
-            color: 'black',
+            color: 'hsl(0, 0%, 0%)',
           },
         },
       }}
