@@ -69,16 +69,16 @@ const GameCard = ({
       }}
       onMouseDown={(e) => e.button === 1 && e.preventDefault()}
       className='cursor-hover'
-      sx={{
+      sx={(theme) => ({
         width: '100%',
-        backgroundColor: '#1e1e1e',
+        backgroundColor: theme.palette.black.jetBlack,
         color: 'white',
         borderRadius: '8px',
         overflow: 'hidden',
         boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
         display: 'flex',
         flexDirection: 'column',
-      }}
+      })}
     >
       <Box
         sx={{

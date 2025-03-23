@@ -8,7 +8,7 @@ const FAQ = () => {
     <Box
       sx={{
         p: 3,
-        color: '#fff',
+        color: 'white',
 
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${godOfWarImg})`,
         backgroundSize: 'cover',
@@ -25,7 +25,7 @@ const FAQ = () => {
       <Container
         maxWidth='md'
         sx={{
-          color: '#fff',
+          color: 'white',
           backgroundColor: 'transparent',
           borderRadius: '8px',
           p: 0,

@@ -25,9 +25,9 @@ const NotFound = () => {
       }}
     >
       <ErrorOutlineIcon
-        sx={{
+        sx={(theme) => ({
           fontSize: 68,
-          color: '#FF6B6B',
+          color: theme.palette.red.coralRed,
           mb: 1,
 
           '@media (max-width: 640px)': {
@@ -36,7 +36,7 @@ const NotFound = () => {
           '@media (min-width: 1921px)': {
             fontSize: 80,
           },
-        }}
+        })}
       />
 
       <Typography

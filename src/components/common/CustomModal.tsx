@@ -24,7 +24,7 @@ const CustomModal = ({
 }: ModalProps) => {
   if (!modalRoot) return null;
 
-  const defaultStyles: SxProps<Theme> = {
+  const defaultStyles: SxProps<Theme> = (theme) => ({
     position: 'absolute',
     bottom: '50%',
     left: '50%',
@@ -32,7 +32,7 @@ const CustomModal = ({
     minWidth: '50%',
     height: '75%',
     overflowY: 'auto',
-    bgcolor: '#1c1c1c',
+    bgcolor: theme.palette.gray.jetGray,
     boxShadow: 24,
     padding: '12px',
     borderRadius: '30px',
@@ -49,7 +49,7 @@ const CustomModal = ({
       transform: 'translate(-50%, 0%)',
       height: '90%',
     },
-  };
+  });
 
   return ReactDOM.createPortal(
     <Modal

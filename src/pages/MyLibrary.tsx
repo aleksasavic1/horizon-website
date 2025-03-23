@@ -19,7 +19,7 @@ const MyLibrary = () => {
     <Box
       sx={{
         p: 3,
-        color: '#fff',
+        color: 'white',
 
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${batmanBg})`,
         backgroundSize: 'cover',

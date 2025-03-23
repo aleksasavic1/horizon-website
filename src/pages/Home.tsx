@@ -51,7 +51,7 @@ const Home = () => {
   return (
     <Box
       sx={{
-        color: '#fff',
+        color: 'white',
         p: 3,
 
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${codBg})`,

@@ -2,10 +2,10 @@ import { Button, ButtonProps } from '@mui/material';
 import { styled } from '@mui/system';
 import { ReactNode } from 'react';
 
-const GradientButton = styled(Button)({
+const GradientButton = styled(Button)(({ theme }) => ({
   background: 'linear-gradient(190deg, #4d5d8a, #293763)',
   padding: '6px 30px',
-  color: '#fff',
+  color: theme.palette.text.primary,
   textTransform: 'none',
   fontSize: '14px',
   borderRadius: '6px',
@@ -18,14 +18,14 @@ const GradientButton = styled(Button)({
   },
 
   '&:disabled': {
-    background: '#ccc',
-    color: '#666',
+    background: theme.palette.gray.lightGray,
+    color: theme.palette.gray.dimGray,
     boxShadow: 'none',
     transform: 'none',
   },
-});
+}));
 
-const OutlineButton = styled(Button)({
+const OutlineButton = styled(Button)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   background: 'transparent',
@@ -43,16 +43,16 @@ const OutlineButton = styled(Button)({
   },
 
   '&:disabled': {
-    color: '#666',
-    borderColor: '#ccc',
+    color: theme.palette.gray.dimGray,
+    borderColor: theme.palette.gray.lightGray,
     background: 'transparent',
   },
-});
+}));
 
 const OrangeButton = styled(Button)({
   background: 'linear-gradient(190deg, #db7909, #5e3b13)',
   padding: '6px 30px',
-  color: '#fff',
+  color: 'white',
   textTransform: 'none',
   fontSize: '14px',
   borderRadius: '6px',
@@ -67,7 +67,7 @@ const OrangeButton = styled(Button)({
 
   '&:disabled': {
     background: 'linear-gradient(190deg, #5a5553, #312f2f )',
-    color: '#fff',
+    color: 'white',
     boxShadow: 'none',
     transform: 'none',
   },

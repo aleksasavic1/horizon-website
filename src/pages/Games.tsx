@@ -142,7 +142,7 @@ const Games = () => {
   return (
     <Box
       sx={{
-        color: '#fff',
+        color: 'white',
         p: 3,
 
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${spidermanBg})`,
@@ -206,7 +206,7 @@ const Games = () => {
           mb: 1,
         }}
       >
-        <IconButton onClick={toggleFilterMenu} sx={{ color: '#fff' }}>
+        <IconButton onClick={toggleFilterMenu} sx={{ color: 'white' }}>
           <TuneIcon sx={{ fontSize: '30px' }} />
         </IconButton>
         <CustomInput

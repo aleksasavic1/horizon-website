@@ -50,15 +50,15 @@ const CustomSelect = ({
         }}
         MenuProps={{
           PaperProps: {
-            sx: {
-              backgroundColor: '#181818',
+            sx: (theme) => ({
+              backgroundColor: theme.palette.black.eerieBlack,
               color: 'white',
               borderRadius: '8px',
               boxShadow: '0px 4px 10px rgba(0,0,0,0.7)',
               maxHeight: '240px',
               overflowY: 'auto',
               width: '171px',
-            },
+            }),
           },
         }}
       >
@@ -66,19 +66,19 @@ const CustomSelect = ({
           <MenuItem
             key={option.value}
             value={option.value}
-            sx={{
+            sx={(theme) => ({
               cursor: "url('/cursor/link_select_pointer.cur') 0 0, pointer",
 
               '&:hover': {
-                backgroundColor: '#252525',
+                backgroundColor: theme.palette.black.darkCharcoal,
               },
               '&.Mui-selected': {
-                backgroundColor: '#2c2c2c',
+                backgroundColor: theme.palette.black.charcoal,
                 '&:hover': {
-                  backgroundColor: '#3a3a3a',
+                  backgroundColor: theme.palette.gray.darkGray,
                 },
               },
-            }}
+            })}
           >
             {option.label}
           </MenuItem>

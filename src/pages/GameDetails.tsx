@@ -62,17 +62,17 @@ const GameDetails = () => {
   if (isPending) {
     return (
       <Box
-        sx={{
+        sx={(theme) => ({
           flex: 1,
-          backgroundColor: '#121212',
-          color: '#fff',
+          backgroundColor: theme.palette.background.default,
+          color: 'white',
           padding: '16px',
           overflow: 'auto',
           minHeight: 'calc(100vh - 68px)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-        }}
+        })}
       >
         <CircularProgress color='secondary' />
       </Box>
@@ -82,17 +82,17 @@ const GameDetails = () => {
   if (error) {
     return (
       <Box
-        sx={{
+        sx={(theme) => ({
           flex: 1,
-          backgroundColor: '#121212',
-          color: '#fff',
+          backgroundColor: theme.palette.background.default,
+          color: 'white',
           padding: '16px',
           overflow: 'auto',
           height: 'calc(100vh - 68px)',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-        }}
+        })}
       >
         <Typography sx={{ textAlign: 'center', color: 'red', mt: 5 }}>
           Failed to load game details. Please try again.
@@ -105,7 +105,7 @@ const GameDetails = () => {
     <Box
       sx={{
         flex: 1,
-        color: '#fff',
+        color: 'white',
         overflow: 'auto',
         maxHeight: 'calc(100vh - 68px)',
 
@@ -250,17 +250,23 @@ const GameDetails = () => {
           <CustomTooltip title={`Rating: ${game?.rating || 'N/A'}`}>
             <Stack direction='row' spacing={0.25}>
               {[...Array(fullStars)].map((_, index) => (
-                <StarIcon key={`full-${index}`} sx={{ color: '#FFD700' }} />
+                <StarIcon
+                  key={`full-${index}`}
+                  sx={(theme) => ({ color: theme.palette.yellow.gold })}
+                />
               ))}
 
               {hasHalfStar && (
-                <StarHalfIcon key='half' sx={{ color: '#FFD700' }} />
+                <StarHalfIcon
+                  key='half'
+                  sx={(theme) => ({ color: theme.palette.yellow.gold })}
+                />
               )}
 
               {[...Array(emptyStars)].map((_, index) => (
                 <StarBorderIcon
                   key={`empty-${index}`}
-                  sx={{ color: '#FFD700' }}
+                  sx={(theme) => ({ color: theme.palette.yellow.gold })}
                 />
               ))}
             </Stack>
@@ -557,13 +563,13 @@ const GameDetails = () => {
             </CustomButton>
           </Box>
           <Box
-            sx={{
-              backgroundColor: '#1e1e1e',
-              color: '#fff',
+            sx={(theme) => ({
+              backgroundColor: theme.palette.black.jetBlack,
+              color: 'white',
               padding: '16px',
               borderRadius: '8px',
               width: '100%',
-            }}
+            })}
           >
             <Typography
               sx={{
