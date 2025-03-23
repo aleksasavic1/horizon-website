@@ -7,9 +7,9 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-interface CustomAccordionProps {
+type CustomAccordionProps = {
   items: { title: string; content: string | React.ReactNode }[];
-}
+};
 
 const CustomAccordion: React.FC<CustomAccordionProps> = ({ items }) => {
   const [expanded, setExpanded] = useState<number | false>(false);

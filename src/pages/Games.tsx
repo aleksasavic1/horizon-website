@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import {
   Box,
@@ -74,7 +73,7 @@ const Games = () => {
     if (games) {
       setAllGames((prevGames) => {
         const uniqueGames = new Map(prevGames.map((game) => [game.id, game]));
-        games.forEach((game: any) => uniqueGames.set(game.id, game));
+        games.forEach((game: GameTypes) => uniqueGames.set(game.id, game));
         return Array.from(uniqueGames.values());
       });
       setIsFetching(false);

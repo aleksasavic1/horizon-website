@@ -1,6 +1,5 @@
-import { Box } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import CustomAccordion from '../components/common/CustomAccordion';
-import { Container, Typography } from '@mui/material';
 import { FAQ_DATA } from '../constants/faq-data';
 import godOfWarImg from '../assets/god-of-war-bg.jpg';
 

@@ -1,5 +1,3 @@
-// TODO: use this modal somewhere
-
 import ReactDOM from 'react-dom';
 import { Box, Modal } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -18,11 +17,18 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import { useGameDetails, useGameScreenshots } from '../hooks/games-hook';
 import ScreenshotsCarousel from '../components/games/ScreenshotsCarousel';
+import {
+  formatNumber,
+  parseRequirements,
+  formatDate,
+  openLink,
+} from '../utils/helper-functions';
 import placeholderImg from '../assets/game-placeholder.png';
 import websiteLogo from '../assets/website-logo.png';
 import redditLogo from '../assets/reddit-logo.png';
 import returnIcon from '../assets/return-icon.png';
 import gameDetailsBg from '../assets/game-details-bg.jpg';
+import { GameTypes, PlatformInfo } from '../types/game-types';
 
 const GameDetails = () => {
   const theme = useTheme();
@@ -48,36 +54,10 @@ const GameDetails = () => {
   const rawRecommendedReq =
     game?.platforms?.[0]?.requirements?.recommended || '';
 
-  const cleanedMinimumReq = rawMinimumReq.replace(/^Minimum:/, '').trim();
-  const cleanedRecommendedReq = rawRecommendedReq
-    .replace(/^Recommended:/, '')
-    .trim();
+  const parsedMinimumReq = parseRequirements(rawMinimumReq);
+  const parsedRecommendedReq = parseRequirements(rawRecommendedReq);
 
-  const parsedMinimumReq = cleanedMinimumReq
-    .split(/(?=[A-Z][a-z]+:)/)
-    .map((line: any) => line.trim())
-    .filter((line: any) => line.includes(':'));
-  const parsedRecommendedReq = cleanedRecommendedReq
-    .split(/(?=[A-Z][a-z]+:)/)
-    .map((line: any) => line.trim())
-    .filter((line: any) => line.includes(':'));
-
-  const formattedDate = game?.released
-    ? new Date(game.released).toLocaleDateString('en-GB')
-    : 'N/A';
-
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1).replace('.0', '') + 'M+';
-    } else if (num >= 1000) {
-      return (num / 1000).toFixed(1).replace('.0', '') + 'K+';
-    }
-    return num.toString();
-  };
-
-  const openLink = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
+  const formattedDate = game?.released ? formatDate(game.released) : 'N/A';
 
   if (isPending) {
     return (
@@ -263,8 +243,6 @@ const GameDetails = () => {
             alignItems: 'center',
 
             '@media (max-width: 640px)': {
-              // display: 'flex',
-              // flexDirection: 'column',
               left: 14,
             },
           }}
@@ -302,20 +280,22 @@ const GameDetails = () => {
         }}
       >
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {game?.developers.slice(0, 2).map((developer: any, index: number) => (
-            <Typography
-              key={index}
-              sx={{
-                backgroundColor: theme.palette.blueBox.bg,
-                border: `1px solid ${theme.palette.blueBox.border}`,
-                padding: '4px 8px',
-                borderRadius: '4px',
-                display: { xs: 'none', md: 'flex' },
-              }}
-            >
-              {developer?.name || ''}
-            </Typography>
-          ))}
+          {game?.developers
+            .slice(0, 2)
+            .map((developer: GameTypes, index: number) => (
+              <Typography
+                key={index}
+                sx={{
+                  backgroundColor: theme.palette.blueBox.bg,
+                  border: `1px solid ${theme.palette.blueBox.border}`,
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  display: { xs: 'none', md: 'flex' },
+                }}
+              >
+                {developer?.name || ''}
+              </Typography>
+            ))}
 
           <CustomButton
             variant='outlined'
@@ -368,7 +348,7 @@ const GameDetails = () => {
           >
             See Genres
           </CustomButton>
-          {game?.genres.slice(0, 4).map((genre: any, index: number) => {
+          {game?.genres.slice(0, 4).map((genre: GameTypes, index: number) => {
             return (
               <Typography
                 key={index}
@@ -431,7 +411,7 @@ const GameDetails = () => {
               }}
             >
               {game?.platforms
-                ?.map((platform: any) => platform?.platform?.name)
+                ?.map((platform: PlatformInfo) => platform?.platform?.name)
                 .filter(Boolean)
                 .join(', ')}{' '}
             </Typography>
@@ -603,24 +583,26 @@ const GameDetails = () => {
 
             {!isRecommended ? (
               parsedMinimumReq.length > 0 ? (
-                parsedMinimumReq.slice(0, 5).map((line: any, index: number) => {
-                  const [key, ...value] = line.split(':');
-                  return (
-                    <Typography
-                      key={index}
-                      sx={{
-                        opacity: 0.9,
-                        lineHeight: '1.65',
-                        fontSize: '14px',
-                        '@media (min-width: 1921px)': {
-                          fontSize: '16px',
-                        },
-                      }}
-                    >
-                      <strong>{key.trim()}:</strong> {value.join(':').trim()}
-                    </Typography>
-                  );
-                })
+                parsedMinimumReq
+                  .slice(0, 5)
+                  .map((line: string, index: number) => {
+                    const [key, ...value] = line.split(':');
+                    return (
+                      <Typography
+                        key={index}
+                        sx={{
+                          opacity: 0.9,
+                          lineHeight: '1.65',
+                          fontSize: '14px',
+                          '@media (min-width: 1921px)': {
+                            fontSize: '16px',
+                          },
+                        }}
+                      >
+                        <strong>{key.trim()}:</strong> {value.join(':').trim()}
+                      </Typography>
+                    );
+                  })
               ) : (
                 <Typography
                   sx={{
@@ -638,7 +620,7 @@ const GameDetails = () => {
             ) : parsedRecommendedReq.length > 0 ? (
               parsedRecommendedReq
                 .slice(0, 5)
-                .map((line: any, index: number) => {
+                .map((line: string, index: number) => {
                   const [key, ...value] = line.split(':');
                   return (
                     <Typography
@@ -720,8 +702,8 @@ const GameDetails = () => {
             sx={{
               margin: '0 30px',
               position: 'absolute',
-              bottom: 15,
-              left: 10,
+              bottom: 12,
+              left: 15,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -731,6 +713,10 @@ const GameDetails = () => {
               filter: 'drop-shadow(2px 2px 2px black) brightness(84%)',
               '&:hover': {
                 transform: 'scale(1.1)',
+              },
+
+              '@media (max-width: 640px)': {
+                left: 0,
               },
             }}
           />
@@ -743,8 +729,8 @@ const GameDetails = () => {
             sx={{
               margin: '0 30px',
               position: 'absolute',
-              bottom: 15,
-              left: 54,
+              bottom: 12,
+              left: 60,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -754,6 +740,9 @@ const GameDetails = () => {
               filter: 'drop-shadow(2px 2px 2px black) brightness(84%)',
               '&:hover': {
                 transform: 'scale(1.08)',
+              },
+              '@media (max-width: 640px)': {
+                left: 44,
               },
             }}
           />
@@ -774,7 +763,7 @@ const GameDetails = () => {
             All Developers
           </Typography>
           <Box sx={{ overflowY: 'auto' }}>
-            {game?.developers.map((developer: any, index: number) => (
+            {game?.developers.map((developer: GameTypes, index: number) => (
               <Typography
                 key={index}
                 sx={{
@@ -807,7 +796,7 @@ const GameDetails = () => {
             All Genres
           </Typography>
           <Box sx={{ overflowY: 'auto' }}>
-            {game?.genres.map((genre: any, index: number) => {
+            {game?.genres.map((genre: GameTypes, index: number) => {
               return (
                 <Typography
                   key={index}

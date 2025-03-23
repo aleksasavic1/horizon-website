@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -16,6 +15,7 @@ import { COUNTRY_OPTIONS } from '../constants/select-options';
 import { useRegister } from '../hooks/auth-hook';
 import { db } from '../firebase';
 import { setDoc, doc } from 'firebase/firestore';
+import { User } from 'firebase/auth';
 import useAuthStore from '../store/auth-store';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -53,7 +53,7 @@ const Register = () => {
     registration(
       { email: data.email, password: data.password },
       {
-        onSuccess: async (user: any) => {
+        onSuccess: async (user: User) => {
           if (!user?.uid) {
             console.error('No user UID found.');
             return;

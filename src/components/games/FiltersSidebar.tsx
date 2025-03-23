@@ -10,14 +10,14 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import CustomSelect from '../common/CustomSelect';
 import CustomSwitch from '../common/CustomSwitch';
+import CustomButton from '../common/CustomButton';
 import {
   PLATFORM_OPTIONS,
   GENRE_OPTIONS,
   SORT_BY_OPTIONS,
 } from '../../constants/select-options';
-import CustomButton from '../common/CustomButton';
 
-interface FiltersSidebarProps {
+type FiltersSidebarProps = {
   open: boolean;
   onClose: () => void;
   formData: {
@@ -32,7 +32,7 @@ interface FiltersSidebarProps {
   ) => void;
   handleReset: () => void;
   handleApply: () => void;
-}
+};
 
 const FiltersSidebar = ({
   open,

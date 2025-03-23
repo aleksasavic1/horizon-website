@@ -48,6 +48,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
   const handleLogout = () => {
     logout();
     navigate('/login');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setOpen(false);
   };
 
@@ -247,6 +248,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                 component='div'
                 onClick={() => {
                   navigate('/my-profile');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                   setOpen(false);
                 }}
                 sx={{
@@ -264,6 +266,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -280,6 +283,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/games');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -296,6 +300,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/library');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -312,6 +317,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/faq');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -328,6 +334,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
               component='div'
               onClick={() => {
                 navigate('/contact');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 setOpen(false);
               }}
               sx={{
@@ -374,6 +381,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                   }}
                   onClick={() => {
                     navigate('/login');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     setOpen(false);
                   }}
                 >
@@ -389,6 +397,7 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
                   }}
                   onClick={() => {
                     navigate('/register');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     setOpen(false);
                   }}
                 >

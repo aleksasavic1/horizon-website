@@ -28,11 +28,11 @@ const GameCard = ({
   const handleAddOrRemove = (event: React.MouseEvent) => {
     event.stopPropagation();
 
-    const formattedGame: GameTypes = {
+    const formattedGame = {
       ...game,
       genres: game.genres ?? [],
       reviews_count: game.reviews_count ?? 0,
-    };
+    } as GameTypes;
 
     if (isAdded) {
       removeGame(formattedGame.id);
