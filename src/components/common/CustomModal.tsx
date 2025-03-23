@@ -4,14 +4,14 @@ import { SxProps, Theme } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomButton from './CustomButton';
 
-interface ModalProps {
+type ModalProps = {
   open: boolean;
   onClose?: () => void;
   title?: string;
   children: React.ReactNode;
   customStyle?: SxProps<Theme>;
   hideCloseButton?: boolean;
-}
+};
 
 const modalRoot = document.getElementById('modal') as HTMLElement;
 
@@ -24,7 +24,7 @@ const CustomModal = ({
 }: ModalProps) => {
   if (!modalRoot) return null;
 
-  const defaultStyles: SxProps<Theme> = (theme) => ({
+  const defaultStyles: SxProps<Theme> = {
     position: 'absolute',
     bottom: '50%',
     left: '50%',
@@ -32,7 +32,7 @@ const CustomModal = ({
     minWidth: '50%',
     height: '75%',
     overflowY: 'auto',
-    bgcolor: theme.palette.gray.jetGray,
+    bgcolor: 'rgb(28, 28, 28)',
     boxShadow: 24,
     padding: '12px',
     borderRadius: '30px',
@@ -49,7 +49,7 @@ const CustomModal = ({
       transform: 'translate(-50%, 0%)',
       height: '90%',
     },
-  });
+  };
 
   return ReactDOM.createPortal(
     <Modal
