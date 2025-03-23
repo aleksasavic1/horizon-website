@@ -58,6 +58,7 @@ type CustomInputProps = {
   sx?: SxProps<Theme>;
   inputStyle?: SxProps<Theme>;
   disabled?: boolean;
+  readOnly?: boolean;
 };
 
 const CustomInput = ({
@@ -75,6 +76,7 @@ const CustomInput = ({
   sx,
   inputStyle,
   disabled = false,
+  readOnly = false,
 }: CustomInputProps) => {
   return (
     <InputContainer sx={sx} disabled={disabled}>
@@ -94,6 +96,7 @@ const CustomInput = ({
         onBlur={onBlur}
         inputRef={ref}
         disabled={disabled}
+        readOnly={readOnly}
         sx={inputStyle}
       />
       {endAdornment && <Box>{endAdornment}</Box>}

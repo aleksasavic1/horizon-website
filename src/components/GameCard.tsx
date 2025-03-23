@@ -184,32 +184,35 @@ const GameCard = ({
               >
                 Remove
               </CustomButton>
-              {isPending ? (
-                <Box
+              {stores && stores.length > 0 && (
+                <CustomButton
+                  variant='orange'
+                  onClick={handleStore}
+                  disabled={isPending}
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    marginTop: '12px',
+                    background: 'linear-gradient(190deg, #14c004, #264e1f)',
                     minWidth: '100px',
+                    position: 'relative',
+                    pointerEvents: isPending ? 'none' : 'auto',
                   }}
                 >
-                  <CircularProgress color='secondary' />
-                </Box>
-              ) : (
-                stores &&
-                stores.length > 0 && (
-                  <CustomButton
-                    variant='orange'
-                    onClick={handleStore}
-                    sx={{
-                      marginTop: '12px',
-                      background: 'linear-gradient(190deg, #14c004, #264e1f)',
-                      minWidth: '100px',
-                    }}
-                  >
-                    Store
-                  </CustomButton>
-                )
+                  {isPending ? (
+                    <CircularProgress
+                      size={20}
+                      sx={{
+                        color: 'white',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        marginTop: '-10px',
+                        marginLeft: '-10px',
+                      }}
+                    />
+                  ) : (
+                    'Store'
+                  )}
+                </CustomButton>
               )}
             </Box>
           )}

@@ -90,7 +90,11 @@ const GameHeader = ({
           },
         }}
       >
-        {game?.name || ''}
+        {isPending ? (
+          <Skeleton variant='text' width={220} height={45} />
+        ) : (
+          game?.name || ''
+        )}
       </Typography>
       <Typography
         sx={{

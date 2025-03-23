@@ -85,7 +85,10 @@ const Navbar = ({ profilePicture }: NavbarProps) => {
       <Box sx={{ flex: 1, display: 'flex' }}>
         <Typography
           className='cursor-hover'
-          onClick={() => navigate('/')}
+          onClick={() => {
+            navigate('/');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           sx={{
             fontFamily: 'Orbitron, sans-serif',
             fontSize: '24px',

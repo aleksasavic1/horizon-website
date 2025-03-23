@@ -154,7 +154,16 @@ const AboutGame = ({
           Overview:
         </Typography>
 
-        <ShowMore text={game?.description_raw || 'No description'} />
+        {!game?.description_raw ? (
+          <Skeleton
+            variant='rectangular'
+            height={120}
+            width='100%'
+            sx={{ borderRadius: '6px', mt: 1 }}
+          />
+        ) : (
+          <ShowMore text={game.description_raw} />
+        )}
       </Box>
       <Box
         sx={{

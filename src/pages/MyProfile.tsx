@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Box, IconButton, SelectChangeEvent, Link } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
@@ -32,36 +32,40 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
     profile_picture: profilePicture || '',
   });
 
+  const getUserRef = useCallback(() => {
+    if (!user?.uid) throw new Error('User not authenticated');
+    return doc(db, 'users', user.uid);
+  }, [user?.uid]);
+
   useEffect(() => {
-    if (!isAuthenticated || !user?.uid) return;
+    let isMounted = true;
 
     const fetchUserData = async () => {
-      try {
-        const userRef = doc(db, 'users', user.uid);
-        const userSnap = await getDoc(userRef);
+      if (!user?.uid || !isAuthenticated) return;
+      const userSnap = await getDoc(getUserRef());
 
-        if (userSnap.exists()) {
-          setUserData((prev) => ({ ...prev, ...userSnap.data() }));
-        } else {
-          console.log('No user data found in Firestore');
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      if (userSnap.exists() && isMounted) {
+        setUserData((prev) => ({ ...prev, ...userSnap.data() }));
       }
     };
 
     fetchUserData();
-  }, [user, isAuthenticated]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent
-  ) => {
-    const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    return () => {
+      isMounted = false;
+    };
+  }, [user, isAuthenticated, getUserRef]);
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => {
+      const { name, value } = e.target;
+      setUserData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   const handleChangeImage = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -79,7 +83,12 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
         await updateDoc(doc(db, 'users', user.uid), {
           profile_picture: base64String,
         });
+
         setProfilePicture(base64String);
+        setUserData((prev) => ({
+          ...prev,
+          profile_picture: base64String,
+        }));
       } catch (error) {
         console.error('Error saving image:', error);
       }
@@ -103,11 +112,11 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
     }
 
     try {
-      await updateDoc(doc(db, 'users', user.uid), userData);
+      await updateDoc(getUserRef(), userData);
       setIsEditEnabled(false);
 
-      const userRef = doc(db, 'users', user.uid);
-      const userSnap = await getDoc(userRef);
+      const userSnap = await getDoc(getUserRef());
+
       if (userSnap.exists() && userSnap.data().profile_picture) {
         setUserData((prev) => ({
           ...prev,
@@ -315,6 +324,7 @@ const MyProfile = ({ profilePicture, setProfilePicture }: MyProfileProps) => {
               name='email'
               value={userData.email}
               onChange={handleChange}
+              readOnly
               disabled
             />
             <Box sx={{ display: 'flex', justifyContent: 'end', mt: '6px' }}>

@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import HomeContent from '../components/home/HomeContent';
 import GameCard from '../components/GameCard';
@@ -6,20 +5,9 @@ import Carousel from '../components/common/Carousel';
 import { useGames } from '../hooks/games-hook';
 import codBg from '../assets/images/cod-bg.jpg';
 
-type Game = {
-  id: number;
-  name: string;
-  released: string;
-  background_image: string;
-  rating: number;
-};
-
 const Home = () => {
-  const [cod, setCod] = useState<Game[]>([]);
-  const [gta, setGta] = useState<Game[]>([]);
-
   const {
-    data: codGames,
+    data: codGames = [],
     isPending: isCodPending,
     error: codError,
   } = useGames({
@@ -28,25 +16,13 @@ const Home = () => {
   });
 
   const {
-    data: gtaGames,
+    data: gtaGames = [],
     isPending: isGtaPending,
     error: gtaError,
   } = useGames({
     search: 'grand theft auto',
     page_size: '15',
   });
-
-  useEffect(() => {
-    if (codGames) {
-      setCod(codGames);
-    }
-  }, [codGames]);
-
-  useEffect(() => {
-    if (gtaGames) {
-      setGta(gtaGames);
-    }
-  }, [gtaGames]);
 
   return (
     <Box
@@ -132,9 +108,9 @@ const Home = () => {
           <Typography sx={{ textAlign: 'center', color: 'red', my: 4 }}>
             Failed to load games. Please try again.
           </Typography>
-        ) : codGames.length > 0 ? (
+        ) : codGames && codGames.length > 0 ? (
           <Carousel
-            items={cod}
+            items={codGames}
             renderItem={(game) => (
               <GameCard key={game.id} game={game} isCarousel />
             )}
@@ -168,9 +144,9 @@ const Home = () => {
           <Typography sx={{ textAlign: 'center', color: 'red', my: 4 }}>
             Failed to load games. Please try again.
           </Typography>
-        ) : gtaGames.length > 0 ? (
+        ) : gtaGames && gtaGames.length > 0 ? (
           <Carousel
-            items={gta}
+            items={gtaGames}
             renderItem={(game) => (
               <GameCard key={game.id} game={game} isCarousel />
             )}
