@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material';
-import nfsImg from '../../assets/images/nfs.jpg';
 import lolImg from '../../assets/images/lol.jpg';
 import homeVideo from '../../assets/videos/home-video.mp4';
 
@@ -68,7 +67,12 @@ const HomeContent = () => {
           },
         }}
       >
-        <Box component='img' src={nfsImg} alt='Valorant Image' sx={imgStyle} />
+        <Box
+          component='img'
+          src={lolImg}
+          alt='League of Legends Image'
+          sx={imgStyle}
+        />
         <Typography sx={textStyle}>
           <b>Horizon</b> is not just another gaming website — it is a universe
           crafted for gamers by gamers. It's a place where passion for
@@ -116,110 +120,18 @@ const HomeContent = () => {
         </Typography>
       </Box>
 
-      <Typography
-        sx={{
-          my: 5,
-          '@media (max-width: 768px)': {
-            fontSize: '14px',
-          },
-          '@media (min-width: 1921px)': {
-            fontSize: '20px',
-          },
-        }}
-      >
-        With a clean design and user-friendly interface, <b>Horizon</b> lets you
-        easily browse thousands of games across all platforms - from PC and
-        consoles to mobile. Stay up to date with the latest trends, read what
-        other players are saying, and never miss a must-play title again. Our
-        goal is to create a space where gamers feel at home, inspired, and
-        always ready for their next adventure.
-      </Typography>
-
-      <Typography
-        sx={{
-          fontSize: '1.5rem',
-          mb: 1,
-          '@media (max-width: 900px)': {
-            textAlign: 'center',
-          },
-          '@media (max-width: 640px)': {
-            fontSize: '1.3rem',
-          },
-          '@media (min-width: 1921px)': {
-            fontSize: '1.7rem',
-          },
-        }}
-      >
-        Why Horizon Exists
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 3,
-          height: '400px',
-
-          '@media (max-width: 1280px)': {
-            height: '320px',
-          },
-          '@media (max-width: 900px)': {
-            flexDirection: 'column-reverse',
-            alignItems: 'center',
-            height: '720px',
-          },
-        }}
-      >
-        <Typography sx={textStyle}>
-          In a world overflowing with games, platforms, launchers, and endless
-          choices, <b>Horizon</b> was created to bring clarity, simplicity, and
-          inspiration back to the gaming experience. We understand that finding
-          the right game at the right time can be overwhelming — and that's why{' '}
-          <b>Horizon</b> exists. Our goal is to make discovering games feel
-          exciting again, not exhausting. We built <b>Horizon</b> as a single,
-          unified space where gamers can explore, organize, and fall in love
-          with gaming all over again. Our platform is designed around the idea
-          that gamers deserve more than just storefronts and lists of titles.
-          You deserve a place where games are introduced with care, where
-          visuals, reviews, and features come together to help you make choices
-          that matter. Whether you're someone who games once a week or every
-          single day, <b>Horizon</b> gives you the tools to curate your own
-          gaming journey. We're not here to tell you what's popular — we're here
-          to help you find what's right for you. With intelligent filtering,
-          custom collections, and smart recommendations, <b>Horizon</b> adapts
-          to the way you think about games. Are you in the mood for an epic RPG?
-          Looking for a nostalgic platformer? Want to find what's trending but
-          filter out what you've already played? <b>Horizon</b> makes it simple.
-          No ads. No noise. Just pure focus on games that matter. But more than
-          that, <b>Horizon</b> is about connection. We believe that gaming is a
-          deeply human experience — it builds friendships, tells stories,
-          creates memories. That's why our platform encourages community
-          interaction, thoughtful discussion, and sharing what you love with
-          others. With every profile, review, favorite, or list you create, you
-          become part of something bigger — a global community of people who
-          don't just play games… they live them. We're building <b>Horizon</b>{' '}
-          for the long term — not just as a tool, but as a companion. A platform
-          that grows with you, understands your tastes, and evolves alongside
-          the industry. From blockbuster titles to indie wonders, <b>Horizon</b>{' '}
-          is here to make sure every great game gets the spotlight it deserves —
-          and that every player finds their next adventure. This is{' '}
-          <b>Horizon</b>. It's more than a platform. It's a vision. A movement.{' '}
-          <u>A better way to play</u>.
-        </Typography>
-
-        <Box
-          component='img'
-          src={lolImg}
-          alt='League of Legends Image'
-          sx={imgStyle}
-        />
-      </Box>
-
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          my: 7,
+          mt: 6,
+          mb: 5,
           position: 'relative',
+
+          '@media (max-width: 900px)': {
+            my: 5,
+          },
         }}
       >
         <Box
@@ -283,6 +195,25 @@ const HomeContent = () => {
           </Typography>
         </Box>
       </Box>
+
+      <Typography
+        sx={{
+          my: 5,
+          '@media (max-width: 768px)': {
+            fontSize: '14px',
+          },
+          '@media (min-width: 1921px)': {
+            fontSize: '20px',
+          },
+        }}
+      >
+        With a clean design and user-friendly interface, <b>Horizon</b> lets you
+        easily browse thousands of games across all platforms - from PC and
+        consoles to mobile. Stay up to date with the latest trends, read what
+        other players are saying, and never miss a must-play title again. Our
+        goal is to create a space where gamers feel at home, inspired, and
+        always ready for their next adventure.
+      </Typography>
     </Box>
   );
 };
